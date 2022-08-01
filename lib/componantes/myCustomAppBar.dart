@@ -89,7 +89,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
-              children: [],
+              children: [Text('')],
             ),
           ],
         ),
