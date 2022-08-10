@@ -135,7 +135,7 @@ class _HomeState extends State<Home> {
                     padding: index == 0
                         ? EdgeInsets.only(right: 20)
                         : EdgeInsets.only(right: 10),
-                    child: availableRestautantsCard(),
+                    child: featuredMealsCard(),
                   ),
                 ),
               ),
@@ -177,28 +177,37 @@ class _HomeState extends State<Home> {
 
   Container featuredMealsCard() {
     return Container(
-      width: 76,
+      width: 57,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            height: 76,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Image.asset(
-              'assets/images/Restaurant img.jpg',
-              fit: BoxFit.contain,
-            ),
+          Image.asset(
+            'assets/images/Burger.png',
+            fit: BoxFit.contain,
+            width: 50,
+            height: 45,
           ),
           SizedBox(
-            height: 5,
+            height: 1,
           ),
           Text(
-            'كنتاكي',
-            style: MyCustomTextStyle.myCardTitleBlackSecondTextStyle,
-          )
+            'تاكو',
+            style: MyCustomTextStyle.myCardSecondTitleBlackSecondTextStyle,
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Text(
+            '(13)',
+            style: MyCustomTextStyle.myH1withOpacityTextStyle,
+          ),
+          Text(
+            'مطعم',
+            style: MyCustomTextStyle.myH1withOpacityTextStyle,
+          ),
         ],
       ),
     );

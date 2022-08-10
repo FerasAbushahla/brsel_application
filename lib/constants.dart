@@ -61,6 +61,11 @@ class MyCustomTextStyle {
     color: myBlackSecondColor,
     fontWeight: FontWeight.w300,
   );
+  static const TextStyle myCardSecondTitleBlackSecondTextStyle = TextStyle(
+    fontSize: 11,
+    color: myBlackSecondColor,
+    fontWeight: FontWeight.w300,
+  );
 }
 
 InputDecoration searchInputDecoration(
