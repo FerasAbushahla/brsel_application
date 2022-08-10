@@ -16,11 +16,13 @@ const MaterialColor myMaterialPrimaryColor = const MaterialColor(
   },
 );
 
-const myBackgroundColor = Color(0xFFFFFFFF);
+const myBackgroundColor = Color(0xFFF9F9F9);
 const myPrimaryColor = Color(0xFF31C46C);
 const myBackgroundFillingColor = Color(0xFFF9F9F9);
 const myBlackColor = Color(0xFF000000);
+const myBlackSecondColor = Color(0xFF01000D);
 const myTextGreyColor = Color(0xFF9E9E9E);
+const myDarkGreyColor = Color(0xFF595959);
 const myBorderGreyColor = Color(0xFFE8E8E8);
 
 class MyCustomTextStyle {
@@ -39,10 +41,25 @@ class MyCustomTextStyle {
     color: myBlackColor.withOpacity(0.5),
     fontWeight: FontWeight.w300,
   );
+  static TextStyle myH2 = TextStyle(
+    fontSize: 12,
+    color: myDarkGreyColor,
+    fontWeight: FontWeight.w500,
+  );
   static const TextStyle myHintTextStyle = TextStyle(
     fontSize: 14,
     color: myTextGreyColor,
     fontWeight: FontWeight.w400,
+  );
+  static const TextStyle myGreenTextStyle = TextStyle(
+    fontSize: 9,
+    color: myPrimaryColor,
+    fontWeight: FontWeight.w700,
+  );
+  static const TextStyle myCardTitleBlackSecondTextStyle = TextStyle(
+    fontSize: 12,
+    color: myBlackSecondColor,
+    fontWeight: FontWeight.w300,
   );
 }
 
@@ -55,7 +72,7 @@ InputDecoration searchInputDecoration(
     hintText: hint,
     suffixIcon: suffix,
     prefixIcon: Container(height: 24, child: prefix),
-    contentPadding: EdgeInsets.symmetric(horizontal: 11, vertical: 12),
+    contentPadding: EdgeInsets.symmetric(horizontal: 11, vertical: 0),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: BorderSide(
@@ -97,3 +114,38 @@ InputDecoration searchInputDecoration(
     // ),
   );
 }
+
+const AvailableRestList = [
+  {
+    'imagePath': 'assets/images/Dogs.jpg',
+    'title': 'Dogs',
+  },
+  {
+    'imagePath': 'assets/images/SmallPet.jpg',
+    'title': 'Small pet',
+  },
+  {
+    'imagePath': 'assets/images/Fish.jpg',
+    'title': 'Fish',
+  },
+  {
+    'imagePath': 'assets/images/Bird.jpg',
+    'title': 'Bird',
+  },
+  {
+    'imagePath': 'assets/images/Cats.jpg',
+    'title': 'Cats',
+  },
+  {
+    'imagePath': 'assets/images/Reptiles.jpg',
+    'title': 'Reptiles',
+  },
+  {
+    'imagePath': 'assets/images/Horses.jpg',
+    'title': 'Horses',
+  },
+  {
+    'imagePath': 'assets/images/FarmAnimal.jpg',
+    'title': 'Farm animal',
+  },
+];
