@@ -25,6 +25,74 @@ const myTextGreyColor = Color(0xFF9E9E9E);
 const myDarkGreyColor = Color(0xFF595959);
 const myBorderGreyColor = Color(0xFFE8E8E8);
 
+class CustomIcons {
+  CustomIcons._();
+
+  static const _kFontFam = 'BrselApp';
+  static const String? _kFontPkg = null;
+
+  static const IconData logouticon =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData notificationsicon =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ordersicon =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData paymenticon =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData plusicon =
+      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData profile =
+      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData restaurantsicon =
+      IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData reviewedicon =
+      IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData searchicon =
+      IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData settingsicon =
+      IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData staricon =
+      IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData supporticon =
+      IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData viewicon =
+      IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData visiblityicon =
+      IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData arrowdownicon =
+      IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData arrowsicon =
+      IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData attachicon =
+      IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData cancelcircleicon =
+      IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData checkicon =
+      IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData couponicon =
+      IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData deliveryicon =
+      IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData deliverysecicon =
+      IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData editicon =
+      IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData erroricon =
+      IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filtericon =
+      IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData hearticon =
+      IconData(0xe822, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData homesecicon =
+      IconData(0xe825, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData infoicon =
+      IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData locationsecicon =
+      IconData(0xe828, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData lockicon =
+      IconData(0xe829, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+}
+
 class MyCustomTextStyle {
   static const TextStyle myTitleTextStyle = TextStyle(
     fontSize: 22,
@@ -152,5 +220,35 @@ const AvailableRestList = [
   {
     'imagePath': 'assets/images/FarmAnimal.jpg',
     'title': 'Farm animal',
+  },
+];
+const mealsBurgerList = [
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
+  },
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
+  },
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
+  },
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
+  },
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
+  },
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
+  },
+  {
+    'imagePath': 'assets/images/Burger.jpg',
+    'title': 'برجر',
   },
 ];
