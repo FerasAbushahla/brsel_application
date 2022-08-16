@@ -87,6 +87,9 @@ flutter:
         - asset: fonts/ArbFONTS-Montserrat-Arabic-Regular.ttf
         - asset: fonts/ArbFONTS-Montserrat-Arabic-SemiBold.ttf
         - asset: fonts/ArbFONTS-Montserrat-Arabic-Thin.ttf
+    - family:  BrselApp
+      fonts:
+       - asset: fonts/BrselApp.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

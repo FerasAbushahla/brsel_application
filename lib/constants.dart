@@ -24,9 +24,10 @@ const myBlackSecondColor = Color(0xFF01000D);
 const myTextGreyColor = Color(0xFF9E9E9E);
 const myDarkGreyColor = Color(0xFF595959);
 const myBorderGreyColor = Color(0xFFE8E8E8);
+const myGreyColor = Color(0xFFA1A1A1);
 
-class CustomIcons {
-  CustomIcons._();
+class BrselApp {
+  BrselApp._();
 
   static const _kFontFam = 'BrselApp';
   static const String? _kFontPkg = null;

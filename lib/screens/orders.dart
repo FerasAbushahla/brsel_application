@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class Restaurants extends StatefulWidget {
-  const Restaurants({Key? key}) : super(key: key);
+class Orders extends StatefulWidget {
+  const Orders({Key? key}) : super(key: key);
 
   @override
-  State<Restaurants> createState() => _RestaurantsState();
+  State<Orders> createState() => _OrdersState();
 }
 
-class _RestaurantsState extends State<Restaurants> {
+class _OrdersState extends State<Orders> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
