@@ -63,16 +63,10 @@ class _wraperState extends State<wraper> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // resizeToAvoidBottomInset: false,
       bottomNavigationBar: BottomAppBar(
-        shape: AutomaticNotchedShape(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-          ),
-        ),
         notchMargin: 0,
         child: Container(
           width: SizeConfig.screenWidth,
-          height: 70,
+          height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -91,8 +85,8 @@ class _wraperState extends State<wraper> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          BrselApp.homesecicon,
-                          size: 20,
+                          Icons.home_outlined,
+                          size: 25,
                           color:
                               currentPage == 0 ? myPrimaryColor : myGreyColor,
                         ),
@@ -124,7 +118,7 @@ class _wraperState extends State<wraper> {
                       children: [
                         Icon(
                           BrselApp.ordersicon,
-                          size: 20,
+                          size: 25,
                           color:
                               currentPage == 1 ? myPrimaryColor : myGreyColor,
                         ),

@@ -25,6 +25,7 @@ const myTextGreyColor = Color(0xFF9E9E9E);
 const myDarkGreyColor = Color(0xFF595959);
 const myBorderGreyColor = Color(0xFFE8E8E8);
 const myGreyColor = Color(0xFFA1A1A1);
+const myYellowColor = Color(0xFFFFDE0A);
 
 class BrselApp {
   BrselApp._();
@@ -115,6 +116,16 @@ class MyCustomTextStyle {
     color: myDarkGreyColor,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle myH3 = TextStyle(
+    fontSize: 12,
+    color: myDarkGreyColor,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle myP1 = TextStyle(
+    fontSize: 10,
+    color: myBlackColor,
+    fontWeight: FontWeight.w300,
+  );
   static const TextStyle myHintTextStyle = TextStyle(
     fontSize: 14,
     color: myTextGreyColor,
@@ -124,6 +135,16 @@ class MyCustomTextStyle {
     fontSize: 9,
     color: myPrimaryColor,
     fontWeight: FontWeight.w700,
+  );
+  static TextStyle myDetailsTextStyle = TextStyle(
+    fontSize: 9,
+    color: myBlackColor.withOpacity(0.5),
+    fontWeight: FontWeight.w300,
+  );
+  static TextStyle myDetailsSecTextStyle = TextStyle(
+    fontSize: 8,
+    color: myBlackColor.withOpacity(0.5),
+    fontWeight: FontWeight.w900,
   );
   static const TextStyle myCardTitleBlackSecondTextStyle = TextStyle(
     fontSize: 12,

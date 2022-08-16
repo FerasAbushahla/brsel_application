@@ -154,24 +154,29 @@ class _HomeState extends State<Home> {
                       child: GridView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: mealsBurgerList.length,
+                        itemCount: 6,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            // childAspectRatio: 1.2,
+                            childAspectRatio: (1 / 1.18),
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10),
                         itemBuilder: (context, index) => Container(
-                          width: getProportionalScreenWidth(163),
-                          height: getProportionalScreenHeight(200),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colors.white,
-                          ),
+                              borderRadius: BorderRadius.circular(6),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: Offset(0, 0),
+                                )
+                              ]),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Container(
-                                width: getProportionalScreenWidth(163),
+                                // width: getProportionalScreenWidth(163),
                                 height: 123,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
@@ -190,7 +195,81 @@ class _HomeState extends State<Home> {
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: [Text('برجر')],
+                                      children: [
+                                        Text(
+                                          'برجر',
+                                          style: MyCustomTextStyle.myH3,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              BrselApp.staricon,
+                                              size: 10,
+                                              color: myYellowColor,
+                                            ),
+                                            SizedBox(
+                                              width: 2,
+                                            ),
+                                            Text(
+                                              '4.0',
+                                              style: MyCustomTextStyle.myP1,
+                                            ),
+                                            Text(
+                                              '(100)',
+                                              style: MyCustomTextStyle.myP1,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      'مطبخ شرقي.مشاوي شرقة.مطبخ شرقي.مشاوي شرقة.',
+                                      style:
+                                          MyCustomTextStyle.myDetailsTextStyle,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          BrselApp.deliveryicon,
+                                          size: 10,
+                                        ),
+                                        Text(
+                                          '20-30د',
+                                          style: MyCustomTextStyle
+                                              .myDetailsSecTextStyle,
+                                        ),
+                                        Container(
+                                          width: 2,
+                                          height: 2,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: myBlackColor),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'الحدالأدنى.',
+                                          style: MyCustomTextStyle
+                                              .myDetailsSecTextStyle,
+                                        ),
+                                        Text(
+                                          '30',
+                                          style: MyCustomTextStyle
+                                              .myDetailsSecTextStyle,
+                                        ),
+                                        Text(
+                                          'ريال',
+                                          style: MyCustomTextStyle
+                                              .myDetailsSecTextStyle,
+                                        ),
+                                      ],
                                     )
                                   ],
                                 ),
@@ -243,8 +322,7 @@ class _HomeState extends State<Home> {
     return Container(
       width: 57,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      ),
+          borderRadius: BorderRadius.circular(12), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
