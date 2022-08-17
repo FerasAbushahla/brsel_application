@@ -2,6 +2,7 @@ import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 // import 'package:navigation_drawer_animation/model/menu_item.dart';
@@ -506,8 +507,10 @@ class DrawerMenu extends StatelessWidget {
                 title: 'تسجيل الخروج',
                 icon: Icon(BrselApp.logouticon),
                 onTap: () {}),
+            Spacer(),
+            SvgPicture.asset('assets/images/Logo.svg'),
             SizedBox(
-              height: 15,
+              height: 40,
             ),
           ],
         ),
