@@ -2,8 +2,9 @@ import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_zoom_drawer/config.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+// import 'package:navigation_drawer_animation/model/menu_item.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final drawerController = ZoomDrawerController();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -22,7 +24,11 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: [
-            MyHomeCustomAppBar(),
+            MyHomeCustomAppBar(
+              leadingOnPressed: () {
+                ZoomDrawer.of(context)!.toggle();
+              },
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -35,7 +41,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       width: SizeConfig.screenWidth,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(20, 9, 20, 10),
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -46,15 +52,23 @@ class _HomeState extends State<Home> {
                                   'العروض(130)',
                                   style: MyCustomTextStyle.myH2,
                                 ),
-                                Text(
-                                  'تصفح الكل',
-                                  style: MyCustomTextStyle.myGreenTextStyle,
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'تصفح الكل',
+                                    style: MyCustomTextStyle.myGreenTextStyle,
+                                  ),
+                                  style: TextButton.styleFrom(
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      padding: EdgeInsets.zero,
+                                      alignment: Alignment.centerLeft),
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            // SizedBox(
+                            //   height: 5,
+                            // ),
                             Container(
                               width: SizeConfig.screenWidth,
                               height: 170,
@@ -71,7 +85,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -82,15 +96,22 @@ class _HomeState extends State<Home> {
                             'المطاعم المتوفرة(120)',
                             style: MyCustomTextStyle.myH2,
                           ),
-                          Text(
-                            'تصفح الكل',
-                            style: MyCustomTextStyle.myGreenTextStyle,
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'تصفح الكل',
+                              style: MyCustomTextStyle.myGreenTextStyle,
+                            ),
+                            style: TextButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding: EdgeInsets.zero,
+                                alignment: Alignment.centerLeft),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     SingleChildScrollView(
                       physics: const BouncingScrollPhysics(
@@ -109,7 +130,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -120,15 +141,22 @@ class _HomeState extends State<Home> {
                             'وجبات رائجة',
                             style: MyCustomTextStyle.myH2,
                           ),
-                          Text(
-                            'مشاهدة الكل',
-                            style: MyCustomTextStyle.myGreenTextStyle,
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'مشاهدة الكل',
+                              style: MyCustomTextStyle.myGreenTextStyle,
+                            ),
+                            style: TextButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding: EdgeInsets.zero,
+                                alignment: Alignment.centerLeft),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     SingleChildScrollView(
                       physics: const BouncingScrollPhysics(
@@ -349,6 +377,163 @@ class _HomeState extends State<Home> {
           Text(
             'مطعم',
             style: MyCustomTextStyle.myH1withOpacityTextStyle,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+final ZoomDrawerController z = ZoomDrawerController();
+
+class HomeZoomDrawer extends StatefulWidget {
+  const HomeZoomDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<HomeZoomDrawer> createState() => _HomeZoomDrawerState();
+}
+
+class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return ZoomDrawer(
+      controller: z,
+      style: DrawerStyle.defaultStyle,
+      angle: 0,
+      slideWidth: getProportionalScreenWidth(220),
+      androidCloseOnBackTap: true,
+      mainScreenTapClose: true,
+      isRtl: true,
+      menuBackgroundColor: Colors.white,
+      mainScreenScale: 0.1,
+      mainScreen: Home(),
+      menuScreen: DrawerMenu(),
+    );
+  }
+}
+
+class DrawerMenu extends StatelessWidget {
+  const DrawerMenu({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.only(right: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 55,
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 55,
+                  height: 55,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(7)),
+                  child: Image.asset(
+                    'assets/images/Profile.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Spacer()
+              ],
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'أهلا بك',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: myGreyColor),
+            ),
+            SizedBox(
+              height: 2,
+            ),
+            Text(
+              'فراس أبو شهلا',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: myBlackColor),
+            ),
+            SizedBox(
+              height: 44,
+            ),
+            MyMenuListItem(
+                title: 'الرئيسية', icon: Icon(Icons.home), onTap: () {}),
+            SizedBox(
+              height: 15,
+            ),
+            MyMenuListItem(
+                title: 'طلباتي', icon: Icon(BrselApp.ordersicon), onTap: () {}),
+            SizedBox(
+              height: 15,
+            ),
+            MyMenuListItem(
+                title: 'الوجبات',
+                icon: Icon(BrselApp.restaurantsicon),
+                onTap: () {}),
+            SizedBox(
+              height: 15,
+            ),
+            MyMenuListItem(
+                title: 'اعدادات',
+                icon: Icon(BrselApp.settingsicon),
+                onTap: () {}),
+            SizedBox(
+              height: 15,
+            ),
+            MyMenuListItem(
+                title: 'الدعم والاستعادة',
+                icon: Icon(
+                  Icons.info_outline,
+                  size: 22,
+                ),
+                onTap: () {}),
+            SizedBox(
+              height: 15,
+            ),
+            MyMenuListItem(
+                title: 'تسجيل الخروج',
+                icon: Icon(BrselApp.logouticon),
+                onTap: () {}),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  InkWell MyMenuListItem({String? title, VoidCallback? onTap, Widget? icon}) {
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Row(
+              children: [
+                icon!,
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  title!,
+                  style: MyCustomTextStyle.myH2,
+                ),
+              ],
+            ),
           ),
         ],
       ),

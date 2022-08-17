@@ -5,14 +5,21 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class MyHomeCustomAppBar extends StatelessWidget {
-  @override
   // final String title;
   // final Widget? leading;
-  // final VoidCallback? onPressed;
+  final VoidCallback? leadingOnPressed;
+  final VoidCallback? action1OnPressed;
+  final VoidCallback? action2OnPressed;
   // const MyHomeCustomAppBar(
   //     {Key? key, this.onPressed, required this.title, this.leading})
   //     : super(key: key);
-  const MyHomeCustomAppBar({Key? key}) : super(key: key);
+  @override
+  const MyHomeCustomAppBar(
+      {Key? key,
+      this.leadingOnPressed,
+      this.action1OnPressed,
+      this.action2OnPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,8 @@ class MyHomeCustomAppBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyIconButton(
-                      imagePath: 'assets/images/Menu Icon.png', onPress: () {}),
+                      imagePath: 'assets/images/Menu Icon.png',
+                      onPress: leadingOnPressed),
                   Container(
                     height: getProportionalScreenHeight(42),
                     width: getProportionalScreenWidth(140),
@@ -85,7 +93,8 @@ class MyHomeCustomAppBar extends StatelessWidget {
                     ),
                   ),
                   MyIconButton(
-                      imagePath: 'assets/images/Cart Icon.png', onPress: () {}),
+                      imagePath: 'assets/images/Cart Icon.png',
+                      onPress: action1OnPressed),
                 ],
               ),
               SizedBox(
@@ -107,7 +116,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
                   ),
                   MyIconButton(
                       imagePath: 'assets/images/Filter Icon.png',
-                      onPress: () {}),
+                      onPress: action2OnPressed),
                 ],
               ),
               SizedBox(
