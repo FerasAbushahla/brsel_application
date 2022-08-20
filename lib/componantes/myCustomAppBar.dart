@@ -108,6 +108,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
                     child: Container(
                       height: 42,
                       child: TextField(
+                        style: MyCustomTextStyle.myH1TextStyle,
                         decoration: searchInputDecoration(
                           hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
                           prefix: Icon(

@@ -399,6 +399,7 @@ class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ZoomDrawer(
+      borderRadius: 21,
       controller: z,
       style: DrawerStyle.defaultStyle,
       angle: 0,

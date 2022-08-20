@@ -25,7 +25,9 @@ const myTextGreyColor = Color(0xFF9E9E9E);
 const myDarkGreyColor = Color(0xFF595959);
 const myBorderGreyColor = Color(0xFFE8E8E8);
 const myGreyColor = Color(0xFFA1A1A1);
+const mySecGreyColor = Color(0xFF8F92A1);
 const myYellowColor = Color(0xFFFFDE0A);
+const mySecondaryColor = Color(0xFF275D89);
 
 class BrselApp {
   BrselApp._();
@@ -126,10 +128,20 @@ class MyCustomTextStyle {
     color: myBlackColor,
     fontWeight: FontWeight.w300,
   );
-  static const TextStyle myHintTextStyle = TextStyle(
+  static const TextStyle mySearchHintTextStyle = TextStyle(
     fontSize: 14,
     color: myTextGreyColor,
     fontWeight: FontWeight.w400,
+  );
+  static TextStyle myHintTextStyle = TextStyle(
+    fontSize: 12,
+    color: myTextGreyColor,
+    fontWeight: FontWeight.w400,
+  );
+  static const TextStyle myTextFieldTitletextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: mySecGreyColor,
   );
   static const TextStyle myGreenTextStyle = TextStyle(
     fontSize: 9,
@@ -155,6 +167,21 @@ class MyCustomTextStyle {
     fontSize: 11,
     color: myBlackSecondColor,
     fontWeight: FontWeight.w300,
+  );
+  static const TextStyle myLoginForgetPasswordTextStyle = TextStyle(
+    fontSize: 11,
+    color: myBlackColor,
+    fontWeight: FontWeight.w300,
+  );
+  static const TextStyle myButtonTextStyle = TextStyle(
+    fontSize: 13,
+    color: Colors.white,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle myTextButtonTextStyle = TextStyle(
+    fontSize: 13,
+    color: myBlackColor,
+    fontWeight: FontWeight.w500,
   );
 }
 
@@ -193,20 +220,20 @@ InputDecoration myInputDecoration(
     hintStyle: MyCustomTextStyle.myHintTextStyle,
     hintText: hint,
     suffixIcon: suffix,
-    prefixIcon: Container(height: 24, child: prefix),
+    prefixIcon: prefix,
     contentPadding: EdgeInsets.symmetric(horizontal: 11, vertical: 0),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: BorderSide(
         width: 1.0,
-        color: myBorderGreyColor,
+        color: myBackgroundFillingColor,
       ),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: BorderSide(
         width: 1.0,
-        color: myBorderGreyColor,
+        color: myBackgroundFillingColor,
       ),
     ),
     // disabledBorder: OutlineInputBorder(

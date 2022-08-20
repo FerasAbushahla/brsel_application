@@ -1,19 +1,19 @@
-import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+import '../componantes/myButton.dart';
+
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
-  bool rememberMe = false;
-
+class _RegisterState extends State<Register> {
+  bool agree = false;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -87,20 +87,42 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'تكرار كلمة المرور',
+                                style:
+                                    MyCustomTextStyle.myTextFieldTitletextStyle,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              TextFormField(
+                                style: MyCustomTextStyle.myH1TextStyle,
+                                decoration: myInputDecoration(
+                                  hint: 'أدخل كلمة المرور',
+                                  suffix: Icon(
+                                    BrselApp.checkicon,
+                                    color: myPrimaryColor,
+                                    size: 13,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
                                 height: 15,
                               ),
                               Row(
-                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
                                     height: 20,
                                     width: 20,
                                     child: Checkbox(
-                                      value: rememberMe,
+                                      value: agree,
                                       onChanged: (val) {
                                         setState(() {
-                                          rememberMe = val!;
-                                          print(rememberMe);
+                                          agree = val!;
+                                          print(agree);
                                         });
                                       },
                                     ),
@@ -108,22 +130,27 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     width: 4,
                                   ),
-                                  Text(
-                                    'تذكرني',
-                                    style: MyCustomTextStyle.myH1TextStyle,
-                                  ),
-                                  Spacer(),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        padding: EdgeInsets.zero),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'نسيت كلمة السر؟',
-                                      style: MyCustomTextStyle
-                                          .myLoginForgetPasswordTextStyle,
-                                    ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'من خلال إنشاء حساب ، فإنك توافق على',
+                                        style: MyCustomTextStyle.myH1TextStyle,
+                                      ),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
+                                            padding: EdgeInsets.zero),
+                                        onPressed: () {},
+                                        child: Text(
+                                          'الأحكام والشروط ',
+                                          style: MyCustomTextStyle
+                                              .myTextButtonTextStyle,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -131,7 +158,7 @@ class _LoginState extends State<Login> {
                                 height: 40,
                               ),
                               MyButton(
-                                title: 'تسجيل الدخول',
+                                title: 'انشاء حساب',
                                 onPressed: () {},
                               ),
                             ],
@@ -141,7 +168,7 @@ class _LoginState extends State<Login> {
                           height: 20,
                         ),
                         Text(
-                          'ليس لديك حساب ؟',
+                          'لديك حساب مسجل ؟',
                           style: MyCustomTextStyle.myTextFieldTitletextStyle,
                         ),
                         TextButton(
@@ -150,7 +177,7 @@ class _LoginState extends State<Login> {
                               padding: EdgeInsets.zero),
                           onPressed: () {},
                           child: Text(
-                            'أنشئ حساب الان',
+                            'سجل الدخول',
                             style: MyCustomTextStyle.myTextButtonTextStyle,
                           ),
                         ),

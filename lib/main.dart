@@ -1,4 +1,6 @@
 import 'package:brsel_application/screens/home.dart';
+import 'package:brsel_application/screens/login.dart';
+import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: wraper(),
+      home: Register(),
     );
   }
 }

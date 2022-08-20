@@ -7,14 +7,14 @@ import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 
-class wraper extends StatefulWidget {
-  const wraper({Key? key}) : super(key: key);
+class Wraper extends StatefulWidget {
+  const Wraper({Key? key}) : super(key: key);
 
   @override
-  State<wraper> createState() => _wraperState();
+  State<Wraper> createState() => _WraperState();
 }
 
-class _wraperState extends State<wraper> {
+class _WraperState extends State<Wraper> {
   int currentPage = 0;
   final List<Widget> Screens = [
     HomeZoomDrawer(),
