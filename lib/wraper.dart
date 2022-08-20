@@ -6,8 +6,6 @@ import 'package:brsel_application/screens/restaurants.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class wraper extends StatefulWidget {
   const wraper({Key? key}) : super(key: key);

@@ -161,6 +161,33 @@ class MyCustomTextStyle {
 InputDecoration searchInputDecoration(
     {Widget? prefix, String? hint, Widget? suffix}) {
   return InputDecoration(
+    fillColor: myBackgroundColor,
+    filled: true,
+    hintStyle: MyCustomTextStyle.myHintTextStyle,
+    hintText: hint,
+    suffixIcon: suffix,
+    prefixIcon: Container(child: prefix),
+    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: BorderSide(
+        width: 1.0,
+        color: myBorderGreyColor,
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: BorderSide(
+        width: 1.0,
+        color: myBorderGreyColor,
+      ),
+    ),
+  );
+}
+
+InputDecoration myInputDecoration(
+    {Widget? prefix, String? hint, Widget? suffix}) {
+  return InputDecoration(
     fillColor: myBackgroundFillingColor,
     filled: true,
     hintStyle: MyCustomTextStyle.myHintTextStyle,

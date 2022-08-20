@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-// import 'package:navigation_drawer_animation/model/menu_item.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final drawerController = ZoomDrawerController();
+  // final drawerController = ZoomDrawerController();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -28,6 +27,7 @@ class _HomeState extends State<Home> {
             MyHomeCustomAppBar(
               leadingOnPressed: () {
                 ZoomDrawer.of(context)!.toggle();
+                // z.toggle!();
               },
             ),
             Expanded(
@@ -255,7 +255,7 @@ class _HomeState extends State<Home> {
                                       height: 5,
                                     ),
                                     Text(
-                                      'مطبخ شرقي.مشاوي شرقة.مطبخ شرقي.مشاوي شرقة.',
+                                      'مطبخ شرقي.مشاوي شرقة.مطبخ شرقي.مشاوي شرقية.',
                                       style:
                                           MyCustomTextStyle.myDetailsTextStyle,
                                     ),

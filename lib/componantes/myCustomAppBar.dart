@@ -98,16 +98,24 @@ class MyHomeCustomAppBar extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 18,
+                height: 21,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: TextField(
-                      decoration: searchInputDecoration(
-                        hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
-                        prefix: Icon(Icons.search),
+                    child: Container(
+                      height: 42,
+                      child: TextField(
+                        decoration: searchInputDecoration(
+                          hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
+                          prefix: Icon(
+                            BrselApp.searchicon,
+                            size: 17,
+                            color: myPrimaryColor,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -122,20 +130,6 @@ class MyHomeCustomAppBar extends StatelessWidget {
               SizedBox(
                 height: 9,
               ),
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: [
-              //     Container(
-              //       width: SizeConfig.screenWidth,
-              //       child: TextField(
-              //         decoration: searchInputDecoration(
-              //           hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
-              //           prefix: Icon(Icons.search),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
