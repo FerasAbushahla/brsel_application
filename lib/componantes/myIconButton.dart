@@ -1,11 +1,12 @@
 import 'package:brsel_application/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MyIconButton extends StatelessWidget {
   final VoidCallback? onPress;
-  final String? imagePath;
+  final Widget? iconWidget;
 
-  const MyIconButton({Key? key, this.onPress, this.imagePath})
+  const MyIconButton({Key? key, this.onPress, this.iconWidget})
       : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class MyIconButton extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Image.asset(imagePath!),
+          child: iconWidget,
         ),
       ),
     );

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.354" height="23.354" viewBox="0 0 22.354 23.354">
+  <g id="cart" transform="translate(-0.646 -0.646)">
+    <path id="Path_74356" data-name="Path 74356" d="M4,4H22L19,14H4" fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1"/>
+    <circle id="Ellipse_3323" data-name="Ellipse 3323" cx="2" cy="2" r="2" transform="translate(2 20)" fill="#212121"/>
+    <circle id="Ellipse_3324" data-name="Ellipse 3324" cx="2" cy="2" r="2" transform="translate(18 20)" fill="#212121"/>
+    <path id="Path_74357" data-name="Path 74357" d="M1,1,4,4V14L2,18H23" fill="none" stroke="#212121" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
