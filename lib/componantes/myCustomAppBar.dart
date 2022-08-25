@@ -1,3 +1,4 @@
+import 'package:brsel_application/constants.dart';
 import 'package:flutter/material.dart';
 
 class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,6 +12,8 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: myBackgroundColor,
+      elevation: 0,
       leading: leading,
     );
   }

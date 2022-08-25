@@ -1,14 +1,20 @@
 import 'package:brsel_application/screens/home.dart';
 import 'package:brsel_application/screens/login.dart';
+import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'constants.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +39,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Wraper(),
+      home: PersonalInfo(),
     );
   }
 }

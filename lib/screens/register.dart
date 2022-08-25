@@ -13,6 +13,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordRetypeController = TextEditingController();
   bool agree = false;
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,7 @@ class _RegisterState extends State<Register> {
                     child: Column(
                       children: [
                         Form(
+                          key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -54,6 +59,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                controller: emailController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل البريد الإلكتروني',
@@ -76,6 +82,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                controller: passwordController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل كلمة المرور',
@@ -98,6 +105,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                controller: passwordRetypeController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل كلمة المرور',

@@ -39,6 +39,8 @@ class MyHomeCustomAppBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyIconButton(
+                      BackgroundColor: myBackgroundFillingColor,
+                      borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/MenuIcon.svg'),
                       onPress: leadingOnPressed),
@@ -95,6 +97,8 @@ class MyHomeCustomAppBar extends StatelessWidget {
                     ),
                   ),
                   MyIconButton(
+                      BackgroundColor: myBackgroundFillingColor,
+                      borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/CartIcon.svg'),
                       onPress: action1OnPressed),
@@ -127,6 +131,8 @@ class MyHomeCustomAppBar extends StatelessWidget {
                     width: 3,
                   ),
                   MyIconButton(
+                      BackgroundColor: myBackgroundFillingColor,
+                      borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/FilterIcon.svg'),
                       onPress: action2OnPressed),
