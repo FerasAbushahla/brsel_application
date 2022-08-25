@@ -30,10 +30,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
               height: 11,
             ),
             MyIconButton(
+              onPress: () {
+                Navigator.pop(context);
+              },
               borderRadius: 12,
               BackgroundColor: Colors.white,
-              iconWidget: FittedBox(
-                fit: BoxFit.scaleDown,
+              iconWidget: Padding(
+                padding: EdgeInsets.all(5),
+                // fit: BoxFit.scaleDown,
                 child: SvgPicture.asset(
                   'assets/images/ArrowBack Icon.svg',
                   height: 10,
@@ -51,7 +55,19 @@ class _PersonalInfoState extends State<PersonalInfo> {
               SizedBox(
                 height: 30,
               ),
-              SvgPicture.asset('assets/images/Logo.svg', height: 82),
+              Column(
+                children: [
+                  Text(
+                    'المعلومات الشخصية',
+                    style: MyCustomTextStyle.myTitletextStyle,
+                  ),
+                  SizedBox(
+                    height: 13,
+                  ),
+                  SvgPicture.asset('assets/images/PersonalInfoProgress1.svg',
+                      height: getProportionalScreenHeight(24)),
+                ],
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -72,7 +88,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Text(
-                                'البريد الالكتروني',
+                                'الاسم',
                                 style:
                                     MyCustomTextStyle.myTextFieldTitletextStyle,
                               ),
@@ -83,7 +99,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 controller: emailController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
-                                  hint: 'أدخل البريد الإلكتروني',
+                                  hint: 'أدخل الاسم',
                                   suffix: Icon(
                                     BrselApp.checkicon,
                                     color: myPrimaryColor,
@@ -95,7 +111,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 10,
                               ),
                               Text(
-                                'كلمة المرور',
+                                'اسم العائلة',
                                 style:
                                     MyCustomTextStyle.myTextFieldTitletextStyle,
                               ),
@@ -106,7 +122,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 controller: passwordController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
-                                  hint: 'أدخل كلمة المرور',
+                                  hint: 'أدخل اسم العائلة',
                                   suffix: Icon(
                                     BrselApp.checkicon,
                                     color: myPrimaryColor,
@@ -118,7 +134,57 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 10,
                               ),
                               Text(
-                                'تكرار كلمة المرور',
+                                'رقم الهاتف',
+                                style:
+                                    MyCustomTextStyle.myTextFieldTitletextStyle,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              TextFormField(
+                                controller: passwordRetypeController,
+                                style: MyCustomTextStyle.myH1TextStyle,
+                                keyboardType: TextInputType.phone,
+                                decoration: myInputDecoration(
+                                  hint: 'أدخل رقم الهاتف',
+                                  prefix: SizedBox(
+                                    height: 30,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                          '+973',
+                                          style: MyCustomTextStyle
+                                              .myTextFieldTitletextStyle,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        VerticalDivider(
+                                          width: 0,
+                                          thickness: 1,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  suffix: Icon(
+                                    BrselApp.checkicon,
+                                    color: myPrimaryColor,
+                                    size: 13,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'الجنس',
                                 style:
                                     MyCustomTextStyle.myTextFieldTitletextStyle,
                               ),
@@ -129,7 +195,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 controller: passwordRetypeController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
-                                  hint: 'أدخل كلمة المرور',
+                                  hint: 'أدخل الجنس',
                                   suffix: Icon(
                                     BrselApp.checkicon,
                                     color: myPrimaryColor,
@@ -138,33 +204,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 ),
                               ),
                               SizedBox(
-                                height: 15,
-                              ),
-                              SizedBox(
-                                height: 40,
+                                height: 25,
                               ),
                               MyButton(
-                                title: 'انشاء حساب',
+                                title: 'حفظ ومتابعة',
                                 onPressed: () {},
                               ),
                             ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'لديك حساب مسجل ؟',
-                          style: MyCustomTextStyle.myTextFieldTitletextStyle,
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: EdgeInsets.zero),
-                          onPressed: () {},
-                          child: Text(
-                            'سجل الدخول',
-                            style: MyCustomTextStyle.myTextButtonTextStyle,
                           ),
                         ),
                       ],

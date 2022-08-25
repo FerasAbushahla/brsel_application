@@ -28,6 +28,7 @@ const myGreyColor = Color(0xFFA1A1A1);
 const mySecGreyColor = Color(0xFF8F92A1);
 const myYellowColor = Color(0xFFFFDE0A);
 const mySecondaryColor = Color(0xFF275D89);
+const myDarkBlueColor = Color(0xFF3E4958);
 
 class BrselApp {
   BrselApp._();
@@ -142,6 +143,11 @@ class MyCustomTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: mySecGreyColor,
+  );
+  static const TextStyle myTitletextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: myDarkBlueColor,
   );
   static const TextStyle myGreenTextStyle = TextStyle(
     fontSize: 9,
