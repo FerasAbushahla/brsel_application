@@ -40,6 +40,7 @@ dependencies:
   flutter_zoom_drawer: ^3.0.3
   http: ^0.13.5
   get: ^4.6.5
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
