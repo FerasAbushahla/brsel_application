@@ -1,4 +1,5 @@
 import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
+import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,13 @@ class _HomeState extends State<Home> {
           mainAxisSize: MainAxisSize.max,
           children: [
             MyHomeCustomAppBar(
-              leadingOnPressed: () {
-                ZoomDrawer.of(context)!.toggle();
-                // z.toggle!();
-              },
+              leading: MyIconButton(
+                  BackgroundColor: myBackgroundFillingColor,
+                  borderRadius: 6,
+                  iconWidget: SvgPicture.asset('assets/images/MenuIcon.svg'),
+                  onPress: () {
+                    ZoomDrawer.of(context)!.toggle();
+                  }),
             ),
             Expanded(
               child: SingleChildScrollView(

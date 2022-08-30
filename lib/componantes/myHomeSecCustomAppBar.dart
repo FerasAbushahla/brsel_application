@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../constants.dart';
 
-class MyHomeCustomAppBar extends StatelessWidget {
+class MyHomeSecCustomAppBar extends StatelessWidget {
   // final String title;
   // final Widget? leading;
   final VoidCallback? leadingOnPressed;
@@ -16,7 +16,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
   //     {Key? key, this.onPressed, required this.title, this.leading})
   //     : super(key: key);
   @override
-  const MyHomeCustomAppBar({
+  const MyHomeSecCustomAppBar({
     Key? key,
     this.leadingOnPressed,
     this.action1OnPressed,
@@ -41,57 +41,9 @@ class MyHomeCustomAppBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   leading!,
-                  Container(
-                    height: getProportionalScreenHeight(42),
-                    width: getProportionalScreenWidth(140),
-                    decoration: BoxDecoration(
-                      color: myBackgroundFillingColor,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: myBorderGreyColor),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                size: 14,
-                                color: myPrimaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'منزل',
-                                style: MyCustomTextStyle.myH1TextStyle,
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 14,
-                                color: myPrimaryColor,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'مسقط ,عمان,1988',
-                                style:
-                                    MyCustomTextStyle.myH1withOpacityTextStyle,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                  Text(
+                    'المطاعم',
+                    style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
                   MyIconButton(
                       BackgroundColor: myBackgroundFillingColor,

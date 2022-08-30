@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
@@ -15,10 +16,20 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 5), () async {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      print(preferences.get('token'));
+    });
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final passwordRetypeController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final sexController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -37,10 +48,25 @@ class _PersonalInfoState extends State<PersonalInfo> {
               BackgroundColor: Colors.white,
               iconWidget: Padding(
                 padding: EdgeInsets.all(5),
-                // fit: BoxFit.scaleDown,
                 child: SvgPicture.asset(
                   'assets/images/ArrowBack Icon.svg',
-                  height: 10,
+                ),
+              ),
+            ),
+            MyIconButton(
+              onPress: () {
+                Navigator.pop(context);
+              },
+              borderRadius: 12,
+              BackgroundColor: Colors.white,
+              iconWidget: Padding(
+                padding: EdgeInsets.all(5),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: SvgPicture.asset(
+                    'assets/images/ArrowBack Icon.svg',
+                    height: 10,
+                  ),
                 ),
               ),
             ),
@@ -96,7 +122,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
-                                controller: emailController,
+                                controller: firstNameController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل الاسم',
@@ -119,7 +145,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
-                                controller: passwordController,
+                                controller: lastNameController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل اسم العائلة',
@@ -142,7 +168,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
-                                controller: passwordRetypeController,
+                                controller: phoneController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 keyboardType: TextInputType.phone,
                                 decoration: myInputDecoration(
@@ -192,7 +218,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
-                                controller: passwordRetypeController,
+                                controller: sexController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل الجنس',

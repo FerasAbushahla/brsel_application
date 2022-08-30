@@ -92,7 +92,7 @@ class _WraperState extends State<Wraper> {
                           height: 4,
                         ),
                         Text(
-                          'Home',
+                          'الرئيسية',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -124,7 +124,7 @@ class _WraperState extends State<Wraper> {
                           height: 4,
                         ),
                         Text(
-                          'Orders',
+                          'طلباتي',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -161,7 +161,7 @@ class _WraperState extends State<Wraper> {
                           height: 4,
                         ),
                         Text(
-                          'Notifications',
+                          'المطاعم',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -193,7 +193,7 @@ class _WraperState extends State<Wraper> {
                           height: 4,
                         ),
                         Text(
-                          'Profile',
+                          'اعدادات',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,

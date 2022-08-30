@@ -189,6 +189,11 @@ class MyCustomTextStyle {
     color: myBlackColor,
     fontWeight: FontWeight.w500,
   );
+  static const TextStyle myAppBarTitleTextStyle = TextStyle(
+    fontSize: 13,
+    color: myBlackColor,
+    fontWeight: FontWeight.w700,
+  );
 }
 
 InputDecoration searchInputDecoration(
@@ -332,5 +337,25 @@ const mealsBurgerList = [
   {
     'imagePath': 'assets/images/Burger.jpg',
     'title': 'برجر',
+  },
+];
+const RestaurantesCategoriesList = [
+  {
+    'title': 'مضاف حديثا',
+  },
+  {
+    'title': 'برجر',
+  },
+  {
+    'title': 'مشروبات',
+  },
+  {
+    'title': 'دجاج',
+  },
+  {
+    'title': 'معجنات',
+  },
+  {
+    'title': 'مشروبات',
   },
 ];

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Register(),
+      home: Wraper(),
     );
   }
 }
