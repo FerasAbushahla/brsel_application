@@ -2,6 +2,9 @@ class User {
   String? email;
   String? created_at;
   int? id;
+  // String? email = null;
+  // String? created_at = null;
+  // int? id = null;
   User({
     this.email,
     this.created_at,

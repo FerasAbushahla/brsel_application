@@ -1,9 +1,12 @@
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/controllers/userController.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -21,15 +24,23 @@ class _PersonalInfoState extends State<PersonalInfo> {
     Future.delayed(const Duration(milliseconds: 5), () async {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       print(preferences.get('token'));
+      userBox = Hive.box('user');
+      var myUser = await userBox.getAt(0);
+      print(myUser);
     });
     super.initState();
   }
+
+  UserController userController = Get.put(UserController());
+
+  late Box userBox;
 
   final _formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final phoneController = TextEditingController();
   final sexController = TextEditingController();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -50,23 +61,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 padding: EdgeInsets.all(5),
                 child: SvgPicture.asset(
                   'assets/images/ArrowBack Icon.svg',
-                ),
-              ),
-            ),
-            MyIconButton(
-              onPress: () {
-                Navigator.pop(context);
-              },
-              borderRadius: 12,
-              BackgroundColor: Colors.white,
-              iconWidget: Padding(
-                padding: EdgeInsets.all(5),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: SvgPicture.asset(
-                    'assets/images/ArrowBack Icon.svg',
-                    height: 10,
-                  ),
                 ),
               ),
             ),
@@ -233,6 +227,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 25,
                               ),
                               MyButton(
+                                loading: loading,
                                 title: 'حفظ ومتابعة',
                                 onPressed: () {},
                               ),

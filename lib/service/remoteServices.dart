@@ -41,14 +41,30 @@ class RemoteServices {
 
       RegisterModel registerResponse = RegisterModel.fromJson(mapOutput);
       return registerResponse;
-    } else {
+    } else if (response.statusCode == 401) {
       var jsonString = response.body;
       print(jsonString);
 
       var mapOutput = await json.decode(jsonString);
-      print(mapOutput);
+      // print(mapOutput);
+      // print(mapOutput['status']);
+      // print(mapOutput['errors']['email']);
+      // var status = mapOutput['status'];
+      // var message = mapOutput['errors']['email'].toString();
+      RegisterModel registerResponse = RegisterModel.fromJson(mapOutput);
+      return registerResponse;
+      // return registerResponse.status = status;
+      // return RegisterModel(status: status, message: message);
       // throw Exception();
-      throw Exception('Error occured in registering these credntials');
+      // throw Exception('Error occured in registering these credntials');
+    } else {
+      var jsonString = response.body;
+      print(jsonString);
+      var mapOutput = await json.decode(jsonString);
+      RegisterModel registerResponse = RegisterModel.fromJson(mapOutput);
+      return registerResponse;
     }
   }
+
+  // static Future<Logout> logout({}){}
 }

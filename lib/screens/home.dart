@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -511,7 +512,48 @@ class DrawerMenu extends StatelessWidget {
             MyMenuListItem(
                 title: 'تسجيل الخروج',
                 icon: Icon(BrselApp.logouticon),
-                onTap: () {}),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text(
+                        'تسجيل الخروج, هل أنت متأكد؟',
+                        style:
+                            TextStyle(fontSize: getProportionalScreenWidth(16)),
+                      ),
+                      actions: [
+                        IconButton(
+                          onPressed: () async {
+                            // print('pppppppppppppppppppppppppppp');
+                            // SharedPreferences preferences =
+                            //     await SharedPreferences.getInstance();
+                            // if (true) {
+                            //   print('pppppppppppppppppppppppppppp');
+                            //   ApiResponse apiResponse =
+                            //       await RemoteServices.logOut(
+                            //           phone: preferences.getString('phone'),
+                            //           token: preferences.getString('token'));
+                            //   if (apiResponse.message == 'Unauthenticated') {
+                            //     preferences.remove('token');
+                            //     preferences.remove('email');
+                            //     preferences.remove('first_name');
+                            //     preferences.remove('last_name');
+                            //     Navigator.pushReplacement(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) => WelcomeFormFirst(),
+                            //         ));
+                            //   }
+                            // }
+                          },
+                          icon: Icon(
+                            Icons.logout,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                }),
             Spacer(),
             SvgPicture.asset('assets/images/Logo.svg'),
             SizedBox(

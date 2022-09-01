@@ -1,5 +1,6 @@
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +14,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool rememberMe = false;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +133,7 @@ class _LoginState extends State<Login> {
                                 height: 40,
                               ),
                               MyButton(
+                                loading: loading,
                                 title: 'تسجيل الدخول',
                                 onPressed: () {},
                               ),
@@ -148,7 +151,12 @@ class _LoginState extends State<Login> {
                           style: TextButton.styleFrom(
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               padding: EdgeInsets.zero),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => Register())));
+                          },
                           child: Text(
                             'أنشئ حساب الان',
                             style: MyCustomTextStyle.myTextButtonTextStyle,

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   final String title;
+  final bool? loading;
   final VoidCallback? onPressed;
   const MyButton({
     Key? key,
     required this.title,
+    this.loading,
     this.onPressed,
   }) : super(key: key);
 
@@ -14,10 +16,17 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(
-        title,
-        style: MyCustomTextStyle.myButtonTextStyle,
-      ),
+      child: loading == false
+          ? Text(
+              title,
+              style: MyCustomTextStyle.myButtonTextStyle,
+            )
+          : SizedBox(
+              height: 18,
+              width: 18,
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+              )),
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 14),
         elevation: 0,

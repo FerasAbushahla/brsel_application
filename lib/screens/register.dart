@@ -1,11 +1,15 @@
 import 'package:brsel_application/componantes/checkBoxFormField.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/userController.dart';
 import 'package:brsel_application/models/registerModel.dart';
+import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../componantes/myButton.dart';
@@ -26,6 +30,26 @@ class _RegisterState extends State<Register> {
     });
     super.initState();
   }
+
+  String? validateEmail(String? value) {
+    String pattern =
+        // r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        // r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
+        // r"{0,253}[a-zA-Z0-9])?)*$";
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = RegExp(pattern);
+    if (value == null || value.isEmpty) {
+      return 'أدخل البريد الإلكتروني';
+    } else if (!regex.hasMatch(value)) {
+      return 'أدخل بريد صحيح';
+    } else {
+      return null;
+    }
+  }
+
+  UserController userController = Get.put(UserController());
+
+  late Box userBox;
 
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
@@ -75,9 +99,7 @@ class _RegisterState extends State<Register> {
                               ),
                               TextFormField(
                                 // textDirection: TextDirection.ltr,
-                                validator: (val) => val!.isEmpty
-                                    ? 'أدخل البريد الإلكتروني'
-                                    : null,
+                                validator: (val) => validateEmail(val),
                                 controller: emailController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
@@ -231,8 +253,10 @@ class _RegisterState extends State<Register> {
                                 height: 40,
                               ),
                               MyButton(
+                                loading: loading,
                                 title: 'انشاء حساب',
                                 onPressed: () async {
+                                  FocusScope.of(context).unfocus();
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       loading = true;
@@ -241,22 +265,52 @@ class _RegisterState extends State<Register> {
                                         await RemoteServices.register(
                                             email: emailController.text,
                                             password: passwordController.text);
-                                    SharedPreferences sharedPreferences =
-                                        await SharedPreferences.getInstance();
-                                    sharedPreferences.setString(
-                                        'token', registerResponse.token!);
-                                    print('token');
-                                    print(registerResponse.token!);
+
                                     if (registerResponse.message ==
                                         'User Created Successfully') {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: ((context) =>
-                                              PersonalInfo()),
+                                      SharedPreferences sharedPreferences =
+                                          await SharedPreferences.getInstance();
+                                      sharedPreferences.setString(
+                                          'token', registerResponse.token!);
+                                      print('token');
+                                      print(registerResponse.token!);
+
+                                      userBox = Hive.box('user');
+                                      await userBox
+                                          .add(userController.user)
+                                          .then((value) => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      PersonalInfo()),
+                                                ),
+                                              ));
+                                    } else if (registerResponse
+                                            .errors!.email?[0] ==
+                                        'قيمة الحقل البريد الالكتروني مُستخدمة من قبل') {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              "البريد الالكتروني مستخدم من قبل"),
+                                        ),
+                                      );
+                                    } else {
+                                      // Get.snackbar(
+                                      //   'خطأ',
+                                      //   'خطأ في إنشاء الحساب, أعد المحاولة',
+                                      // );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              "خطأ في إنشاء الحساب, أعد المحاولة"),
                                         ),
                                       );
                                     }
+                                    setState(() {
+                                      loading = false;
+                                    });
                                   }
                                 },
                               ),
@@ -274,7 +328,12 @@ class _RegisterState extends State<Register> {
                           style: TextButton.styleFrom(
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               padding: EdgeInsets.zero),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()));
+                          },
                           child: Text(
                             'سجل الدخول',
                             style: MyCustomTextStyle.myTextButtonTextStyle,
