@@ -2,6 +2,7 @@ import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/controllers/userController.dart';
+import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,6 +32,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
     super.initState();
   }
 
+  String? validatePhoneNum(String? value) {
+    String pattern = r'^[0-9]*$';
+    RegExp regex = RegExp(pattern);
+    if (value == null || value.isEmpty) {
+      return 'أدخل رقم الهاتف';
+    } else if (!regex.hasMatch(value)) {
+      return 'أدخل رقم هاتف صحيح';
+    } else {
+      return null;
+    }
+  }
+
   UserController userController = Get.put(UserController());
 
   late Box userBox;
@@ -41,6 +54,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final phoneController = TextEditingController();
   final sexController = TextEditingController();
   bool loading = false;
+  String? mySexValue;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -116,6 +130,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
+                                validator: (val) =>
+                                    val!.isEmpty ? 'أدخل الاسم' : null,
                                 controller: firstNameController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
@@ -139,6 +155,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
+                                validator: (val) =>
+                                    val!.isEmpty ? 'أدخل اسم العائلة' : null,
                                 controller: lastNameController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
@@ -162,6 +180,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
+                                validator: (val) => validatePhoneNum(val),
+                                // validator: (val) =>
+                                //     val!.isEmpty ? 'أدخل رقم الهاتف' : null,
                                 controller: phoneController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 keyboardType: TextInputType.phone,
@@ -211,25 +232,130 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               SizedBox(
                                 height: 5,
                               ),
-                              TextFormField(
-                                controller: sexController,
-                                style: MyCustomTextStyle.myH1TextStyle,
-                                decoration: myInputDecoration(
-                                  hint: 'أدخل الجنس',
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
+                              DropdownButtonFormField(
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'أدخل الجنس';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: const InputDecoration(
+                                  fillColor: myBackgroundFillingColor,
+                                  filled: true,
+                                  hintText: '',
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(8.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      width: 1.0,
+                                      color: myBackgroundFillingColor,
+                                    ),
                                   ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(8.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      width: 1.0,
+                                      color: myBackgroundFillingColor,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 11, vertical: 0),
                                 ),
+                                isExpanded: true,
+                                value: mySexValue,
+                                hint: Text(
+                                  'أدخل الجنس',
+                                  style: MyCustomTextStyle.myHintTextStyle,
+                                ),
+                                onChanged: (value) => setState(
+                                    () => mySexValue = value.toString()),
+                                items: [
+                                  DropdownMenuItem(
+                                      child: Container(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 11),
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            child: Text('ذكر',
+                                                style: MyCustomTextStyle
+                                                    .myH1TextStyle),
+                                          ),
+                                        ),
+                                      ),
+                                      value: 'ذكر'),
+                                  DropdownMenuItem(
+                                      child: Container(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 11),
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            child: Text('أنثى',
+                                                style: MyCustomTextStyle
+                                                    .myH1TextStyle),
+                                          ),
+                                        ),
+                                      ),
+                                      value: 'أنثى'),
+                                ],
                               ),
+                              // TextFormField(
+                              //   controller: sexController,
+                              //   style: MyCustomTextStyle.myH1TextStyle,
+                              //   decoration: myInputDecoration(
+                              //     hint: 'أدخل الجنس',
+                              //     suffix: Icon(
+                              //       BrselApp.checkicon,
+                              //       color: myPrimaryColor,
+                              //       size: 13,
+                              //     ),
+                              //   ),
+                              // ),
                               SizedBox(
                                 height: 25,
                               ),
                               MyButton(
                                 loading: loading,
                                 title: 'حفظ ومتابعة',
-                                onPressed: () {},
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    SharedPreferences sharedPreferences =
+                                        await SharedPreferences.getInstance();
+                                    sharedPreferences.setString(
+                                        'firstName', firstNameController.text);
+                                    print('firstName');
+                                    print(firstNameController.text);
+                                    sharedPreferences.setString(
+                                        'lastName', lastNameController.text);
+                                    print('lastName');
+                                    print(lastNameController.text);
+                                    sharedPreferences.setString(
+                                        'phoneNumber', phoneController.text);
+                                    print('phoneNumber');
+                                    print(phoneController.text);
+                                    sharedPreferences.setString(
+                                        'sex', sexController.text);
+                                    print('sex');
+                                    print(sexController.text);
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: ((context) => PersonalImage()),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ],
                           ),

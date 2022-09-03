@@ -25,6 +25,7 @@ class _RestaurantsState extends State<Restaurants> {
           mainAxisSize: MainAxisSize.max,
           children: [
             MyHomeSecCustomAppBar(
+              title: 'المطاعم',
               leading: MyIconButton(
                 onPress: () {
                   Navigator.pop(context);

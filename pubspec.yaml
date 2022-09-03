@@ -42,6 +42,7 @@ dependencies:
   get: ^4.6.5
   shared_preferences: ^2.0.15
   hive_flutter: ^1.1.0
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

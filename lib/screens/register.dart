@@ -123,6 +123,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                obscureText: true,
                                 validator: (val) =>
                                     val!.isEmpty ? 'أدخل كلمة المرور' : null,
                                 controller: passwordController,
@@ -148,6 +149,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                obscureText: true,
                                 validator: (val) {
                                   if (val!.isEmpty) {
                                     return 'أدخل كلمة المرور';
@@ -292,7 +294,7 @@ class _RegisterState extends State<Register> {
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                              "البريد الالكتروني مستخدم من قبل"),
+                                              "البريد الالكتروني مستخدم من قبل, بإمكانك تسجيل الدخول"),
                                         ),
                                       );
                                     } else {

@@ -1,6 +1,7 @@
 import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -476,12 +477,21 @@ class DrawerMenu extends StatelessWidget {
               height: 44,
             ),
             MyMenuListItem(
-                title: 'الرئيسية', icon: Icon(Icons.home), onTap: () {}),
+                title: 'الرئيسية',
+                icon: Icon(Icons.home),
+                onTap: () {
+                  ZoomDrawer.of(context)!.toggle();
+                }),
             SizedBox(
               height: 15,
             ),
             MyMenuListItem(
-                title: 'طلباتي', icon: Icon(BrselApp.ordersicon), onTap: () {}),
+                title: 'طلباتي',
+                icon: Icon(BrselApp.ordersicon),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Meals()));
+                }),
             SizedBox(
               height: 15,
             ),

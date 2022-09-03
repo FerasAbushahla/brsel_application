@@ -12,6 +12,7 @@ class MyHomeSecCustomAppBar extends StatelessWidget {
   final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
   final Widget? leading;
+  final String? title;
   // const MyHomeCustomAppBar(
   //     {Key? key, this.onPressed, required this.title, this.leading})
   //     : super(key: key);
@@ -22,6 +23,7 @@ class MyHomeSecCustomAppBar extends StatelessWidget {
     this.action1OnPressed,
     this.action2OnPressed,
     this.leading,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -42,7 +44,7 @@ class MyHomeSecCustomAppBar extends StatelessWidget {
                 children: [
                   leading!,
                   Text(
-                    'المطاعم',
+                    title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
                   MyIconButton(

@@ -149,6 +149,16 @@ class MyCustomTextStyle {
     fontWeight: FontWeight.w700,
     color: myDarkBlueColor,
   );
+  static const TextStyle myBigtextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: myDarkBlueColor,
+  );
+  static const TextStyle myNormaltextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w300,
+    color: myDarkBlueColor,
+  );
   static const TextStyle myGreenTextStyle = TextStyle(
     fontSize: 9,
     color: myPrimaryColor,
