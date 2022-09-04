@@ -268,7 +268,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 isExpanded: true,
                                 value: mySexValue,
                                 hint: Text(
-                                  'أدخل الجنس',
+                                  'اختر الجنس',
                                   style: MyCustomTextStyle.myHintTextStyle,
                                 ),
                                 onChanged: (value) => setState(
@@ -342,9 +342,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                     print('phoneNumber');
                                     print(phoneController.text);
                                     sharedPreferences.setString(
-                                        'sex', sexController.text);
+                                        'sex', mySexValue.toString());
                                     print('sex');
-                                    print(sexController.text);
+                                    print(mySexValue);
                                     setState(() {
                                       loading = false;
                                     });
