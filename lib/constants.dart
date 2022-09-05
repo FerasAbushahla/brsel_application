@@ -144,6 +144,7 @@ class MyCustomTextStyle {
     fontWeight: FontWeight.w500,
     color: mySecGreyColor,
   );
+
   static const TextStyle myTitletextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w700,
@@ -153,6 +154,16 @@ class MyCustomTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: myDarkBlueColor,
+  );
+  static const TextStyle myCardTitletextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: myBlackColor,
+  );
+  static TextStyle myCardtextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: myBlackColor.withOpacity(0.5),
   );
   static const TextStyle myNormaltextStyle = TextStyle(
     fontSize: 14,

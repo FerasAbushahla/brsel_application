@@ -24,10 +24,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 5), () async {
       SharedPreferences preferences = await SharedPreferences.getInstance();
+      print(preferences.get('firstName'));
+      print(preferences.get('lastName'));
+      print(preferences.get('phoneNumber'));
+      print(preferences.get('sex'));
       print(preferences.get('token'));
-      userBox = Hive.box('user');
-      var myUser = await userBox.getAt(0);
-      print(myUser);
+      print(preferences.get('personalImage'));
+      // userBox = Hive.box('user');
+      // var myUser = await userBox.getAt(0);
+      // print(myUser);
     });
     super.initState();
   }

@@ -5,6 +5,7 @@
         android:label="brsel_application"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,5 +32,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBci-Qf9f5w-fEoqyXoWBl5ZkhSncZw12A"/>
     </application>
 </manifest>
