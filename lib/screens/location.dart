@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../componantes/myButton.dart';
+
 class Location extends StatefulWidget {
   const Location({Key? key}) : super(key: key);
 
@@ -31,6 +33,9 @@ class _LocationState extends State<Location> {
     });
     super.initState();
   }
+
+  bool loading = false;
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -93,110 +98,147 @@ class _LocationState extends State<Location> {
               SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 36),
-                child: SizedBox(
-                  height: 250,
-                  child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(37.773972, -122.431297), zoom: 12),
-                  ),
-                ),
+              Column(
+                children: [
+                  MyMap(loading: loading),
+                ],
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 36),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  height: 65,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: myPrimaryColor.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Center(
-                                  child: Icon(
-                                    size: 26,
-                                    Icons.location_on_outlined,
-                                    color: myPrimaryColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'الموقع',
-                                  style: MyCustomTextStyle.myCardTitletextStyle,
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  'مسقط ,عمان,1988',
-                                  style: MyCustomTextStyle.myCardtextStyle,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: ClipOval(
-                            child: Material(
-                              color: myPrimaryColor,
-                              child: InkWell(
-                                // splashColor: Colors.red, // Splash color
-                                onTap: () {
-                                  // setState(() {
-                                  //   image = null;
-                                  // });
-                                },
-                                child: SizedBox(
-                                  width: 28,
-                                  height: 28,
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class MyMap extends StatelessWidget {
+  const MyMap({
+    Key? key,
+    required this.loading,
+  }) : super(key: key);
+
+  final bool loading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: SizedBox(
+            height: 250,
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(37.773972, -122.431297), zoom: 12),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            height: 65,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: myPrimaryColor.withOpacity(0.3),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Center(
+                            child: Icon(
+                              size: 26,
+                              Icons.location_on_outlined,
+                              color: myPrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'الموقع',
+                            style: MyCustomTextStyle.myCardTitletextStyle,
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(
+                            'مسقط ,عمان,1988',
+                            style: MyCustomTextStyle.myCardtextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: ClipOval(
+                      child: Material(
+                        color: myPrimaryColor,
+                        child: InkWell(
+                          // splashColor: Colors.red, // Splash color
+                          onTap: () {
+                            // setState(() {
+                            //   image = null;
+                            // });
+                          },
+                          child: SizedBox(
+                            width: 28,
+                            height: 28,
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 45,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 36),
+          child: MyButton(
+            loading: loading,
+            title: 'حفظ ومتابعة',
+            onPressed: () async {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Location()));
+            },
+          ),
+        ),
+      ],
     );
   }
 }
