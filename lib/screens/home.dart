@@ -3,6 +3,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
@@ -48,45 +49,51 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       width: SizeConfig.screenWidth,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'العروض(130)',
-                                  style: MyCustomTextStyle.myH2,
-                                ),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    'تصفح الكل',
-                                    style: MyCustomTextStyle.myGreenTextStyle,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'العروض(130)',
+                                    style: MyCustomTextStyle.myH2,
                                   ),
-                                  style: TextButton.styleFrom(
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      padding: EdgeInsets.zero,
-                                      alignment: Alignment.centerLeft),
-                                ),
-                              ],
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      'تصفح الكل',
+                                      style: MyCustomTextStyle.myGreenTextStyle,
+                                    ),
+                                    style: TextButton.styleFrom(
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        padding: EdgeInsets.zero,
+                                        alignment: Alignment.centerLeft),
+                                  ),
+                                ],
+                              ),
                             ),
                             // SizedBox(
                             //   height: 5,
                             // ),
-                            Container(
-                              width: SizeConfig.screenWidth,
-                              height: 170,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Image.asset(
-                                'assets/images/Ad.jpg',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
+                            // Container(
+                            //   width: SizeConfig.screenWidth,
+                            //   height: 170,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(6),
+                            //   ),
+                            //   child: Image.asset(
+                            //     'assets/images/Ad.jpg',
+                            //     fit: BoxFit.fill,
+                            //   ),
+                            // ),
+                            MyADSlider(),
                           ],
                         ),
                       ),
@@ -597,6 +604,76 @@ class DrawerMenu extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class MyADSlider extends StatefulWidget {
+  const MyADSlider({Key? key}) : super(key: key);
+
+  @override
+  State<MyADSlider> createState() => _MyADSliderState();
+}
+
+class _MyADSliderState extends State<MyADSlider> {
+  int currentAd = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        CarouselSlider(
+          items: List.generate(
+            5,
+            (index) => Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Container(
+                  width: SizeConfig.screenWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Image.asset(
+                    'assets/images/Ad.jpg',
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          options: CarouselOptions(
+            onPageChanged: (index, reason) {
+              setState(() {
+                currentAd = index;
+              });
+            },
+            // autoPlay: true,
+            height: getProportionalScreenHeight(170),
+            initialPage: currentAd,
+            reverse: false,
+            enableInfiniteScroll: false,
+            viewportFraction: 1,
+            scrollDirection: Axis.horizontal,
+          ),
+        ),
+        Positioned(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(width: 1, color: Colors.white),
+            ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(7, 1, 7, 1),
+              child: Text(
+                "${currentAd + 1}/12",
+                style: TextStyle(fontSize: 12, color: Colors.white),
+              ),
+            ),
+          ),
+          bottom: 15,
+          right: 25,
+        )
+      ],
     );
   }
 }

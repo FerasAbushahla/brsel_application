@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
@@ -100,7 +101,63 @@ class _LocationState extends State<Location> {
               ),
               Column(
                 children: [
-                  MyMap(loading: loading),
+                  if (index == 0) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 36),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            index = 1;
+                          });
+                        },
+                        child: Container(
+                          width: SizeConfig.screenWidth,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 17),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    decoration: BoxDecoration(
+                                      color: myPrimaryColor.withOpacity(0.3),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: Icon(
+                                        size: 26,
+                                        Icons.location_on_outlined,
+                                        color: myPrimaryColor,
+                                      ),
+                                    )
+                                    // SvgPicture.asset(
+                                    //   'assets/images/Gallery.svg',
+                                    //   color: myPrimaryColor,
+                                    //   height: getProportionalScreenHeight(60),
+                                    // ),
+                                    ),
+                                SizedBox(
+                                  height: 9,
+                                ),
+                                Text(
+                                  'اعداد الموقع',
+                                  style: MyCustomTextStyle.myNormaltextStyle,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 11,
+                    ),
+                  ] else if (index == 1) ...[
+                    MyMap(loading: loading),
+                  ]
                 ],
               ),
             ],
@@ -111,13 +168,30 @@ class _LocationState extends State<Location> {
   }
 }
 
-class MyMap extends StatelessWidget {
+class MyMap extends StatefulWidget {
   const MyMap({
     Key? key,
     required this.loading,
   }) : super(key: key);
 
   final bool loading;
+
+  @override
+  State<MyMap> createState() => _MyMapState();
+}
+
+class _MyMapState extends State<MyMap> {
+  Completer<GoogleMapController> _controller = Completer();
+
+  static final Marker marker = Marker(
+    markerId: MarkerId('_kGooglePlex'),
+    infoWindow: InfoWindow(title: 'Google plex'),
+    icon: BitmapDescriptor.defaultMarker,
+    position: LatLng(37.773972, -122.431297),
+  );
+
+  static final CameraPosition _kGooglePlex =
+      CameraPosition(target: LatLng(37.773972, -122.431297), zoom: 12);
 
   @override
   Widget build(BuildContext context) {
@@ -129,8 +203,14 @@ class MyMap extends StatelessWidget {
           child: SizedBox(
             height: 250,
             child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(37.773972, -122.431297), zoom: 12),
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+              markers: {marker},
+              // initialCameraPosition: CameraPosition(
+              //     target: LatLng(37.773972, -122.431297), zoom: 12),
             ),
           ),
         ),
@@ -230,7 +310,7 @@ class MyMap extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: MyButton(
-            loading: loading,
+            loading: widget.loading,
             title: 'حفظ ومتابعة',
             onPressed: () async {
               Navigator.push(
