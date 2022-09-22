@@ -5,4 +5,5 @@ class ApiSettings {
   static const register = _apiUrl + 'auth/register';
   static const infoRegister = _apiUrl + 'auth/infoRegister';
   static const login = _apiUrl + 'auth/login';
+  static const home = _apiUrl + 'home';
 }

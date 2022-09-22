@@ -1,6 +1,9 @@
 import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/homeADsSliderController.dart';
+import 'package:brsel_application/controllers/homeRestaurantsController.dart';
+import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -18,6 +22,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  HomeADsSliderController homeADsSliderController =
+      Get.put(HomeADsSliderController());
+  HomeRestaurantsController homeRestaurantsController =
+      Get.put(HomeRestaurantsController());
   // final drawerController = ZoomDrawerController();
   @override
   Widget build(BuildContext context) {
@@ -93,7 +101,21 @@ class _HomeState extends State<Home> {
                             //     fit: BoxFit.fill,
                             //   ),
                             // ),
-                            MyADSlider(),
+                            Obx(() {
+                              if (HomeADsSliderController.isLoading.value) {
+                                return Container(
+                                  height: getProportionalScreenHeight(170),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              } else {
+                                return MyADSlider(
+                                  homeADsSliderController:
+                                      homeADsSliderController,
+                                );
+                              }
+                            }),
                           ],
                         ),
                       ),
@@ -127,22 +149,34 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 5,
                     ),
-                    SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                          AvailableRestList.length,
-                          (index) => Padding(
-                            padding: index == 0
-                                ? EdgeInsets.only(right: 20)
-                                : EdgeInsets.only(right: 10),
-                            child: availableRestautantsCard(),
+                    Obx((() {
+                      if (HomeRestaurantsController.isLoading.value) {
+                        return Container(
+                            width: 25,
+                            height: 76,
+                            child: CircularProgressIndicator());
+                      } else {
+                        return SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                              homeRestaurantsController
+                                  .homeResraurantsList.length,
+                              (index) => Padding(
+                                padding: index == 0
+                                    ? EdgeInsets.only(right: 20)
+                                    : EdgeInsets.only(right: 10),
+                                child: availableRestautantsCard(
+                                    homeRestaurantsController
+                                        .homeResraurantsList[index]),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+                        );
+                      }
+                    })),
                     SizedBox(
                       height: 10,
                     ),
@@ -331,7 +365,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Container availableRestautantsCard() {
+  Container availableRestautantsCard(HomeResturante homeResturante) {
     return Container(
       width: 76,
       child: Column(
@@ -342,11 +376,13 @@ class _HomeState extends State<Home> {
             height: 76,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
+              // image: NetworkImage(homeResturante.image),
             ),
             child: Image.asset(
               'assets/images/Restaurant img.jpg',
               fit: BoxFit.contain,
             ),
+            // child: NetworkImage(homeResturante.image.toString()),
           ),
           SizedBox(
             height: 5,
@@ -609,7 +645,11 @@ class DrawerMenu extends StatelessWidget {
 }
 
 class MyADSlider extends StatefulWidget {
-  const MyADSlider({Key? key}) : super(key: key);
+  final HomeADsSliderController? homeADsSliderController;
+  final HomeSlider? homeSlider;
+
+  const MyADSlider({Key? key, this.homeADsSliderController, this.homeSlider})
+      : super(key: key);
 
   @override
   State<MyADSlider> createState() => _MyADSliderState();
@@ -623,7 +663,7 @@ class _MyADSliderState extends State<MyADSlider> {
       children: [
         CarouselSlider(
           items: List.generate(
-            5,
+            widget.homeADsSliderController!.homeSliderList.length,
             (index) => Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: ClipRRect(
@@ -637,6 +677,9 @@ class _MyADSliderState extends State<MyADSlider> {
                     'assets/images/Ad.jpg',
                     fit: BoxFit.fill,
                   ),
+                  // child: NetworkImage(
+                  //   widget.homeSlider.attachments
+                  // ),
                 ),
               ),
             ),
@@ -665,7 +708,7 @@ class _MyADSliderState extends State<MyADSlider> {
             child: Padding(
               padding: EdgeInsets.fromLTRB(7, 1, 7, 1),
               child: Text(
-                "${currentAd + 1}/12",
+                "${currentAd + 1}/${widget.homeADsSliderController!.homeSliderList.length}",
                 style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),
