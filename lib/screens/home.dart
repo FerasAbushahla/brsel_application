@@ -3,6 +3,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/controllers/homeCategoriesController.dart';
+import 'package:brsel_application/controllers/homeMealsController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
@@ -30,6 +31,7 @@ class _HomeState extends State<Home> {
       Get.put(HomeADsSliderController());
   HomeCategoriesController homeCategoriesController =
       Get.put(HomeCategoriesController());
+  HomeMealsController homeMealsController = Get.put(HomeMealsController());
   // final drawerController = ZoomDrawerController();
   int curruntCategory = 1;
   @override
@@ -164,7 +166,7 @@ class _HomeState extends State<Home> {
                       if (HomeRestaurantsController.isLoading.value) {
                         return SizedBox(
                             // width: 25,
-                            height: 76,
+                            height: 95,
                             child: Center(child: CircularProgressIndicator()));
                       } else {
                         return SingleChildScrollView(
@@ -221,7 +223,7 @@ class _HomeState extends State<Home> {
                       if (HomeCategoriesController.isLoading.value) {
                         return SizedBox(
                             // width: 25,
-                            height: 76,
+                            height: 96,
                             child: Center(child: CircularProgressIndicator()));
                       } else {
                         return SingleChildScrollView(
@@ -248,134 +250,55 @@ class _HomeState extends State<Home> {
                       height: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 6,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: (1 / 1.18),
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10),
-                        itemBuilder: (context, index) => Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 1,
-                                  blurRadius: 1,
-                                  offset: Offset(0, 0),
-                                )
-                              ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                // width: getProportionalScreenWidth(163),
-                                height: 123,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Image.asset(
-                                  'assets/images/Burger.jpg',
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(10, 6, 10, 10),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'برجر',
-                                          style: MyCustomTextStyle.myH3,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              BrselApp.staricon,
-                                              size: 10,
-                                              color: myYellowColor,
-                                            ),
-                                            SizedBox(
-                                              width: 2,
-                                            ),
-                                            Text(
-                                              '4.0',
-                                              style: MyCustomTextStyle.myP1,
-                                            ),
-                                            Text(
-                                              '(100)',
-                                              style: MyCustomTextStyle.myP1,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      'مطبخ شرقي.مشاوي شرقة.مطبخ شرقي.مشاوي شرقية.',
-                                      style:
-                                          MyCustomTextStyle.myDetailsTextStyle,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          BrselApp.deliveryicon,
-                                          size: 10,
-                                        ),
-                                        Text(
-                                          '20-30د',
-                                          style: MyCustomTextStyle
-                                              .myDetailsSecTextStyle,
-                                        ),
-                                        Container(
-                                          width: 2,
-                                          height: 2,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: myBlackColor),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'الحدالأدنى.',
-                                          style: MyCustomTextStyle
-                                              .myDetailsSecTextStyle,
-                                        ),
-                                        Text(
-                                          '30',
-                                          style: MyCustomTextStyle
-                                              .myDetailsSecTextStyle,
-                                        ),
-                                        Text(
-                                          'ريال',
-                                          style: MyCustomTextStyle
-                                              .myDetailsSecTextStyle,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'الوجبات الرائجة',
+                            style: MyCustomTextStyle.myH2,
                           ),
-                        ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'مشاهدة الكل',
+                              style: MyCustomTextStyle.myGreenTextStyle,
+                            ),
+                            style: TextButton.styleFrom(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding: EdgeInsets.zero,
+                                alignment: Alignment.centerLeft),
+                          ),
+                        ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Obx((() {
+                        if (HomeMealsController.isLoading.value) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: homeMealsController.homeMealsList.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: (1 / 1.18),
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10),
+                            itemBuilder: (context, index) => homeMeals(
+                                homeMealsController.homeMealsList[index]),
+                          );
+                        }
+                      })),
+                    ),
+                    SizedBox(
+                      height: 15,
                     ),
                   ],
                 ),
@@ -383,6 +306,134 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Container homeMeals(HomeMeals homeMeals) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(0, 0),
+            )
+          ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          CachedNetworkImage(
+            imageUrl: homeMeals.attachments!.first.link ?? "",
+            imageBuilder: (context, imageProvider) => Container(
+              width: SizeConfig.screenWidth,
+              height: 123,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  image:
+                      DecorationImage(image: imageProvider, fit: BoxFit.fill)),
+            ),
+            placeholder: (context, url) => SizedBox(
+                height: 123,
+                child: Center(child: const CircularProgressIndicator())),
+            errorWidget: (context, url, error) => Container(
+              height: 123,
+              child: const Icon(
+                Icons.broken_image,
+                color: myGreyColor,
+                size: 30,
+              ),
+            ),
+          ),
+          // Image.asset(
+          //   'assets/images/Burger.jpg',
+          //   fit: BoxFit.fill,
+          // ),
+
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 6, 10, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      homeMeals.name!,
+                      style: MyCustomTextStyle.myH3,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          BrselApp.staricon,
+                          size: 10,
+                          color: myYellowColor,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          homeMeals.review!,
+                          style: MyCustomTextStyle.myP1,
+                        ),
+                        Text(
+                          '(100)',
+                          style: MyCustomTextStyle.myP1,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  homeMeals.description!,
+                  style: MyCustomTextStyle.myDetailsTextStyle,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      BrselApp.deliveryicon,
+                      size: 10,
+                    ),
+                    Text(
+                      '${homeMeals.deliveryTime}د',
+                      style: MyCustomTextStyle.myDetailsSecTextStyle,
+                    ),
+                    Container(
+                      width: 2,
+                      height: 2,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: myBlackColor),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'الحدالأدنى.',
+                      style: MyCustomTextStyle.myDetailsSecTextStyle,
+                    ),
+                    Text(
+                      homeMeals.price!,
+                      style: MyCustomTextStyle.myDetailsSecTextStyle,
+                    ),
+                    Text(
+                      'ريال',
+                      style: MyCustomTextStyle.myDetailsSecTextStyle,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -414,7 +465,8 @@ class _HomeState extends State<Home> {
                   // ),
                   ),
             ),
-            placeholder: (context, url) => const CircularProgressIndicator(),
+            placeholder: (context, url) =>
+                Center(child: const CircularProgressIndicator()),
             errorWidget: (context, url, error) => Container(
               height: 76,
               child: const Icon(
@@ -476,6 +528,9 @@ class _HomeState extends State<Home> {
             Text(
               'مطعم',
               style: MyCustomTextStyle.myH1withOpacityTextStyle,
+            ),
+            SizedBox(
+              height: 3,
             ),
           ],
         ),
@@ -790,6 +845,7 @@ class _MyADSliderState extends State<MyADSlider> {
         Positioned(
           child: Container(
             decoration: BoxDecoration(
+              color: myBlackColor.withOpacity(0.5),
               borderRadius: BorderRadius.circular(6),
               border: Border.all(width: 1, color: Colors.white),
             ),

@@ -20,7 +20,7 @@ class HomeModel {
 class HomeModelData {
   List<HomeSlider>? sliders;
   List<HomeResturante>? resturantes;
-  List<Meal>? meals;
+  List<HomeMeals>? meals;
   List<HomeCategories>? categories;
   HomeModelData({
     this.sliders,
@@ -34,7 +34,8 @@ class HomeModelData {
             json["sliders"].map((x) => HomeSlider.fromJson(x))),
         resturantes: List<HomeResturante>.from(
             json["resturantes"].map((x) => HomeResturante.fromJson(x))),
-        meals: List<Meal>.from(json["meals"].map((x) => Meal.fromJson(x))),
+        meals: List<HomeMeals>.from(
+            json["meals"].map((x) => HomeMeals.fromJson(x))),
         categories: List<HomeCategories>.from(
             json["categories"].map((x) => HomeCategories.fromJson(x))),
       );
@@ -66,7 +67,7 @@ class HomeCategories {
       };
 }
 
-class Meal {
+class HomeMeals {
   int? id;
   String? name;
   String? price;
@@ -79,7 +80,7 @@ class Meal {
   DateTime? createdAt;
   List<Extra>? extras;
   List<Attachment>? attachments;
-  Meal({
+  HomeMeals({
     this.id,
     this.name,
     this.price,
@@ -94,7 +95,7 @@ class Meal {
     this.attachments,
   });
 
-  factory Meal.fromJson(Map<String, dynamic> json) => Meal(
+  factory HomeMeals.fromJson(Map<String, dynamic> json) => HomeMeals(
         id: json["id"],
         name: json["name"],
         price: json["price"],
