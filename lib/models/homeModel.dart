@@ -21,7 +21,7 @@ class HomeModelData {
   List<HomeSlider>? sliders;
   List<HomeResturante>? resturantes;
   List<Meal>? meals;
-  List<Category>? categories;
+  List<HomeCategories>? categories;
   HomeModelData({
     this.sliders,
     this.resturantes,
@@ -35,8 +35,8 @@ class HomeModelData {
         resturantes: List<HomeResturante>.from(
             json["resturantes"].map((x) => HomeResturante.fromJson(x))),
         meals: List<Meal>.from(json["meals"].map((x) => Meal.fromJson(x))),
-        categories: List<Category>.from(
-            json["categories"].map((x) => Category.fromJson(x))),
+        categories: List<HomeCategories>.from(
+            json["categories"].map((x) => HomeCategories.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,15 +47,15 @@ class HomeModelData {
       };
 }
 
-class Category {
+class HomeCategories {
   int? id;
   String? name;
-  Category({
+  HomeCategories({
     this.id,
     this.name,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory HomeCategories.fromJson(Map<String, dynamic> json) => HomeCategories(
         id: json["id"],
         name: json["name"],
       );
@@ -217,6 +217,7 @@ class HomeResturante {
         active: json["active"],
         deliveryTime: json["delivery_time"],
         review: json["review"],
+        // image: json["image"],
         image: json["image"] == null ? null : json["image"],
         createdAt: DateTime.parse(json["created_at"]),
       );
@@ -242,13 +243,13 @@ class HomeSlider {
   String? name;
   String? orderIndex;
   dynamic? status;
-  dynamic? attachments;
+  dynamic? image;
   HomeSlider({
     this.id,
     this.name,
     this.orderIndex,
     this.status,
-    this.attachments,
+    this.image,
   });
 
   factory HomeSlider.fromJson(Map<String, dynamic> json) => HomeSlider(
@@ -256,7 +257,7 @@ class HomeSlider {
         name: json["name"],
         orderIndex: json["order_index"],
         status: json["status"],
-        attachments: json["attachments"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -264,7 +265,7 @@ class HomeSlider {
         "name": name,
         "order_index": orderIndex,
         "status": status,
-        "attachments": attachments,
+        "image": image,
       };
 }
 

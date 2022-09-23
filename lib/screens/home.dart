@@ -2,10 +2,12 @@ import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
+import 'package:brsel_application/controllers/homeCategoriesController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,11 +24,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  HomeADsSliderController homeADsSliderController =
-      Get.put(HomeADsSliderController());
   HomeRestaurantsController homeRestaurantsController =
       Get.put(HomeRestaurantsController());
+  HomeADsSliderController homeADsSliderController =
+      Get.put(HomeADsSliderController());
+  HomeCategoriesController homeCategoriesController =
+      Get.put(HomeCategoriesController());
   // final drawerController = ZoomDrawerController();
+  int curruntCategory = 1;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -103,17 +108,23 @@ class _HomeState extends State<Home> {
                             // ),
                             Obx(() {
                               if (HomeADsSliderController.isLoading.value) {
+                                print('HomeADsSliderController.isLoading');
                                 return Container(
                                   height: getProportionalScreenHeight(170),
                                   child: Center(
-                                    child: CircularProgressIndicator(),
+                                    child: SizedBox(
+                                        // height: 30,
+                                        // width: 30,
+                                        child: CircularProgressIndicator()),
                                   ),
                                 );
                               } else {
+                                print('HomeADsSliderController.doneLoading');
                                 return MyADSlider(
-                                  homeADsSliderController:
-                                      homeADsSliderController,
-                                );
+                                    // homeADsSliderController:
+                                    //     homeADsSliderController,
+
+                                    );
                               }
                             }),
                           ],
@@ -151,10 +162,10 @@ class _HomeState extends State<Home> {
                     ),
                     Obx((() {
                       if (HomeRestaurantsController.isLoading.value) {
-                        return Container(
-                            width: 25,
+                        return SizedBox(
+                            // width: 25,
                             height: 76,
-                            child: CircularProgressIndicator());
+                            child: Center(child: CircularProgressIndicator()));
                       } else {
                         return SingleChildScrollView(
                           physics: const BouncingScrollPhysics(
@@ -186,7 +197,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'وجبات رائجة',
+                            'الأصناف',
                             style: MyCustomTextStyle.myH2,
                           ),
                           TextButton(
@@ -206,22 +217,33 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 5,
                     ),
-                    SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                          AvailableRestList.length,
-                          (index) => Padding(
-                            padding: index == 0
-                                ? EdgeInsets.only(right: 20)
-                                : EdgeInsets.only(right: 10),
-                            child: featuredMealsCard(),
+                    Obx((() {
+                      if (HomeCategoriesController.isLoading.value) {
+                        return SizedBox(
+                            // width: 25,
+                            height: 76,
+                            child: Center(child: CircularProgressIndicator()));
+                      } else {
+                        return SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                              homeCategoriesController
+                                  .homeCategoriesList.length,
+                              (index) => Padding(
+                                padding: index == 0
+                                    ? EdgeInsets.only(right: 20)
+                                    : EdgeInsets.only(right: 10),
+                                child: CategoriesCard(homeCategoriesController
+                                    .homeCategoriesList[index]),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+                        );
+                      }
+                    })),
                     SizedBox(
                       height: 10,
                     ),
@@ -371,64 +393,92 @@ class _HomeState extends State<Home> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            height: 76,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              // image: NetworkImage(homeResturante.image),
+          CachedNetworkImage(
+            imageUrl: homeResturante.image ?? "",
+            // imageUrl: homeResturante.image ??
+            //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+            imageBuilder: (context, imageProvider) => Container(
+              width: SizeConfig.screenWidth,
+              height: 76,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  image: DecorationImage(image: imageProvider, fit: BoxFit.fill)
+                  // DecorationImage(
+                  //   fit: BoxFit.cover,
+                  //   // image: NetworkImage(homeResturante.image!),
+                  //   image: CachedNetworkImageProvider(
+                  //     homeResturante.image ??
+                  //         'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                  //     errorListener: () => const Icon(Icons.broken_image_outlined),
+                  //   ),
+                  // ),
+                  ),
             ),
-            child: Image.asset(
-              'assets/images/Restaurant img.jpg',
-              fit: BoxFit.contain,
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Container(
+              height: 76,
+              child: const Icon(
+                Icons.broken_image,
+                color: myGreyColor,
+                size: 30,
+              ),
             ),
-            // child: NetworkImage(homeResturante.image.toString()),
           ),
           SizedBox(
             height: 5,
           ),
           Text(
-            'كنتاكي',
+            homeResturante.name!,
             style: MyCustomTextStyle.myCardTitleBlackSecondTextStyle,
-          )
+          ),
         ],
       ),
     );
   }
 
-  Container featuredMealsCard() {
-    return Container(
-      width: 57,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/burger1.png',
-            fit: BoxFit.contain,
-            width: 50,
-            height: 45,
-          ),
-          SizedBox(
-            height: 1,
-          ),
-          Text(
-            'تاكو',
-            style: MyCustomTextStyle.myCardSecondTitleBlackSecondTextStyle,
-          ),
-          SizedBox(
-            height: 3,
-          ),
-          Text(
-            '(13)',
-            style: MyCustomTextStyle.myH1withOpacityTextStyle,
-          ),
-          Text(
-            'مطعم',
-            style: MyCustomTextStyle.myH1withOpacityTextStyle,
-          ),
-        ],
+  InkWell CategoriesCard(HomeCategories homeCategories) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          curruntCategory = homeCategories.id!;
+        });
+      },
+      child: Container(
+        width: 57,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: curruntCategory == homeCategories.id!
+                ? myPrimaryColor
+                : Colors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/burger1.png',
+              fit: BoxFit.contain,
+              width: 50,
+              height: 45,
+            ),
+            SizedBox(
+              height: 1,
+            ),
+            Text(
+              homeCategories.name!,
+              style: MyCustomTextStyle.myCardSecondTitleBlackSecondTextStyle,
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            Text(
+              '(13)',
+              style: MyCustomTextStyle.myH1withOpacityTextStyle,
+            ),
+            Text(
+              'مطعم',
+              style: MyCustomTextStyle.myH1withOpacityTextStyle,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -645,17 +695,21 @@ class DrawerMenu extends StatelessWidget {
 }
 
 class MyADSlider extends StatefulWidget {
-  final HomeADsSliderController? homeADsSliderController;
-  final HomeSlider? homeSlider;
+  // final HomeADsSliderController? homeADsSliderController;
+  // final HomeSlider? homeSlider;
 
-  const MyADSlider({Key? key, this.homeADsSliderController, this.homeSlider})
-      : super(key: key);
+  const MyADSlider({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MyADSlider> createState() => _MyADSliderState();
 }
 
 class _MyADSliderState extends State<MyADSlider> {
+  HomeADsSliderController homeADsSliderController =
+      Get.put(HomeADsSliderController());
+
   int currentAd = 0;
   @override
   Widget build(BuildContext context) {
@@ -663,24 +717,58 @@ class _MyADSliderState extends State<MyADSlider> {
       children: [
         CarouselSlider(
           items: List.generate(
-            widget.homeADsSliderController!.homeSliderList.length,
+            homeADsSliderController.homeSliderList.length,
             (index) => Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
-                child: Container(
-                  width: SizeConfig.screenWidth,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      homeADsSliderController.homeSliderList[index].image ?? "",
+                  // imageUrl: homeResturante.image ??
+                  //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: SizeConfig.screenWidth,
+                    height: 76,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.fill)
+                        // DecorationImage(
+                        //   fit: BoxFit.cover,
+                        //   // image: NetworkImage(homeResturante.image!),
+                        //   image: CachedNetworkImageProvider(
+                        //     homeResturante.image ??
+                        //         'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                        //     errorListener: () => const Icon(Icons.broken_image_outlined),
+                        //   ),
+                        // ),
+                        ),
                   ),
-                  child: Image.asset(
-                    'assets/images/Ad.jpg',
-                    fit: BoxFit.fill,
+                  placeholder: (context, url) =>
+                      Center(child: const CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Container(
+                    height: 76,
+                    child: const Icon(
+                      Icons.broken_image,
+                      color: myGreyColor,
+                      size: 30,
+                    ),
                   ),
-                  // child: NetworkImage(
-                  //   widget.homeSlider.attachments
-                  // ),
                 ),
+                //  Container(
+                //   width: SizeConfig.screenWidth,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(6),
+                //   ),
+                //   child: Image.asset(
+                //     'assets/images/Ad.jpg',
+                //     fit: BoxFit.fill,
+                //   ),
+                //   // child: NetworkImage(
+                //   //   widget.homeSlider.attachments
+                //   // ),
+                // ),
               ),
             ),
           ),
@@ -690,7 +778,7 @@ class _MyADSliderState extends State<MyADSlider> {
                 currentAd = index;
               });
             },
-            // autoPlay: true,
+            autoPlay: true,
             height: getProportionalScreenHeight(170),
             initialPage: currentAd,
             reverse: false,
@@ -708,7 +796,7 @@ class _MyADSliderState extends State<MyADSlider> {
             child: Padding(
               padding: EdgeInsets.fromLTRB(7, 1, 7, 1),
               child: Text(
-                "${currentAd + 1}/${widget.homeADsSliderController!.homeSliderList.length}",
+                "${currentAd + 1}/${homeADsSliderController.homeSliderList.length}",
                 style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),

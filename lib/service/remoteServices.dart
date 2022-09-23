@@ -87,10 +87,12 @@ class RemoteServices {
       // HomeSlider homeSlider = HomeSlider.fromJson(mapOutput);
       // print('true getHomeSlider homeSlider: $homeSlider');
 
-      print((mapOutput['data']['sliders'])
-          .map((e) => HomeSlider.fromJson(e))
-          .cast<HomeSlider>()
-          .toList());
+      print(mapOutput['data']['sliders']);
+
+      // print((mapOutput['data']['sliders'])
+      //     .map((e) => HomeSlider.fromJson(e))
+      //     .cast<HomeSlider>()
+      //     .toList());
 
       return (mapOutput['data']['sliders'])
           .map((e) => HomeSlider.fromJson(e))
@@ -98,13 +100,13 @@ class RemoteServices {
           .toList();
     } else {
       var jsonString = response.body;
-      print('false getHomeSlider body:$jsonString');
+      // print('false getHomeSlider body:$jsonString');
 
       var mapOutput = json.decode(jsonString);
-      print('false getHomeSlider mapOutput: $jsonString');
+      // print('false getHomeSlider mapOutput: $jsonString');
 
-      HomeModelData homeModelData = HomeModelData.fromJson(mapOutput);
-      print('false getHomeSlider homeModelData: $homeModelData');
+      // HomeModelData homeModelData = HomeModelData.fromJson(mapOutput);
+      // print('false getHomeSlider homeModelData: $homeModelData');
       return [];
     }
   }
@@ -118,18 +120,18 @@ class RemoteServices {
       // "Charset": "utf-8",
       "Authorization": "Bearer $access_token"
     });
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      print('true getHomeRestaurants$jsonString');
+      // print('true getHomeRestaurants$jsonString');
 
       var mapOutput = json.decode(jsonString);
-      print('true getHomeRestaurants mapOutput: $jsonString');
+      // print('true getHomeRestaurants mapOutput: $jsonString');
 
-      print((mapOutput['data']['resturantes'])
-          .map((e) => HomeResturante.fromJson(e))
-          .cast<HomeResturante>()
-          .toList());
+      // print((mapOutput['data']['resturantes'])
+      //     .map((e) => HomeResturante.fromJson(e))
+      //     .cast<HomeResturante>()
+      //     .toList());
 
       return (mapOutput['data']['resturantes'])
           .map((e) => HomeResturante.fromJson(e))
@@ -137,10 +139,44 @@ class RemoteServices {
           .toList();
     } else {
       var jsonString = response.body;
-      print('false getHomeRestaurants body:$jsonString');
+      // print('false getHomeRestaurants body:$jsonString');
 
       var mapOutput = json.decode(jsonString);
-      print('false getHomeRestaurants mapOutput: $jsonString');
+      // print('false getHomeRestaurants mapOutput: $jsonString');
+
+      return [];
+    }
+  }
+
+  static Future<List<HomeCategories>> getHomeCategories(
+      {String? access_token}) async {
+    var response = await client.get(Uri.parse(ApiSettings.home), headers: {
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token"
+    });
+    // print(response.statusCode);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print('true getHomeCategories$jsonString');
+
+      var mapOutput = json.decode(jsonString);
+      print('true getHomeCategories mapOutput: $jsonString');
+
+      // print((mapOutput['data']['resturantes'])
+      //     .map((e) => HomeResturante.fromJson(e))
+      //     .cast<HomeResturante>()
+      //     .toList());
+
+      return (mapOutput['data']['categories'])
+          .map((e) => HomeCategories.fromJson(e))
+          .cast<HomeCategories>()
+          .toList();
+    } else {
+      var jsonString = response.body;
+      print('false getHomeCategories body:$jsonString');
+
+      var mapOutput = json.decode(jsonString);
+      print('false getHomeCategories mapOutput: $jsonString');
 
       return [];
     }
