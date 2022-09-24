@@ -29,6 +29,7 @@ const mySecGreyColor = Color(0xFF8F92A1);
 const myYellowColor = Color(0xFFFFDE0A);
 const mySecondaryColor = Color(0xFF275D89);
 const myDarkBlueColor = Color(0xFF3E4958);
+const myRedColor = Color(0xFFE35757);
 
 class BrselApp {
   BrselApp._();
@@ -109,6 +110,12 @@ class MyCustomTextStyle {
     color: myBlackColor,
     fontWeight: FontWeight.w300,
   );
+  static const TextStyle myRedH1TextStyle = TextStyle(
+    decoration: TextDecoration.lineThrough,
+    fontSize: 12,
+    color: myRedColor,
+    fontWeight: FontWeight.w300,
+  );
   static TextStyle myH1withOpacityTextStyle = TextStyle(
     fontSize: 12,
     color: myBlackColor.withOpacity(0.5),
@@ -127,6 +134,11 @@ class MyCustomTextStyle {
   static TextStyle myP1 = TextStyle(
     fontSize: 10,
     color: myBlackColor,
+    fontWeight: FontWeight.w300,
+  );
+  static TextStyle myCounter = TextStyle(
+    fontSize: 10,
+    color: Colors.white,
     fontWeight: FontWeight.w300,
   );
   static const TextStyle mySearchHintTextStyle = TextStyle(
@@ -149,6 +161,11 @@ class MyCustomTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w700,
     color: myDarkBlueColor,
+  );
+  static const TextStyle myTitleSecTextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: myBlackColor,
   );
   static const TextStyle myBigtextStyle = TextStyle(
     fontSize: 14,
