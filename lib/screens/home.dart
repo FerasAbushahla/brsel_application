@@ -8,6 +8,7 @@ import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
+import 'package:brsel_application/screens/restaurants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -26,6 +27,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+    });
+    super.initState();
+  }
+
   HomeRestaurantsController homeRestaurantsController =
       Get.put(HomeRestaurantsController());
   HomeADsSliderController homeADsSliderController =
@@ -33,6 +41,7 @@ class _HomeState extends State<Home> {
   HomeCategoriesController homeCategoriesController =
       Get.put(HomeCategoriesController());
   HomeMealsController homeMealsController = Get.put(HomeMealsController());
+
   // final drawerController = ZoomDrawerController();
   int curruntCategory = 1;
   @override
@@ -147,7 +156,12 @@ class _HomeState extends State<Home> {
                             style: MyCustomTextStyle.myH2,
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Restaurants()));
+                            },
                             child: Text(
                               'تصفح الكل',
                               style: MyCustomTextStyle.myGreenTextStyle,

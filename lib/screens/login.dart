@@ -134,6 +134,7 @@ class _LoginState extends State<Login> {
                               ),
                               MyButton(
                                 loading: loading,
+                                color: mySecondaryColor,
                                 title: 'تسجيل الدخول',
                                 onPressed: () {},
                               ),

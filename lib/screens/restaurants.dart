@@ -2,9 +2,13 @@ import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
 import 'package:brsel_application/componantes/myHomeSecCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/homeRestaurantsController.dart';
+import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class Restaurants extends StatefulWidget {
   const Restaurants({Key? key}) : super(key: key);
@@ -14,6 +18,8 @@ class Restaurants extends StatefulWidget {
 }
 
 class _RestaurantsState extends State<Restaurants> {
+  HomeRestaurantsController homeRestaurantsController =
+      Get.put(HomeRestaurantsController());
   int selectedCategoryIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -80,12 +86,177 @@ class _RestaurantsState extends State<Restaurants> {
                         ),
                       ),
                     ),
+                    Obx((() {
+                      if (HomeRestaurantsController.isLoading.value) {
+                        return Container(
+                          height: getProportionalScreenHeight(200),
+                          child: Center(
+                            child: SizedBox(
+                                // height: 30,
+                                // width: 30,
+                                child: CircularProgressIndicator()),
+                          ),
+                        );
+                      } else {
+                        return Column(
+                          children: List.generate(
+                            homeRestaurantsController
+                                .homeResraurantsList.length,
+                            (index) => Padding(
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              child: RestaurantCard(homeRestaurantsController
+                                  .homeResraurantsList[index]),
+                            ),
+                          ),
+                        );
+                      }
+                    }))
                   ],
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Container RestaurantCard(HomeResturante homeResturante) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 0),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          CachedNetworkImage(
+            imageUrl: homeResturante.image ?? "",
+            // imageUrl:
+            //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+            imageBuilder: (context, imageProvider) => Container(
+              width: SizeConfig.screenWidth,
+              height: 136,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  image:
+                      DecorationImage(image: imageProvider, fit: BoxFit.fill)),
+            ),
+            placeholder: (context, url) => SizedBox(
+                height: 136,
+                child: Center(child: const CircularProgressIndicator())),
+            errorWidget: (context, url, error) => Container(
+              height: 136,
+              child: const Icon(
+                Icons.broken_image,
+                color: myGreyColor,
+                size: 30,
+              ),
+            ),
+          ),
+          // Image.asset(
+          //   'assets/images/Burger.jpg',
+          //   fit: BoxFit.fill,
+          // ),
+
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      homeResturante.name!,
+                      // homeMeals.name!,
+                      style: MyCustomTextStyle.myAppBarTitleTextStyle,
+                    ),
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Icon(
+                            BrselApp.locationsecicon,
+                            size: 10,
+                          ),
+                          Text(
+                            '2.6',
+                            // homeResturante.address!,
+                            // homeMeals.price!,
+                            style: MyCustomTextStyle.myDetailsSecTextStyle,
+                          ),
+                          Text(
+                            'كم',
+                            style: MyCustomTextStyle.myDetailsSecTextStyle,
+                          ),
+                          VerticalDivider(
+                            width: 6,
+                            thickness: 1,
+                          ),
+                          Icon(
+                            BrselApp.deliveryicon,
+                            size: 10,
+                          ),
+                          Text(
+                            // '20د',
+                            '${homeResturante.deliveryTime}د',
+                            style: MyCustomTextStyle.myDetailsSecTextStyle,
+                          ),
+                          Container(
+                            width: 6,
+                            height: 2,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: myBlackColor),
+                          ),
+                          VerticalDivider(
+                            width: 2,
+                            thickness: 1,
+                          ),
+                          Icon(
+                            BrselApp.staricon,
+                            size: 10,
+                            color: myYellowColor,
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            // '3',
+                            homeResturante.review!,
+                            style: MyCustomTextStyle.myP1,
+                          ),
+                          Text(
+                            '(100)',
+                            style: MyCustomTextStyle.myP1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'hjhj',
+                  // homeMeals.description!,
+                  style: MyCustomTextStyle.myDetailsTextStyle,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -256,6 +256,7 @@ class _RegisterState extends State<Register> {
                               ),
                               MyButton(
                                 loading: loading,
+                                color: mySecondaryColor,
                                 title: 'انشاء حساب',
                                 onPressed: () async {
                                   FocusScope.of(context).unfocus();
@@ -275,7 +276,9 @@ class _RegisterState extends State<Register> {
                                       sharedPreferences.setString(
                                           'token', registerResponse.token!);
                                       print('token');
-                                      print(registerResponse.token!);
+                                      sharedPreferences.setString(
+                                          'email', emailController.text);
+                                      print('email');
 
                                       userBox = Hive.box('user');
                                       await userBox

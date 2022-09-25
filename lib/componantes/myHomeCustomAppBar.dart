@@ -2,16 +2,18 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
-class MyHomeCustomAppBar extends StatelessWidget {
+class MyHomeCustomAppBar extends StatefulWidget {
   // final String title;
   // final Widget? leading;
   final VoidCallback? leadingOnPressed;
   final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
   final Widget? leading;
+  // final String? address;
   // const MyHomeCustomAppBar(
   //     {Key? key, this.onPressed, required this.title, this.leading})
   //     : super(key: key);
@@ -22,7 +24,40 @@ class MyHomeCustomAppBar extends StatelessWidget {
     this.action1OnPressed,
     this.action2OnPressed,
     this.leading,
+    // this.address,
   }) : super(key: key);
+
+  @override
+  State<MyHomeCustomAppBar> createState() => _MyHomeCustomAppBarState();
+}
+
+class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
+  String? userAddress;
+
+  Future getSharedPrefs() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    // userAddress = preferences.getString("currentPosition");
+    setState(() {
+      userAddress = preferences.getString("currentPosition");
+      print(userAddress);
+    });
+
+    print(preferences.get('firstName'));
+    print(preferences.get('lastName'));
+    print(preferences.get('phoneNumber'));
+    print(preferences.get('sex'));
+    print(preferences.get('token'));
+    print(preferences.get('personalImage'));
+    print(preferences.get('currentPosition'));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    getSharedPrefs();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +75,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  leading!,
+                  widget.leading!,
                   Container(
                     height: getProportionalScreenHeight(42),
                     width: getProportionalScreenWidth(140),
@@ -83,7 +118,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'مسقط ,عمان,1988',
+                                userAddress!,
                                 style:
                                     MyCustomTextStyle.myH1withOpacityTextStyle,
                               )
@@ -98,7 +133,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
                       borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/CartIcon.svg'),
-                      onPress: action1OnPressed),
+                      onPress: widget.action1OnPressed),
                 ],
               ),
               SizedBox(
@@ -132,7 +167,7 @@ class MyHomeCustomAppBar extends StatelessWidget {
                       borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/FilterIcon.svg'),
-                      onPress: action2OnPressed),
+                      onPress: widget.action2OnPressed),
                 ],
               ),
               SizedBox(

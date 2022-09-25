@@ -78,7 +78,7 @@ class HomeMeals {
   String? review;
   String? deliveryTime;
   DateTime? createdAt;
-  List<Extra>? extras;
+  List<HomeMealsExtra>? extras;
   List<Attachment>? attachments;
   HomeMeals({
     this.id,
@@ -107,7 +107,8 @@ class HomeMeals {
         review: json["review"],
         deliveryTime: json["delivery_time"],
         createdAt: DateTime.parse(json["created_at"]),
-        extras: List<Extra>.from(json["extras"].map((x) => Extra.fromJson(x))),
+        extras: List<HomeMealsExtra>.from(
+            json["extras"].map((x) => HomeMealsExtra.fromJson(x))),
         attachments: List<Attachment>.from(
             json["attachments"].map((x) => Attachment.fromJson(x))),
       );
@@ -152,19 +153,19 @@ class Attachment {
       };
 }
 
-class Extra {
+class HomeMealsExtra {
   int? id;
   String? name;
   String? price;
   String? type;
-  Extra({
+  HomeMealsExtra({
     this.id,
     this.name,
     this.price,
     this.type,
   });
 
-  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
+  factory HomeMealsExtra.fromJson(Map<String, dynamic> json) => HomeMealsExtra(
         id: json["id"],
         name: json["name"],
         price: json["price"],

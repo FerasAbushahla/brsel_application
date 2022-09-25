@@ -85,7 +85,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                   Text(
                                     // '${homeMeals.deliveryTime}د',
-                                    '20-30 د',
+                                    '${widget.homeMeals!.deliveryTime!}د',
                                     style: TextStyle(
                                       fontSize: 13,
                                       color: myBlackColor.withOpacity(0.5),
@@ -100,7 +100,7 @@ class _MealDetailsState extends State<MealDetails> {
                               ),
                               Text(
                                 // '${homeMeals.deliveryTime}د',
-                                'الحدالأدنى. 30 ريال',
+                                'الحدالأدنى. ${widget.homeMeals!.price!} ريال',
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: myBlackColor.withOpacity(0.5),
@@ -113,7 +113,7 @@ class _MealDetailsState extends State<MealDetails> {
                               ),
                               Text(
                                 // '${homeMeals.deliveryTime}د',
-                                'مطعم العربي',
+                                widget.homeMeals!.restaurant!,
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: myBlackColor.withOpacity(0.5),
@@ -153,7 +153,7 @@ class _MealDetailsState extends State<MealDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Text(
-                                    'وجبة شيش تاووك',
+                                    widget.homeMeals!.name!,
                                     style:
                                         MyCustomTextStyle.myTitleSecTextStyle,
                                   ),
@@ -162,6 +162,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                   Text(
                                     'هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف.',
+                                    // widget.homeMeals!.description!,
                                     style: MyCustomTextStyle
                                         .myH1withOpacityTextStyle,
                                   ),
@@ -215,12 +216,14 @@ class _MealDetailsState extends State<MealDetails> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: List.generate(
-                        3,
+                        widget.homeMeals!.extras!.length,
                         (index) => Padding(
                           padding: index == 0
                               ? EdgeInsets.only(right: 35)
                               : EdgeInsets.only(right: 10),
-                          child: recommendedExtrasCard(),
+                          child: recommendedExtrasCard(
+                            widget.homeMeals!.extras![index],
+                          ),
                         ),
                       ),
                     ),
@@ -234,7 +237,7 @@ class _MealDetailsState extends State<MealDetails> {
     );
   }
 
-  Stack recommendedExtrasCard() {
+  Stack recommendedExtrasCard(HomeMealsExtra homeMealsExtra) {
     return Stack(
       children: [
         Column(
@@ -243,7 +246,7 @@ class _MealDetailsState extends State<MealDetails> {
               width: 80,
               height: 80,
               child: CachedNetworkImage(
-                // imageUrl: homeResturante.image ?? "",
+                // imageUrl: homeMealsExtra. ?? "",
                 imageUrl:
                     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
                 imageBuilder: (context, imageProvider) => Container(
@@ -464,8 +467,7 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
             child: Padding(
               padding: EdgeInsets.fromLTRB(7, 1, 7, 1),
               child: Text(
-                "${current + 1}/2",
-                // "${currentAd + 1}/${homeADsSliderController.homeSliderList.length}",
+                "${current + 1}/${widget.homeMeals!.attachments!.length}",
                 style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),

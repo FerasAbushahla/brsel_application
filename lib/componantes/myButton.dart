@@ -5,11 +5,15 @@ class MyButton extends StatelessWidget {
   final String title;
   final bool? loading;
   final VoidCallback? onPressed;
+  final Color? color;
+  final Color? circularProgressColor;
   const MyButton({
     Key? key,
     required this.title,
     this.loading,
+    required this.color,
     this.onPressed,
+    this.circularProgressColor,
   }) : super(key: key);
 
   @override
@@ -25,12 +29,15 @@ class MyButton extends StatelessWidget {
               height: 18,
               width: 18,
               child: CircularProgressIndicator(
+                color: circularProgressColor,
                 strokeWidth: 3,
-              )),
+              ),
+            ),
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 14),
         elevation: 0,
-        primary: mySecondaryColor,
+        backgroundColor: color,
+        // primary: mySecondaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
         ),

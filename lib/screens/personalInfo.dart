@@ -326,6 +326,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               ),
                               MyButton(
                                 loading: loading,
+                                color: mySecondaryColor,
                                 title: 'حفظ ومتابعة',
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {

@@ -324,6 +324,7 @@ class _PersonalImageState extends State<PersonalImage> {
                 padding: const EdgeInsets.symmetric(horizontal: 36),
                 child: MyButton(
                   loading: loading,
+                  color: mySecondaryColor,
                   title: 'حفظ ومتابعة',
                   onPressed: () async {
                     if (image == null) {
