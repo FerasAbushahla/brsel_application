@@ -28,9 +28,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   void initState() {
-    Future.delayed(const Duration(milliseconds: 100), () async {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-    });
+    // Future.delayed(const Duration(milliseconds: 100), () async {
+    //   SharedPreferences preferences = await SharedPreferences.getInstance();
+    // });
     super.initState();
   }
 

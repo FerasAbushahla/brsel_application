@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
+// String? userAddress = '';
+
 class MyHomeCustomAppBar extends StatefulWidget {
   // final String title;
   // final Widget? leading;
@@ -32,7 +34,7 @@ class MyHomeCustomAppBar extends StatefulWidget {
 }
 
 class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
-  String? userAddress;
+  String? userAddress = '';
 
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
