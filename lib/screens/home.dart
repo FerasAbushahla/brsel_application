@@ -574,6 +574,36 @@ class HomeZoomDrawer extends StatefulWidget {
 }
 
 class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
+  String firstName = '';
+  String lastName = '';
+
+  Future getSharedPrefs() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    // userAddress = preferences.getString("currentPosition");
+    setState(() {
+      firstName = preferences.getString("firstName") ?? '';
+      print(firstName);
+      lastName = preferences.getString("lastName") ?? '';
+      print(lastName);
+    });
+
+    print(preferences.get('firstName'));
+    print(preferences.get('lastName'));
+    print(preferences.get('phoneNumber'));
+    print(preferences.get('sex'));
+    print(preferences.get('token'));
+    print(preferences.get('personalImage'));
+    print(preferences.get('currentPosition'));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    getSharedPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -589,15 +619,19 @@ class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
       menuBackgroundColor: Colors.white,
       mainScreenScale: 0.1,
       mainScreen: Home(),
-      menuScreen: DrawerMenu(),
+      menuScreen: DrawerMenu(
+        firstName: firstName,
+        lastName: lastName,
+      ),
     );
   }
 }
 
 class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
-    Key? key,
-  }) : super(key: key);
+  final String firstName;
+  final String lastName;
+  const DrawerMenu({Key? key, required this.firstName, required this.lastName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -640,7 +674,7 @@ class DrawerMenu extends StatelessWidget {
               height: 2,
             ),
             Text(
-              'فراس أبو شهلا',
+              '$firstName $lastName',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
