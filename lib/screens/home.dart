@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
@@ -576,6 +578,7 @@ class HomeZoomDrawer extends StatefulWidget {
 class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
   String firstName = '';
   String lastName = '';
+  String personalImage = '';
 
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -585,6 +588,8 @@ class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
       print(firstName);
       lastName = preferences.getString("lastName") ?? '';
       print(lastName);
+      personalImage = preferences.getString("personalImage") ?? '';
+      print(personalImage);
     });
 
     print(preferences.get('firstName'));
@@ -622,6 +627,7 @@ class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
       menuScreen: DrawerMenu(
         firstName: firstName,
         lastName: lastName,
+        personalImage: personalImage,
       ),
     );
   }
@@ -630,7 +636,12 @@ class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
 class DrawerMenu extends StatelessWidget {
   final String firstName;
   final String lastName;
-  const DrawerMenu({Key? key, required this.firstName, required this.lastName})
+  final String personalImage;
+  const DrawerMenu(
+      {Key? key,
+      required this.firstName,
+      required this.lastName,
+      required this.personalImage})
       : super(key: key);
 
   @override
@@ -647,14 +658,21 @@ class DrawerMenu extends StatelessWidget {
             ),
             Row(
               children: [
-                Container(
-                  width: 55,
-                  height: 55,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(7)),
-                  child: Image.asset(
-                    'assets/images/Profile.jpg',
-                    fit: BoxFit.cover,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Container(
+                    width: 55,
+                    height: 55,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(6)),
+                    child: Image.memory(
+                      base64Decode(personalImage),
+                      fit: BoxFit.cover,
+                    ),
+                    // child: Image.asset(
+                    //   'assets/images/Profile.jpg',
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                 ),
                 Spacer()
