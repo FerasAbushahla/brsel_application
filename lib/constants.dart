@@ -110,6 +110,11 @@ class MyCustomTextStyle {
     color: myBlackColor,
     fontWeight: FontWeight.w300,
   );
+  static const TextStyle myH2TextStyle = TextStyle(
+    fontSize: 12,
+    color: myBlackColor,
+    fontWeight: FontWeight.w500,
+  );
   static const TextStyle myRedH1TextStyle = TextStyle(
     decoration: TextDecoration.lineThrough,
     fontSize: 12,

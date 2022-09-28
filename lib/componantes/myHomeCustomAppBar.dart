@@ -6,27 +6,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
-// String? userAddress = '';
-
 class MyHomeCustomAppBar extends StatefulWidget {
-  // final String title;
-  // final Widget? leading;
-  final VoidCallback? leadingOnPressed;
   final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
   final Widget? leading;
-  // final String? address;
-  // const MyHomeCustomAppBar(
-  //     {Key? key, this.onPressed, required this.title, this.leading})
-  //     : super(key: key);
+
   @override
   const MyHomeCustomAppBar({
     Key? key,
-    this.leadingOnPressed,
     this.action1OnPressed,
     this.action2OnPressed,
     this.leading,
-    // this.address,
   }) : super(key: key);
 
   @override

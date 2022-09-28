@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Location(),
+      home: Wraper(),
     );
   }
 }
