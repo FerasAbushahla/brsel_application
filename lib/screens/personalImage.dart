@@ -334,8 +334,12 @@ class _PersonalImageState extends State<PersonalImage> {
                         ),
                       );
                     } else if (image != null) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Location()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Location(
+                                    image: image,
+                                  )));
                     }
                   },
                 ),

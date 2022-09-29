@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:brsel_application/models/homeModel.dart';
+import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/models/registerModel.dart';
 import 'package:brsel_application/service/apiSettings.dart';
 import 'package:http/http.dart' as http;
+import 'package:async/async.dart';
 
 class RemoteServices {
   static var client = http.Client();
@@ -66,6 +69,130 @@ class RemoteServices {
       return registerResponse;
     }
   }
+
+  static Future<PersonalInfoModel> userInfoRegister(
+      {String? userID,
+      String? firstName,
+      String? lastName,
+      String? phoneNumber,
+      String? gender,
+      File? image,
+      String? address,
+      String? lat,
+      String? long,
+      String? access_token}) async {
+    print(
+        '$firstName + $lastName + $phoneNumber + $gender+ $image + $lat+ $long');
+    var request =
+        http.MultipartRequest("POST", Uri.parse(ApiSettings.infoRegister));
+
+    Map<String, String> body = {
+      "id": userID!,
+      "first_name": firstName!,
+      "last_name": lastName!,
+      "phone": phoneNumber!,
+      "gender": gender!,
+      "address": address!,
+      "latitude": lat!,
+      "longitude": long!,
+    };
+    Map<String, String> headers = {
+      "Content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token"
+    };
+    request.headers.addAll(headers);
+    request.fields.addAll(body);
+    if (image != null) {
+      String fileName = image.path.split("/").last;
+      var stream = http.ByteStream(DelegatingStream(image.openRead()));
+      var length = await image.length();
+      var multipartFile =
+          http.MultipartFile('image', stream, length, filename: fileName);
+
+      request.files.add(multipartFile);
+    }
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    var output = json.decode(response.body);
+    print(output);
+
+    print(response);
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString);
+      print(mapOutput);
+
+      PersonalInfoModel personalInfoResponse =
+          PersonalInfoModel.fromJson(mapOutput);
+      return personalInfoResponse;
+    } else {
+      var jsonString = response.body;
+      print(jsonString);
+      var mapOutput = await json.decode(jsonString);
+      PersonalInfoModel personalInfoResponse =
+          PersonalInfoModel.fromJson(mapOutput);
+      print(mapOutput);
+      return personalInfoResponse;
+    }
+  }
+  // static Future<PersonalInfoModel> userInfoRegister({
+  //   String? userID,
+  //   String? firstName,
+  //   String? lastName,
+  //   String? phoneNumber,
+  //   String? gender,
+  //   File? image,
+  //   String? address,
+  //   String? lat,
+  //   String? long,
+  // }) async {
+  //   print(
+  //       '$firstName + $lastName + $phoneNumber + $gender+ $image + $lat+ $long');
+  //   var response = await client.post(
+  //     Uri.parse(ApiSettings.infoRegister),
+  //     body: {
+  //       "id": userID,
+  //       "first_name": firstName,
+  //       "last_name": lastName,
+  //       "phone": phoneNumber,
+  //       "image": image,
+  //       "gender": gender,
+  //       "address": address,
+  //       "latitude": lat,
+  //       "longitude": long,
+  //     },
+  //   );
+  //   print(response);
+
+  //   print(response.statusCode);
+
+  //   if (response.statusCode == 200) {
+  //     var jsonString = response.body;
+  //     print(jsonString);
+
+  //     var mapOutput = await json.decode(jsonString);
+  //     print(mapOutput);
+
+  //     PersonalInfoModel personalInfoResponse =
+  //         PersonalInfoModel.fromJson(mapOutput);
+  //     return personalInfoResponse;
+  //   } else {
+  //     var jsonString = response.body;
+  //     print(jsonString);
+  //     var mapOutput = await json.decode(jsonString);
+  //     PersonalInfoModel personalInfoResponse =
+  //         PersonalInfoModel.fromJson(mapOutput);
+  //     print(mapOutput);
+  //     return personalInfoResponse;
+  //   }
+  // }
 
   // static Future<Logout> logout({}){}
   static Future<List<HomeSlider>> getHomeSlider({String? access_token}) async {

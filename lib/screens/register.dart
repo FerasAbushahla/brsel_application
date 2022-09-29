@@ -98,17 +98,18 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
-                                // textDirection: TextDirection.ltr,
+                                // maxLength: 40,
+                                textDirection: TextDirection.ltr,
                                 validator: (val) => validateEmail(val),
                                 controller: emailController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل البريد الإلكتروني',
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
-                                  ),
+                                  // suffix: Icon(
+                                  //   BrselApp.checkicon,
+                                  //   color: myPrimaryColor,
+                                  //   size: 13,
+                                  // ),
                                 ),
                               ),
                               SizedBox(
@@ -123,6 +124,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                maxLength: 15,
                                 obscureText: true,
                                 validator: (val) =>
                                     val!.isEmpty ? 'أدخل كلمة المرور' : null,
@@ -130,11 +132,11 @@ class _RegisterState extends State<Register> {
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل كلمة المرور',
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
-                                  ),
+                                  // suffix: Icon(
+                                  //   BrselApp.checkicon,
+                                  //   color: myPrimaryColor,
+                                  //   size: 13,
+                                  // ),
                                 ),
                               ),
                               SizedBox(
@@ -149,6 +151,7 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               TextFormField(
+                                maxLength: 15,
                                 obscureText: true,
                                 validator: (val) {
                                   if (val!.isEmpty) {
@@ -164,11 +167,11 @@ class _RegisterState extends State<Register> {
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل كلمة المرور',
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
-                                  ),
+                                  // suffix: Icon(
+                                  //   BrselApp.checkicon,
+                                  //   color: myPrimaryColor,
+                                  //   size: 13,
+                                  // ),
                                 ),
                               ),
                               SizedBox(
@@ -279,6 +282,9 @@ class _RegisterState extends State<Register> {
                                       sharedPreferences.setString(
                                           'email', emailController.text);
                                       print('email');
+                                      sharedPreferences.setInt(
+                                          'ID', registerResponse.user!.id!);
+                                      print('ID');
 
                                       userBox = Hive.box('user');
                                       await userBox

@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:io';
+
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/models/personalInfoModel.dart';
+import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../componantes/myButton.dart';
 
 class Location extends StatefulWidget {
-  const Location({Key? key}) : super(key: key);
+  final File? image;
+  const Location({Key? key, this.image}) : super(key: key);
 
   @override
   State<Location> createState() => _LocationState();
@@ -161,7 +166,7 @@ class _LocationState extends State<Location> {
                       height: 11,
                     ),
                   ] else if (index == 1) ...[
-                    CurrentLocationMap(),
+                    CurrentLocationMap(image: widget.image),
                   ]
                 ],
               ),
@@ -171,229 +176,32 @@ class _LocationState extends State<Location> {
       ),
     );
   }
-
-  // Future<Position> _determinePosition() async {
-  //   bool serviceEnabled;
-  //   LocationPermission permission;
-
-  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-  //   if (!serviceEnabled) {
-  //     return Future.error('Location Services are disabled');
-  //   }
-
-  //   permission = await Geolocator.checkPermission();
-  //   // permission = await Geolocator.requestPermission();
-
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       return Future.error('Location permission denied');
-  //     }
-  //   }
-  //   if (permission == LocationPermission.deniedForever) {
-  //     return Future.error('Location permission are permenantly denied');
-  //   }
-
-  //   Position position = await Geolocator.getCurrentPosition();
-  //   return position;
-  // }
-
 }
 
-// class MyMap extends StatefulWidget {
-//   const MyMap({
-//     Key? key,
-//     required this.loading,
-//   }) : super(key: key);
-
-//   final bool loading;
-
-//   @override
-//   State<MyMap> createState() => _MyMapState();
-// }
-
-// class _MyMapState extends State<MyMap> {
-//   Completer<GoogleMapController> _controller = Completer();
-
-//   static final Marker marker = Marker(
-//     markerId: MarkerId('_kGooglePlex'),
-//     infoWindow: InfoWindow(title: 'Google plex'),
-//     icon: BitmapDescriptor.defaultMarker,
-//     position: LatLng(37.773972, -122.431297),
-//   );
-
-//   static final CameraPosition _kGooglePlex =
-//       CameraPosition(target: LatLng(37.773972, -122.431297), zoom: 12);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.stretch,
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 36),
-//           child: SizedBox(
-//             height: 250,
-//             child: GoogleMap(
-//               mapType: MapType.normal,
-//               initialCameraPosition: _kGooglePlex,
-//               onMapCreated: (GoogleMapController controller) {
-//                 _controller.complete(controller);
-//               },
-//               markers: {marker},
-//               // initialCameraPosition: CameraPosition(
-//               //     target: LatLng(37.773972, -122.431297), zoom: 12),
-//             ),
-//           ),
-//         ),
-//         SizedBox(
-//           height: 16,
-//         ),
-//         Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 36),
-//           child: Container(
-//             decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(6),
-//             ),
-//             height: 65,
-//             child: Padding(
-//               padding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-//               child: Row(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 mainAxisSize: MainAxisSize.max,
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Row(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Container(
-//                         decoration: BoxDecoration(
-//                           color: myPrimaryColor.withOpacity(0.3),
-//                           shape: BoxShape.circle,
-//                         ),
-//                         child: Padding(
-//                           padding: const EdgeInsets.all(12.0),
-//                           child: Center(
-//                             child: Icon(
-//                               size: 26,
-//                               Icons.location_on_outlined,
-//                               color: myPrimaryColor,
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         width: 20,
-//                       ),
-//                       Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         mainAxisAlignment: MainAxisAlignment.center,
-//                         mainAxisSize: MainAxisSize.max,
-//                         children: [
-//                           Text(
-//                             'الموقع',
-//                             style: MyCustomTextStyle.myCardTitletextStyle,
-//                           ),
-//                           SizedBox(
-//                             height: 3,
-//                           ),
-//                           Text(
-//                             'مسقط ,عمان,1988',
-//                             style: MyCustomTextStyle.myCardtextStyle,
-//                           ),
-//                         ],
-//                       ),
-//                     ],
-//                   ),
-//                   Padding(
-//                     padding: const EdgeInsets.only(top: 8),
-//                     child: ClipOval(
-//                       child: Material(
-//                         color: myPrimaryColor,
-//                         child: InkWell(
-//                           // splashColor: Colors.red, // Splash color
-//                           onTap: () {
-//                             // setState(() {
-//                             //   image = null;
-//                             // });
-//                           },
-//                           child: SizedBox(
-//                             width: 28,
-//                             height: 28,
-//                             child: Icon(
-//                               Icons.edit,
-//                               color: Colors.white,
-//                               size: 20,
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//         SizedBox(
-//           height: 45,
-//         ),
-//         Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 36),
-//           child: MyButton(
-//             loading: widget.loading,
-//             title: 'حفظ ومتابعة',
-//             onPressed: () async {
-//               Navigator.push(
-//                   context, MaterialPageRoute(builder: (context) => Location()));
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class CurrentLocationMap extends StatefulWidget {
-  const CurrentLocationMap({
-    super.key,
-    // this.lat,
-    // this.long,
-  });
-
-  // final String? lat;
-  // final String? long;
+  final File? image;
+  const CurrentLocationMap({super.key, this.image});
 
   @override
   State<CurrentLocationMap> createState() => _CurrentLocationMapState();
 }
 
 class _CurrentLocationMapState extends State<CurrentLocationMap> {
-  // String? lat;
-  // String? long;
-  @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   lat = widget.lat;
-  //   long = widget.long;
-  //   googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-  //       CameraPosition(
-  //           target: LatLng(double.parse(lat!), double.parse(long!)),
-  //           zoom: 12)));
-  //   markers.clear();
-  //   markers.add(Marker(
-  //       markerId: const MarkerId('currentLocation'),
-  //       position: LatLng(double.parse(lat!), double.parse(long!))));
-  //   setState(() {});
-  // }
-
   bool loading = false;
   bool determinePositionLoading = false;
   var address;
   Position? currentPosition;
+
+  String? userAddress;
+  int? userID;
+  String? userFirstName;
+  String? userLastName;
+  String? userPhoneNumber;
+  String? userGender;
+  String? userImage;
+  String? userLat;
+  String? userLong;
+  String? accessToken;
 
   late GoogleMapController googleMapController;
 
@@ -483,6 +291,14 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                           '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}');
                       print(
                           'Preferences::::::: ${sharedPreferences.setString('currentPosition', '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}')}');
+                      // sharedPreferences.setString(
+                      //     'currentLat', position.latitude.toString());
+                      // print(sharedPreferences.setString(
+                      //     'currentLat', position.latitude.toString()));
+                      // sharedPreferences.setString(
+                      //     'currentLong', position.longitude.toString());
+                      // print(sharedPreferences.setString(
+                      //     'currentLong', position.longitude.toString()));
                       print(sharedPreferences.get('currentPosition'));
                       sharedPreferences.setString('currentCountryPosition',
                           '${userCurrentPlace![0].country}');
@@ -622,6 +438,48 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                 setState(() {
                   loading = true;
                 });
+                SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                setState(() {
+                  userAddress = sharedPreferences.getString('currentPosition');
+                  userFirstName = sharedPreferences.getString('firstName');
+                  userLastName = sharedPreferences.getString('lastName');
+                  userGender = sharedPreferences.getString('sex');
+                  userImage = sharedPreferences.getString('personalImage');
+                  userLat =
+                      sharedPreferences.getString('currentPositionLatitude');
+                  userLong =
+                      sharedPreferences.getString('currentPositionLongitude');
+                  userPhoneNumber = sharedPreferences.getString('phoneNumber');
+                  userID = sharedPreferences.getInt('ID');
+                  accessToken = sharedPreferences.getString('token');
+                });
+                print(widget.image);
+                PersonalInfoModel personalInfoResponse =
+                    await RemoteServices.userInfoRegister(
+                  access_token: accessToken,
+                  address: userAddress,
+                  firstName: userFirstName,
+                  lastName: userLastName,
+                  gender: userGender,
+                  image: widget.image,
+                  lat: userLat,
+                  long: userLong,
+                  phoneNumber: userPhoneNumber,
+                  userID: userID.toString(),
+                );
+                // PersonalInfoModel personalInfoResponse =
+                //     await RemoteServices.userInfoRegister(
+                //   address: userAddress,
+                //   firstName: userFirstName,
+                //   lastName: userLastName,
+                //   gender: userGender,
+                //   // image: userImage,
+                //   lat: userLat,
+                //   long: userLong,
+                //   phoneNumber: userPhoneNumber,
+                //   userID: userID.toString(),
+                // );
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Wraper()));
                 setState(() {

@@ -29,6 +29,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       print(preferences.get('phoneNumber'));
       print(preferences.get('sex'));
       print(preferences.get('token'));
+      print(preferences.get('ID'));
       print(preferences.get('personalImage'));
       // userBox = Hive.box('user');
       // var myUser = await userBox.getAt(0);
@@ -141,11 +142,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل الاسم',
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
-                                  ),
+                                  // suffix: Icon(
+                                  //   BrselApp.checkicon,
+                                  //   color: myPrimaryColor,
+                                  //   size: 13,
+                                  // ),
                                 ),
                               ),
                               SizedBox(
@@ -166,11 +167,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل اسم العائلة',
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
-                                  ),
+                                  // suffix: Icon(
+                                  //   BrselApp.checkicon,
+                                  //   color: myPrimaryColor,
+                                  //   size: 13,
+                                  // ),
                                 ),
                               ),
                               SizedBox(
@@ -219,11 +220,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                       ],
                                     ),
                                   ),
-                                  suffix: Icon(
-                                    BrselApp.checkicon,
-                                    color: myPrimaryColor,
-                                    size: 13,
-                                  ),
+                                  // suffix: Icon(
+                                  //   BrselApp.checkicon,
+                                  //   color: myPrimaryColor,
+                                  //   size: 13,
+                                  // ),
                                 ),
                               ),
                               SizedBox(

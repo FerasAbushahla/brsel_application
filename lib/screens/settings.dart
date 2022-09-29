@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:brsel_application/componantes/MySettingsCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
@@ -21,6 +25,9 @@ class _SettingsState extends State<Settings> {
   String lastName = '';
   String personalImage = '';
   bool sharedPreferencesLoading = false;
+
+  HomeADsSliderController homeADsSliderController =
+      Get.put(HomeADsSliderController());
 
   Future getSharedPrefs() async {
     setState(() {
@@ -215,7 +222,7 @@ class _SettingsState extends State<Settings> {
                                     ),
                                     SizedBox(
                                       width: 0,
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -236,7 +243,140 @@ class _SettingsState extends State<Settings> {
                         settingsListItem(
                             icon: Icon(BrselApp.profile),
                             title: 'المعلومات الشخصية',
-                            onTap: () {})
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        settingsListItem(
+                            icon: Icon(BrselApp.profile),
+                            title: 'العنوان',
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        settingsListItem(
+                            icon: Icon(BrselApp.profile),
+                            title: 'الإشعارات',
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        settingsListItem(
+                            icon: Icon(BrselApp.profile),
+                            title: 'الشروط و الأحكام',
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        settingsListItem(
+                            icon: Icon(BrselApp.profile),
+                            title: 'الدعم والمساعدة',
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        settingsListItem(
+                            icon: Icon(BrselApp.profile),
+                            title: 'تواصل معنا',
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        settingsListItem(
+                            icon: Icon(BrselApp.profile),
+                            title: 'تسجيل الخروج',
+                            onTap: () {}),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: Obx(() {
+                            if (HomeADsSliderController.isLoading.value) {
+                              return Container(
+                                height: getProportionalScreenHeight(80),
+                                child: Center(
+                                  child: SizedBox(
+                                      // height: 30,
+                                      // width: 30,
+                                      child: CircularProgressIndicator()),
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                height: getProportionalScreenHeight(80),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: CachedNetworkImage(
+                                    imageUrl: homeADsSliderController
+                                            .homeSliderList.first.image ??
+                                        "",
+                                    // imageUrl: homeResturante.image ??
+                                    //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      width: SizeConfig.screenWidth,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.fill)
+                                          // DecorationImage(
+                                          //   fit: BoxFit.cover,
+                                          //   // image: NetworkImage(homeResturante.image!),
+                                          //   image: CachedNetworkImageProvider(
+                                          //     homeResturante.image ??
+                                          //         'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                                          //     errorListener: () => const Icon(Icons.broken_image_outlined),
+                                          //   ),
+                                          // ),
+                                          ),
+                                    ),
+                                    placeholder: (context, url) => Center(
+                                        child:
+                                            const CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Container(
+                                      height: 76,
+                                      child: const Icon(
+                                        Icons.broken_image,
+                                        color: myGreyColor,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text('قيم تطبيقنا'),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: RatingBarIndicator(
+                            rating: 5,
+                            itemBuilder: (context, index) => const Icon(
+                              Icons.star_rate_rounded,
+                              color: Colors.yellow,
+                            ),
+                            itemCount: 5,
+                            itemSize: 30,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
                       ],
                     ),
                   ),
@@ -249,17 +389,25 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  InkWell settingsListItem({String? title, VoidCallback? onTap, Widget? icon}) {
+  InkWell settingsListItem(
+      {String? title, String? subtitle, VoidCallback? onTap, Widget? icon}) {
     return InkWell(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8), color: Colors.white),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
           child: Row(
             children: [
-              icon!,
+              Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: myBackgroundColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: icon!,
+                  )),
               SizedBox(
                 width: 15,
               ),
@@ -287,7 +435,7 @@ class _SettingsState extends State<Settings> {
                   textDirection: TextDirection.ltr,
                   size: 17,
                 ),
-              )
+              ),
             ],
           ),
         ),
