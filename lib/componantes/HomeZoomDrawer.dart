@@ -158,8 +158,12 @@ class DrawerMenu extends StatelessWidget {
                 title: 'طلباتي',
                 icon: Icon(BrselApp.ordersicon),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Meals()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Meals(
+                                focus: false,
+                              )));
                 }),
             SizedBox(
               height: 15,

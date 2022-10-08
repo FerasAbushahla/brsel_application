@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../constants.dart';
 
-class MyHomeSecCustomAppBar extends StatefulWidget {
+class MyRestaurantesCustomAppBar extends StatelessWidget {
   // final String title;
   // final Widget? leading;
   final VoidCallback? leadingOnPressed;
@@ -13,38 +13,19 @@ class MyHomeSecCustomAppBar extends StatefulWidget {
   final VoidCallback? action2OnPressed;
   final Widget? leading;
   final String? title;
-  final bool focus;
 
   // const MyHomeCustomAppBar(
   //     {Key? key, this.onPressed, required this.title, this.leading})
   //     : super(key: key);
   @override
-  const MyHomeSecCustomAppBar({
+  const MyRestaurantesCustomAppBar({
     Key? key,
     this.leadingOnPressed,
     this.action1OnPressed,
     this.action2OnPressed,
     this.leading,
     this.title,
-    required this.focus,
   }) : super(key: key);
-
-  @override
-  State<MyHomeSecCustomAppBar> createState() => _MyHomeSecCustomAppBarState();
-}
-
-class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
-  FocusNode myFocusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      if (widget.focus) {
-        FocusScope.of(context).requestFocus(myFocusNode);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +43,9 @@ class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  widget.leading!,
+                  leading!,
                   Text(
-                    widget.title!,
+                    title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
                   MyIconButton(
@@ -72,7 +53,7 @@ class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
                       borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/CartIcon.svg'),
-                      onPress: widget.action1OnPressed),
+                      onPress: action1OnPressed),
                 ],
               ),
               SizedBox(
@@ -86,7 +67,6 @@ class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
                     child: Container(
                       height: 42,
                       child: TextField(
-                        focusNode: myFocusNode,
                         style: MyCustomTextStyle.myH1TextStyle,
                         decoration: searchInputDecoration(
                           hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
@@ -107,7 +87,7 @@ class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
                       borderRadius: 6,
                       iconWidget:
                           SvgPicture.asset('assets/images/FilterIcon.svg'),
-                      onPress: widget.action2OnPressed),
+                      onPress: action2OnPressed),
                 ],
               ),
               SizedBox(

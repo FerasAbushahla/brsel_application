@@ -1,5 +1,6 @@
 import 'package:brsel_application/componantes/myHomeSecCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/componantes/myRestaurantesCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
@@ -29,7 +30,7 @@ class _RestaurantsState extends State<Restaurants> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: [
-            MyHomeSecCustomAppBar(
+            MyRestaurantesCustomAppBar(
               title: 'المطاعم',
               leading: MyIconButton(
                 onPress: () {

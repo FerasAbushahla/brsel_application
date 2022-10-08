@@ -12,7 +12,8 @@ import '../componantes/myHomeSecCustomAppBar.dart';
 import '../componantes/myIconButton.dart';
 
 class Meals extends StatefulWidget {
-  const Meals({Key? key}) : super(key: key);
+  final bool focus;
+  const Meals({Key? key, required this.focus}) : super(key: key);
 
   @override
   State<Meals> createState() => _MealsState();
@@ -30,6 +31,7 @@ class _MealsState extends State<Meals> {
           mainAxisSize: MainAxisSize.max,
           children: [
             MyHomeSecCustomAppBar(
+              focus: widget.focus,
               title: 'الوجبات',
               leading: MyIconButton(
                 onPress: () {

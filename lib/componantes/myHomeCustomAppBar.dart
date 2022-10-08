@@ -1,7 +1,9 @@
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -139,6 +141,17 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                     child: Container(
                       height: 42,
                       child: TextField(
+                        // enabled: false,
+                        readOnly: true,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Meals(
+                                        focus: true,
+                                      )));
+                        },
+                        // enabled: false,
                         style: MyCustomTextStyle.myH1TextStyle,
                         decoration: searchInputDecoration(
                           hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',

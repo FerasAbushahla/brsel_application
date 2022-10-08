@@ -21,7 +21,7 @@ class _WraperState extends State<Wraper> {
     HomeZoomDrawer(),
     // Home(),
     Orders(),
-    Meals(),
+    Meals(focus: false),
     Restaurants(),
     Settings(),
   ];
@@ -55,7 +55,9 @@ class _WraperState extends State<Wraper> {
                 onPressed: () {
                   setState(() {
                     currentPage = 2;
-                    currentScreen = Meals();
+                    currentScreen = Meals(
+                      focus: false,
+                    );
                   });
                 },
               ),
