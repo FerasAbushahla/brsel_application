@@ -1,16 +1,17 @@
+import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeMealsController extends GetxController {
+class SearchController extends GetxController {
   static var isLoading = true.obs;
-  var homeMealsList = <HomeMeals>[].obs;
+  var searchList = <SearchData>[].obs;
   String? token;
 
   @override
   void onInit() {
-    getSharedPrefs().then((value) => getHomeMeals());
+    getSharedPrefs().then((value) => getSearchMeals());
     // getHomeMeals();
 
     super.onInit();
@@ -21,17 +22,18 @@ class HomeMealsController extends GetxController {
     // userAddress = preferences.getString("currentPosition");
     token = preferences.getString('token');
 
-    print('homeMealsController token: $token');
+    print('searchController token: $token');
   }
 
-  void getHomeMeals() async {
+  void getSearchMeals({String? word}) async {
     try {
       isLoading(true);
-      var homeMeals = await RemoteServices.getHomeMeals(access_token: token);
+      var search = await RemoteServices.getSearchMeals(
+          access_token: token, searchWord: word);
       // var homeMeals = await RemoteServices.getHomeMeals(
       //     access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
       // access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
-      homeMealsList.value = homeMeals;
+      searchList.value = search;
     } finally {
       isLoading(false);
     }

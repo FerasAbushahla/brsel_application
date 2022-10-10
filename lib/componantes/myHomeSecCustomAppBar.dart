@@ -12,6 +12,7 @@ class MyHomeSecCustomAppBar extends StatefulWidget {
   final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
   final Widget? leading;
+  final Widget? searchBar;
   final String? title;
   final bool focus;
 
@@ -25,6 +26,7 @@ class MyHomeSecCustomAppBar extends StatefulWidget {
     this.action1OnPressed,
     this.action2OnPressed,
     this.leading,
+    this.searchBar,
     this.title,
     required this.focus,
   }) : super(key: key);
@@ -34,18 +36,6 @@ class MyHomeSecCustomAppBar extends StatefulWidget {
 }
 
 class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
-  FocusNode myFocusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      if (widget.focus) {
-        FocusScope.of(context).requestFocus(myFocusNode);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -78,38 +68,7 @@ class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
               SizedBox(
                 height: 21,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 42,
-                      child: TextField(
-                        focusNode: myFocusNode,
-                        style: MyCustomTextStyle.myH1TextStyle,
-                        decoration: searchInputDecoration(
-                          hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
-                          prefix: Icon(
-                            BrselApp.searchicon,
-                            size: 17,
-                            color: myPrimaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 3,
-                  ),
-                  MyIconButton(
-                      BackgroundColor: myBackgroundFillingColor,
-                      borderRadius: 6,
-                      iconWidget:
-                          SvgPicture.asset('assets/images/FilterIcon.svg'),
-                      onPress: widget.action2OnPressed),
-                ],
-              ),
+              widget.searchBar!,
               SizedBox(
                 height: 9,
               ),

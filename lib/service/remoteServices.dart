@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/models/registerModel.dart';
@@ -342,29 +343,64 @@ class RemoteServices {
     }
   }
 
-  static Future<List<HomeMeals>> getMealDetails(
-      {String? access_token, int? mealID}) async {
-    var response = await client.get(Uri.parse('${ApiSettings.meals}/$mealID'),
-        headers: {
-          "Accept": "application/json",
-          "Authorization": "Bearer $access_token"
-        });
+  // static Future<List<HomeMeals>> getMealDetails(
+  //     {String? access_token, int? mealID}) async {
+  //   var response = await client.get(Uri.parse('${ApiSettings.meals}/$mealID'),
+  //       headers: {
+  //         "Accept": "application/json",
+  //         "Authorization": "Bearer $access_token"
+  //       });
+  //   // print(response.statusCode);
+  //   if (response.statusCode == 200) {
+  //     var jsonString = response.body;
+  //     // print('true getHomeMeals$jsonString');
+
+  //     var mapOutput = json.decode(jsonString);
+  //     // print('true getHomeMeals mapOutput: $jsonString');
+
+  //     // print((mapOutput['data']['resturantes'])
+  //     //     .map((e) => HomeResturante.fromJson(e))
+  //     //     .cast<HomeResturante>()
+  //     //     .toList());
+
+  //     return (mapOutput['data']['meals'])
+  //         .map((e) => HomeMeals.fromJson(e))
+  //         .cast<HomeMeals>()
+  //         .toList();
+  //   } else {
+  //     var jsonString = response.body;
+  //     // print('false getHomeMeals body:$jsonString');
+
+  //     var mapOutput = json.decode(jsonString);
+  //     // print('false getHomeMeals mapOutput: $jsonString');
+
+  //     return [];
+  //   }
+  // }
+  static Future<List<SearchData>> getSearchMeals(
+      {String? access_token, String? searchWord}) async {
+    print('${ApiSettings.search}?$searchWord');
+    var response = await client
+        .get(Uri.parse('${ApiSettings.search}?$searchWord'), headers: {
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token"
+    });
     // print(response.statusCode);
     if (response.statusCode == 200) {
       var jsonString = response.body;
       // print('true getHomeMeals$jsonString');
 
       var mapOutput = json.decode(jsonString);
-      // print('true getHomeMeals mapOutput: $jsonString');
+      print('true getSearchMeals mapOutput: $jsonString');
 
       // print((mapOutput['data']['resturantes'])
       //     .map((e) => HomeResturante.fromJson(e))
       //     .cast<HomeResturante>()
       //     .toList());
 
-      return (mapOutput['data']['meals'])
-          .map((e) => HomeMeals.fromJson(e))
-          .cast<HomeMeals>()
+      return (mapOutput['data'])
+          .map((e) => SearchData.fromJson(e))
+          .cast<SearchData>()
           .toList();
     } else {
       var jsonString = response.body;

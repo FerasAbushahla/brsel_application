@@ -1,5 +1,7 @@
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/SearchController.dart';
 import 'package:brsel_application/controllers/homeMealsController.dart';
+import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
 import 'package:brsel_application/size_config.dart';
@@ -20,7 +22,21 @@ class Meals extends StatefulWidget {
 }
 
 class _MealsState extends State<Meals> {
-  HomeMealsController homeMealsController = Get.put(HomeMealsController());
+  FocusNode myFocusNode = FocusNode();
+  // HomeMealsController homeMealsController = Get.put(HomeMealsController());
+  SearchController searchController = Get.put(SearchController());
+  TextEditingController searchFieldController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      if (widget.focus) {
+        FocusScope.of(context).requestFocus(myFocusNode);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -46,6 +62,43 @@ class _MealsState extends State<Meals> {
                   ),
                 ),
               ),
+              searchBar: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 42,
+                      child: TextField(
+                        controller: searchFieldController,
+                        focusNode: myFocusNode,
+                        style: MyCustomTextStyle.myH1TextStyle,
+                        decoration: searchInputDecoration(
+                          hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',
+                          prefix: Icon(
+                            BrselApp.searchicon,
+                            size: 17,
+                            color: myPrimaryColor,
+                          ),
+                        ),
+                        onChanged: ((value) {
+                          searchController.getSearchMeals(
+                              word: searchFieldController.text);
+                        }),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  MyIconButton(
+                      BackgroundColor: myBackgroundFillingColor,
+                      borderRadius: 6,
+                      iconWidget:
+                          SvgPicture.asset('assets/images/FilterIcon.svg'),
+                      onPress: () {}),
+                ],
+              ),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -58,21 +111,21 @@ class _MealsState extends State<Meals> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Obx((() {
-                        if (HomeMealsController.isLoading.value) {
+                        if (SearchController.isLoading.value) {
                           return Center(child: CircularProgressIndicator());
                         } else {
                           return GridView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: homeMealsController.homeMealsList.length,
+                            itemCount: searchController.searchList.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     childAspectRatio: (1 / 1.18),
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10),
-                            itemBuilder: (context, index) => homeMeals(
-                                homeMealsController.homeMealsList[index]),
+                            itemBuilder: (context, index) => searchMealsCard(
+                                searchController.searchList[index]),
                           );
                         }
                       })),
@@ -87,15 +140,15 @@ class _MealsState extends State<Meals> {
     );
   }
 
-  InkWell homeMeals(HomeMeals homeMeals) {
+  InkWell searchMealsCard(SearchData searchData) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MealDetails(
-                      homeMeals: homeMeals,
-                    )));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => MealDetails(
+        //               homeMeals: homeMeals,
+        //             )));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -113,7 +166,7 @@ class _MealsState extends State<Meals> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CachedNetworkImage(
-              imageUrl: homeMeals.attachments!.first.link ?? "",
+              imageUrl: searchData.attachments!.first.link ?? "",
               imageBuilder: (context, imageProvider) => Container(
                 width: SizeConfig.screenWidth,
                 height: 123,
@@ -148,7 +201,7 @@ class _MealsState extends State<Meals> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        homeMeals.name!,
+                        searchData.name!,
                         style: MyCustomTextStyle.myH3,
                       ),
                       Row(
@@ -162,7 +215,7 @@ class _MealsState extends State<Meals> {
                             width: 2,
                           ),
                           Text(
-                            homeMeals.review!,
+                            searchData.review!,
                             style: MyCustomTextStyle.myP1,
                           ),
                           Text(
@@ -177,7 +230,7 @@ class _MealsState extends State<Meals> {
                     height: 5,
                   ),
                   Text(
-                    homeMeals.description!,
+                    searchData.description!,
                     style: MyCustomTextStyle.myDetailsTextStyle,
                   ),
                   SizedBox(
@@ -190,7 +243,7 @@ class _MealsState extends State<Meals> {
                         size: 10,
                       ),
                       Text(
-                        '${homeMeals.deliveryTime}د',
+                        '${searchData.deliveryTime}د',
                         style: MyCustomTextStyle.myDetailsSecTextStyle,
                       ),
                       Container(
@@ -207,7 +260,7 @@ class _MealsState extends State<Meals> {
                         style: MyCustomTextStyle.myDetailsSecTextStyle,
                       ),
                       Text(
-                        homeMeals.price!,
+                        searchData.price!,
                         style: MyCustomTextStyle.myDetailsSecTextStyle,
                       ),
                       Text(
