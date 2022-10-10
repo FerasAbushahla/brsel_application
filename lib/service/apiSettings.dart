@@ -8,5 +8,5 @@ class ApiSettings {
   static const login = _apiUrl + 'auth/login';
   static const home = _apiUrl + 'home';
   static const meals = _apiUrl + 'meals';
-  static const search = _apiUrl + 'meals/search';
+  static const search = _apiUrl + 'meals/search?word=';
 }

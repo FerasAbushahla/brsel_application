@@ -381,7 +381,7 @@ class RemoteServices {
       {String? access_token, String? searchWord}) async {
     print('${ApiSettings.search}?$searchWord');
     var response = await client
-        .get(Uri.parse('${ApiSettings.search}?$searchWord'), headers: {
+        .get(Uri.parse('${ApiSettings.search}$searchWord'), headers: {
       "Accept": "application/json",
       "Authorization": "Bearer $access_token"
     });
