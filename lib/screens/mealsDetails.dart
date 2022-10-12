@@ -40,12 +40,12 @@ class _MealDetailsState extends State<MealDetails> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   mealDetailsController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    mealDetailsController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +54,63 @@ class _MealDetailsState extends State<MealDetails> {
     print('mealID......${widget.mealID}');
     SizeConfig().init(context);
     return Scaffold(
+      floatingActionButton: Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          // constraints: BoxConstraints(
+          //   maxWidth: SizeConfig.screenWidth - 30,
+          // ),
+          child: ElevatedButton(
+            onPressed: () {},
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: myPrimaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 1.5,
+                      blurRadius: 1.5,
+                      offset: Offset(0, 1),
+                    )
+                  ],
+                ),
+                height: 55,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: Center(
+                          child: Text(
+                            'إضافة الى السلة',
+                            style: MyCustomTextStyle.myButtonTextStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      width: 100,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              // padding: EdgeInsets.symmetric(vertical: 8),
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              backgroundColor: myPrimaryColor,
+              // primary: mySecondaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -117,8 +174,11 @@ class _MealDetailsState extends State<MealDetails> {
                                 if (MealDetailsController.isLoading.value) {
                                   return SizedBox(
                                       height: 15,
+                                      width: 15,
                                       child: Center(
-                                          child: CircularProgressIndicator()));
+                                          child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      )));
                                 } else {
                                   return Row(
                                     children: [
@@ -149,8 +209,11 @@ class _MealDetailsState extends State<MealDetails> {
                                 if (MealDetailsController.isLoading.value) {
                                   return SizedBox(
                                       height: 15,
+                                      width: 15,
                                       child: Center(
-                                          child: CircularProgressIndicator()));
+                                          child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      )));
                                 } else {
                                   return Text(
                                     // '${homeMeals.deliveryTime}د',
@@ -172,8 +235,11 @@ class _MealDetailsState extends State<MealDetails> {
                                 if (MealDetailsController.isLoading.value) {
                                   return SizedBox(
                                       height: 15,
+                                      width: 15,
                                       child: Center(
-                                          child: CircularProgressIndicator()));
+                                          child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      )));
                                 } else {
                                   return Text(
                                     // '${homeMeals.deliveryTime}د',
@@ -194,113 +260,148 @@ class _MealDetailsState extends State<MealDetails> {
                     ),
                   ),
 
-                  // Padding(
-                  //   padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.circular(6),
-                  //       boxShadow: [
-                  //         BoxShadow(
-                  //           color: Colors.grey.withOpacity(0.3),
-                  //           spreadRadius: 1.5,
-                  //           blurRadius: 1.5,
-                  //           offset: Offset(0, 1),
-                  //         )
-                  //       ],
-                  //     ),
-                  //     child: Padding(
-                  //       padding: EdgeInsets.fromLTRB(0, 11, 0, 8),
-                  //       child: Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //         children: [
-                  //           Padding(
-                  //             padding:
-                  //                 const EdgeInsets.symmetric(horizontal: 15),
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //               children: [
-                  //                 Text(
-                  //                   mealDetailsController
-                  //                       .mealDetailsData.value.name!,
-                  //                   // widget.homeMeals!.name!,
-                  //                   style:
-                  //                       MyCustomTextStyle.myTitleSecTextStyle,
-                  //                 ),
-                  //                 SizedBox(
-                  //                   height: 6,
-                  //                 ),
-                  //                 Text(
-                  //                   'هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف.',
-                  //                   // widget.homeMeals!.description!,
-                  //                   style: MyCustomTextStyle
-                  //                       .myH1withOpacityTextStyle,
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //           Divider(
-                  //             height: 14,
-                  //           ),
-                  //           Padding(
-                  //             padding:
-                  //                 const EdgeInsets.symmetric(horizontal: 15),
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //               children: [
-                  //                 Text(
-                  //                   'الإضافات',
-                  //                   style:
-                  //                       MyCustomTextStyle.myTitleSecTextStyle,
-                  //                 ),
-                  //                 SizedBox(
-                  //                   height: 6,
-                  //                 ),
-                  //                 Text(
-                  //                   'الرجاء الغاء المواد الغير مطلوبة',
-                  //                   style: MyCustomTextStyle
-                  //                       .myH1withOpacityTextStyle,
-                  //                 ),
-                  //                 SizedBox(
-                  //                   height: 20,
-                  //                 ),
-                  //                 // MyMultipleExtrasChips(extrasList: extrasList),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: EdgeInsets.fromLTRB(0, 0, 35, 10),
-                  //   child: Text(
-                  //     'إضافات مقترحة',
-                  //     style: MyCustomTextStyle.myTitleSecTextStyle,
-                  //   ),
-                  // ),
-                  // SingleChildScrollView(
-                  //   physics: const BouncingScrollPhysics(
-                  //       parent: AlwaysScrollableScrollPhysics()),
-                  //   scrollDirection: Axis.horizontal,
-                  //   child: Row(
-                  //     children: List.generate(
-                  //       mealDetailsController
-                  //           .mealDetailsData.value.extras!.length,
-                  //       (index) => Padding(
-                  //         padding: index == 0
-                  //             ? EdgeInsets.only(right: 35)
-                  //             : EdgeInsets.only(right: 10),
-                  //         child: recommendedExtrasCard(
-                  //           mealsDetailsExtra: mealDetailsController
-                  //               .mealDetailsData.value.extras![index],
-                  //           // widget.homeMeals!.extras![index],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1.5,
+                            blurRadius: 1.5,
+                            offset: Offset(0, 1),
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 11, 0, 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Obx((() {
+                              if (MealDetailsController.isLoading.value) {
+                                return SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                        child: CircularProgressIndicator()));
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        mealDetailsController
+                                            .mealDetailsData.value.name!,
+                                        // widget.homeMeals!.name!,
+                                        style: MyCustomTextStyle
+                                            .myTitleSecTextStyle,
+                                      ),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Text(
+                                        'هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف.',
+                                        // widget.homeMeals!.description!,
+                                        style: MyCustomTextStyle
+                                            .myH1withOpacityTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            })),
+                            Divider(
+                              height: 14,
+                            ),
+                            Obx((() {
+                              if (MealDetailsController.isLoading.value) {
+                                return SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                        child: CircularProgressIndicator()));
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        'الإضافات',
+                                        style: MyCustomTextStyle
+                                            .myTitleSecTextStyle,
+                                      ),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Text(
+                                        'الرجاء الغاء المواد الغير مطلوبة',
+                                        style: MyCustomTextStyle
+                                            .myH1withOpacityTextStyle,
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      MyMultipleExtrasChips(
+                                          extrasList: extrasList),
+                                    ],
+                                  ),
+                                );
+                              }
+                            })),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Obx((() {
+                    if (MealDetailsController.isLoading.value) {
+                      return SizedBox(
+                          height: 50,
+                          child: Center(child: CircularProgressIndicator()));
+                    } else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 35, 10),
+                            child: Text(
+                              'إضافات مقترحة',
+                              style: MyCustomTextStyle.myTitleSecTextStyle,
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: List.generate(
+                                mealDetailsController
+                                    .mealDetailsData.value.extras!.length,
+                                (index) => Padding(
+                                  padding: index == 0
+                                      ? EdgeInsets.only(right: 35)
+                                      : EdgeInsets.only(right: 10),
+                                  child: recommendedExtrasCard(
+                                    mealsDetailsExtra: mealDetailsController
+                                        .mealDetailsData.value.extras![index],
+                                    // widget.homeMeals!.extras![index],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  })),
                 ],
               ),
             ),
