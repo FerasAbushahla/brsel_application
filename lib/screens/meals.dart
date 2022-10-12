@@ -34,6 +34,7 @@ class _MealsState extends State<Meals> {
       if (widget.focus) {
         FocusScope.of(context).requestFocus(myFocusNode);
       }
+      // searchController.getSearchMeals(word: "");
     });
   }
 

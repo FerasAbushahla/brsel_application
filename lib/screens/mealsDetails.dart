@@ -1,16 +1,20 @@
 import 'package:brsel_application/componantes/myDetailsCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
+import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class MealDetails extends StatefulWidget {
-  final HomeMeals? homeMeals;
-  const MealDetails({super.key, this.homeMeals});
+  final String mealID;
+  // final HomeMeals? homeMeals;
+  const MealDetails({super.key, required this.mealID});
 
   @override
   State<MealDetails> createState() => _MealDetailsState();
@@ -25,8 +29,29 @@ class _MealDetailsState extends State<MealDetails> {
     "زعتر",
     "فلفل"
   ];
+
+  MealDetailsController mealDetailsController =
+      Get.put(MealDetailsController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    mealDetailsController.mealID.value = widget.mealID;
+    mealDetailsController.getMealDetails(ID: widget.mealID);
+    super.initState();
+  }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   mealDetailsController.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    // MealDetailsController mealDetailsController =
+    //     Get.put(MealDetailsController(mealID: widget.mealID));
+    print('mealID......${widget.mealID}');
     SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
@@ -55,7 +80,18 @@ class _MealDetailsState extends State<MealDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  MyMealDetailsSlider(homeMeals: widget.homeMeals),
+                  // MyMealDetailsSlider(homeMeals: widget.homeMeals),
+                  Obx((() {
+                    if (MealDetailsController.isLoading.value) {
+                      return SizedBox(
+                          height: 175,
+                          child: Center(child: CircularProgressIndicator()));
+                    } else {
+                      return MyMealDetailsSlider(
+                          mealDetailsData:
+                              mealDetailsController.mealDetailsData.value);
+                    }
+                  })),
                   Padding(
                     padding: EdgeInsets.fromLTRB(20, 15, 20, 10),
                     child: Container(
@@ -77,157 +113,194 @@ class _MealDetailsState extends State<MealDetails> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    BrselApp.deliveryicon,
-                                    size: 10,
-                                  ),
-                                  Text(
+                              Obx((() {
+                                if (MealDetailsController.isLoading.value) {
+                                  return SizedBox(
+                                      height: 15,
+                                      child: Center(
+                                          child: CircularProgressIndicator()));
+                                } else {
+                                  return Row(
+                                    children: [
+                                      Icon(
+                                        BrselApp.deliveryicon,
+                                        size: 10,
+                                      ),
+                                      Text(
+                                        // '55',
+                                        // '${homeMeals.deliveryTime}د',
+                                        '${mealDetailsController.mealDetailsData.value.deliveryTime!}د',
+                                        // '${widget.homeMeals!.deliveryTime!}د',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: myBlackColor.withOpacity(0.5),
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                              })),
+                              VerticalDivider(
+                                width: 0,
+                                thickness: 1,
+                              ),
+                              Obx((() {
+                                if (MealDetailsController.isLoading.value) {
+                                  return SizedBox(
+                                      height: 15,
+                                      child: Center(
+                                          child: CircularProgressIndicator()));
+                                } else {
+                                  return Text(
                                     // '${homeMeals.deliveryTime}د',
-                                    '${widget.homeMeals!.deliveryTime!}د',
+                                    'الحدالأدنى. ${mealDetailsController.mealDetailsData.value.price!} ريال',
+                                    // 'الحدالأدنى. ${widget.homeMeals!.price!} ريال',
                                     style: TextStyle(
                                       fontSize: 13,
                                       color: myBlackColor.withOpacity(0.5),
                                       fontWeight: FontWeight.w500,
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  );
+                                }
+                              })),
                               VerticalDivider(
                                 width: 0,
                                 thickness: 1,
                               ),
-                              Text(
-                                // '${homeMeals.deliveryTime}د',
-                                'الحدالأدنى. ${widget.homeMeals!.price!} ريال',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: myBlackColor.withOpacity(0.5),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              VerticalDivider(
-                                width: 0,
-                                thickness: 1,
-                              ),
-                              Text(
-                                // '${homeMeals.deliveryTime}د',
-                                widget.homeMeals!.restaurant!,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: myBlackColor.withOpacity(0.5),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              Obx((() {
+                                if (MealDetailsController.isLoading.value) {
+                                  return SizedBox(
+                                      height: 15,
+                                      child: Center(
+                                          child: CircularProgressIndicator()));
+                                } else {
+                                  return Text(
+                                    // '${homeMeals.deliveryTime}د',
+                                    mealDetailsController
+                                        .mealDetailsData.value.restaurant!,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: myBlackColor.withOpacity(0.5),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                }
+                              })),
                             ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 1.5,
-                            blurRadius: 1.5,
-                            offset: Offset(0, 1),
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 11, 0, 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    widget.homeMeals!.name!,
-                                    style:
-                                        MyCustomTextStyle.myTitleSecTextStyle,
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    'هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف.',
-                                    // widget.homeMeals!.description!,
-                                    style: MyCustomTextStyle
-                                        .myH1withOpacityTextStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              height: 14,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    'الإضافات',
-                                    style:
-                                        MyCustomTextStyle.myTitleSecTextStyle,
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    'الرجاء الغاء المواد الغير مطلوبة',
-                                    style: MyCustomTextStyle
-                                        .myH1withOpacityTextStyle,
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  MyMultipleExtrasChips(extrasList: extrasList),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 35, 10),
-                    child: Text(
-                      'إضافات مقترحة',
-                      style: MyCustomTextStyle.myTitleSecTextStyle,
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        widget.homeMeals!.extras!.length,
-                        (index) => Padding(
-                          padding: index == 0
-                              ? EdgeInsets.only(right: 35)
-                              : EdgeInsets.only(right: 10),
-                          child: recommendedExtrasCard(
-                            widget.homeMeals!.extras![index],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+
+                  // Padding(
+                  //   padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       borderRadius: BorderRadius.circular(6),
+                  //       boxShadow: [
+                  //         BoxShadow(
+                  //           color: Colors.grey.withOpacity(0.3),
+                  //           spreadRadius: 1.5,
+                  //           blurRadius: 1.5,
+                  //           offset: Offset(0, 1),
+                  //         )
+                  //       ],
+                  //     ),
+                  //     child: Padding(
+                  //       padding: EdgeInsets.fromLTRB(0, 11, 0, 8),
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //         children: [
+                  //           Padding(
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             child: Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //               children: [
+                  //                 Text(
+                  //                   mealDetailsController
+                  //                       .mealDetailsData.value.name!,
+                  //                   // widget.homeMeals!.name!,
+                  //                   style:
+                  //                       MyCustomTextStyle.myTitleSecTextStyle,
+                  //                 ),
+                  //                 SizedBox(
+                  //                   height: 6,
+                  //                 ),
+                  //                 Text(
+                  //                   'هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف.',
+                  //                   // widget.homeMeals!.description!,
+                  //                   style: MyCustomTextStyle
+                  //                       .myH1withOpacityTextStyle,
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           Divider(
+                  //             height: 14,
+                  //           ),
+                  //           Padding(
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             child: Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //               children: [
+                  //                 Text(
+                  //                   'الإضافات',
+                  //                   style:
+                  //                       MyCustomTextStyle.myTitleSecTextStyle,
+                  //                 ),
+                  //                 SizedBox(
+                  //                   height: 6,
+                  //                 ),
+                  //                 Text(
+                  //                   'الرجاء الغاء المواد الغير مطلوبة',
+                  //                   style: MyCustomTextStyle
+                  //                       .myH1withOpacityTextStyle,
+                  //                 ),
+                  //                 SizedBox(
+                  //                   height: 20,
+                  //                 ),
+                  //                 // MyMultipleExtrasChips(extrasList: extrasList),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.fromLTRB(0, 0, 35, 10),
+                  //   child: Text(
+                  //     'إضافات مقترحة',
+                  //     style: MyCustomTextStyle.myTitleSecTextStyle,
+                  //   ),
+                  // ),
+                  // SingleChildScrollView(
+                  //   physics: const BouncingScrollPhysics(
+                  //       parent: AlwaysScrollableScrollPhysics()),
+                  //   scrollDirection: Axis.horizontal,
+                  //   child: Row(
+                  //     children: List.generate(
+                  //       mealDetailsController
+                  //           .mealDetailsData.value.extras!.length,
+                  //       (index) => Padding(
+                  //         padding: index == 0
+                  //             ? EdgeInsets.only(right: 35)
+                  //             : EdgeInsets.only(right: 10),
+                  //         child: recommendedExtrasCard(
+                  //           mealsDetailsExtra: mealDetailsController
+                  //               .mealDetailsData.value.extras![index],
+                  //           // widget.homeMeals!.extras![index],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -237,7 +310,7 @@ class _MealDetailsState extends State<MealDetails> {
     );
   }
 
-  Stack recommendedExtrasCard(HomeMealsExtra homeMealsExtra) {
+  Stack recommendedExtrasCard({MealsDetailsExtra? mealsDetailsExtra}) {
     return Stack(
       children: [
         Column(
@@ -389,9 +462,11 @@ class _MyMultipleExtrasChipsState extends State<MyMultipleExtrasChips> {
 class MyMealDetailsSlider extends StatefulWidget {
   // final HomeADsSliderController? homeADsSliderController;
   // final HomeSlider? homeSlider;
-  final HomeMeals? homeMeals;
+  // final HomeMeals? homeMeals;
+  final MealDetailsData? mealDetailsData;
+  // final Rx<MealDetailsData>? mealDetailsData;
 
-  const MyMealDetailsSlider({Key? key, this.homeMeals}) : super(key: key);
+  MyMealDetailsSlider({Key? key, this.mealDetailsData}) : super(key: key);
 
   @override
   State<MyMealDetailsSlider> createState() => _MyMealDetailsSliderState();
@@ -409,15 +484,19 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
         CarouselSlider(
           items: List.generate(
             // homeADsSliderController.homeSliderList.length,
-            widget.homeMeals!.attachments!.length,
+            // widget.homeMeals!.attachments!.length,
+            widget.mealDetailsData!.attachments!.length,
             (index) => Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: CachedNetworkImage(
-                  imageUrl:
-                      widget.homeMeals!.attachments!.elementAt(index).link ??
-                          "",
+                  imageUrl: widget.mealDetailsData!.attachments!
+                          .elementAt(index)
+                          .link ??
+                      "",
+                  // widget.homeMeals!.attachments!.elementAt(index).link ??
+                  //     "",
                   // imageUrl:
                   //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
                   imageBuilder: (context, imageProvider) => Container(
@@ -467,7 +546,8 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
             child: Padding(
               padding: EdgeInsets.fromLTRB(7, 1, 7, 1),
               child: Text(
-                "${current + 1}/${widget.homeMeals!.attachments!.length}",
+                "${current + 1}/${widget.mealDetailsData!.attachments!.length}",
+                // "${current + 1}/${widget.homeMeals!.attachments!.length}",
                 style: TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),
@@ -479,7 +559,9 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(widget.homeMeals!.attachments!.length,
+            children: List.generate(
+                widget.mealDetailsData!.attachments!.length,
+                // widget.homeMeals!.attachments!.length,
                 (index) => buildDot(index)),
           ),
           bottom: 10,

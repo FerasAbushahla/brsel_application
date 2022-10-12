@@ -1,14 +1,15 @@
-class MealDetails {
+class MealDetailsModel {
   Status? status;
-  Data? data;
-  MealDetails({
+  MealDetailsData? data;
+  MealDetailsModel({
     this.status,
     this.data,
   });
 
-  factory MealDetails.fromJson(Map<String, dynamic> json) => MealDetails(
+  factory MealDetailsModel.fromJson(Map<String, dynamic> json) =>
+      MealDetailsModel(
         status: Status.fromJson(json["status"]),
-        data: Data.fromJson(json["data"]),
+        data: MealDetailsData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -17,7 +18,7 @@ class MealDetails {
       };
 }
 
-class Data {
+class MealDetailsData {
   int? id;
   String? name;
   String? price;
@@ -28,9 +29,9 @@ class Data {
   String? review;
   String? deliveryTime;
   DateTime? createdAt;
-  List<Extra>? extras;
+  List<MealsDetailsExtra>? extras;
   List<Attachment>? attachments;
-  Data({
+  MealDetailsData({
     this.id,
     this.name,
     this.price,
@@ -45,7 +46,8 @@ class Data {
     this.attachments,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory MealDetailsData.fromJson(Map<String, dynamic> json) =>
+      MealDetailsData(
         id: json["id"],
         name: json["name"],
         price: json["price"],
@@ -57,7 +59,8 @@ class Data {
         review: json["review"],
         deliveryTime: json["delivery_time"],
         createdAt: DateTime.parse(json["created_at"]),
-        extras: List<Extra>.from(json["extras"].map((x) => Extra.fromJson(x))),
+        extras: List<MealsDetailsExtra>.from(
+            json["extras"].map((x) => MealsDetailsExtra.fromJson(x))),
         attachments: List<Attachment>.from(
             json["attachments"].map((x) => Attachment.fromJson(x))),
       );
@@ -102,19 +105,20 @@ class Attachment {
       };
 }
 
-class Extra {
+class MealsDetailsExtra {
   int? id;
   String? name;
   String? price;
   String? type;
-  Extra({
+  MealsDetailsExtra({
     this.id,
     this.name,
     this.price,
     this.type,
   });
 
-  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
+  factory MealsDetailsExtra.fromJson(Map<String, dynamic> json) =>
+      MealsDetailsExtra(
         id: json["id"],
         name: json["name"],
         price: json["price"],

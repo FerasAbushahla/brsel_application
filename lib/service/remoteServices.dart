@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
+import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/models/registerModel.dart';
 import 'package:brsel_application/service/apiSettings.dart';
@@ -343,43 +344,44 @@ class RemoteServices {
     }
   }
 
-  // static Future<List<HomeMeals>> getMealDetails(
-  //     {String? access_token, int? mealID}) async {
-  //   var response = await client.get(Uri.parse('${ApiSettings.meals}/$mealID'),
-  //       headers: {
-  //         "Accept": "application/json",
-  //         "Authorization": "Bearer $access_token"
-  //       });
-  //   // print(response.statusCode);
-  //   if (response.statusCode == 200) {
-  //     var jsonString = response.body;
-  //     // print('true getHomeMeals$jsonString');
+  static Future<MealDetailsData> getMealDetails(
+      {String? access_token, String? mealID}) async {
+    print('mealID...$mealID');
+    print('${ApiSettings.mealDetails}/$mealID');
+    var response = await client
+        .get(Uri.parse('${ApiSettings.mealDetails}/$mealID'), headers: {
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token"
+    });
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      // print('true getHomeMeals$jsonString');
 
-  //     var mapOutput = json.decode(jsonString);
-  //     // print('true getHomeMeals mapOutput: $jsonString');
+      var mapOutput = json.decode(jsonString)['data'];
+      print('true getMealDetails mapOutput: $jsonString');
 
-  //     // print((mapOutput['data']['resturantes'])
-  //     //     .map((e) => HomeResturante.fromJson(e))
-  //     //     .cast<HomeResturante>()
-  //     //     .toList());
+      MealDetailsData mealDetailsData = MealDetailsData.fromJson(mapOutput);
+      print('data  ${mealDetailsData.toJson()}');
+      print(mealDetailsData.toJson());
+      print('the end');
 
-  //     return (mapOutput['data']['meals'])
-  //         .map((e) => HomeMeals.fromJson(e))
-  //         .cast<HomeMeals>()
-  //         .toList();
-  //   } else {
-  //     var jsonString = response.body;
-  //     // print('false getHomeMeals body:$jsonString');
+      return mealDetailsData;
+    } else {
+      var jsonString = response.body;
+      print('false getMealDetails body:$jsonString');
 
-  //     var mapOutput = json.decode(jsonString);
-  //     // print('false getHomeMeals mapOutput: $jsonString');
+      var mapOutput = json.decode(jsonString);
+      MealDetailsData mealDetailsData = MealDetailsData.fromJson(mapOutput);
+      // print('false getHomeMeals mapOutput: $jsonString');
 
-  //     return [];
-  //   }
-  // }
+      return mealDetailsData;
+    }
+  }
+
   static Future<List<SearchData>> getSearchMeals(
       {String? access_token, String? searchWord}) async {
-    print('${ApiSettings.search}?$searchWord');
+    print('${ApiSettings.search}$searchWord');
     var response = await client
         .get(Uri.parse('${ApiSettings.search}$searchWord'), headers: {
       "Accept": "application/json",
@@ -388,7 +390,7 @@ class RemoteServices {
     // print(response.statusCode);
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      // print('true getHomeMeals$jsonString');
+      // print('true getHomeMeals$jsonString');q
 
       var mapOutput = json.decode(jsonString);
       print('true getSearchMeals mapOutput: $jsonString');

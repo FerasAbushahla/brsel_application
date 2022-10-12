@@ -9,4 +9,5 @@ class ApiSettings {
   static const home = _apiUrl + 'home';
   static const meals = _apiUrl + 'meals';
   static const search = _apiUrl + 'meals/search?word=';
+  static const mealDetails = _apiUrl + 'meals';
 }

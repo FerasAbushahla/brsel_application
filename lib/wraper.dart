@@ -9,6 +9,8 @@ import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 
 class Wraper extends StatefulWidget {
+  // final int currentPageGlobale;
+  // const Wraper({Key? key, required this.currentPageGlobale}) : super(key: key);
   const Wraper({Key? key}) : super(key: key);
 
   @override

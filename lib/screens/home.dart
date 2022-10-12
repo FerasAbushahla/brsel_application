@@ -331,11 +331,15 @@ class _HomeState extends State<Home> {
   InkWell homeMeals(HomeMeals homeMeals) {
     return InkWell(
       onTap: () {
+        print('card tap');
+        print(homeMeals.id);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => MealDetails(
-                      homeMeals: homeMeals,
+                      // homeMeals: homeMeals,
+                      // mealID: '1',
+                      mealID: homeMeals.id.toString(),
                     )));
       },
       child: Container(

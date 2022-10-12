@@ -17,6 +17,11 @@ class SearchController extends GetxController {
     super.onInit();
   }
 
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  // }
+
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // userAddress = preferences.getString("currentPosition");
@@ -29,7 +34,7 @@ class SearchController extends GetxController {
     try {
       isLoading(true);
       var search = await RemoteServices.getSearchMeals(
-          access_token: token, searchWord: word);
+          access_token: token, searchWord: word == null ? "" : word);
       // var homeMeals = await RemoteServices.getHomeMeals(
       //     access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
       // access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
