@@ -30,13 +30,13 @@ class _MealDetailsState extends State<MealDetails> {
     "فلفل"
   ];
 
-  MealDetailsController mealDetailsController =
+  final MealDetailsController mealDetailsController =
       Get.put(MealDetailsController());
   @override
   void initState() {
     // TODO: implement initState
     mealDetailsController.mealID.value = widget.mealID;
-    mealDetailsController.getMealDetails(ID: widget.mealID);
+    mealDetailsController.getMealDetails();
     super.initState();
   }
 
@@ -54,12 +54,26 @@ class _MealDetailsState extends State<MealDetails> {
     print('mealID......${widget.mealID}');
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton: Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          // constraints: BoxConstraints(
-          //   maxWidth: SizeConfig.screenWidth - 30,
-          // ),
+      floatingActionButton:
+          //  Expanded(
+          // child:
+
+          Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        // constraints: BoxConstraints(
+        //   maxWidth: SizeConfig.screenWidth - 30,
+        // ),
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 4,
+                blurRadius: 10,
+                offset: Offset(3, 3),
+              ),
+            ],
+          ),
           child: ElevatedButton(
             onPressed: () {},
             child: ClipRRect(
@@ -67,14 +81,6 @@ class _MealDetailsState extends State<MealDetails> {
               child: Container(
                 decoration: BoxDecoration(
                   color: myPrimaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1.5,
-                      blurRadius: 1.5,
-                      offset: Offset(0, 1),
-                    )
-                  ],
                 ),
                 height: 55,
                 child: Row(
@@ -92,6 +98,12 @@ class _MealDetailsState extends State<MealDetails> {
                     Container(
                       color: Colors.white,
                       width: 100,
+                      child: Center(
+                        child: Text(
+                          '15ر.ع',
+                          style: MyCustomTextStyle.myTextButtonTextStyle,
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -110,6 +122,8 @@ class _MealDetailsState extends State<MealDetails> {
           ),
         ),
       ),
+
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
           child: Column(
@@ -402,6 +416,9 @@ class _MealDetailsState extends State<MealDetails> {
                       );
                     }
                   })),
+                  SizedBox(
+                    height: 100,
+                  )
                 ],
               ),
             ),

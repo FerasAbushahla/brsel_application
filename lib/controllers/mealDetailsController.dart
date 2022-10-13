@@ -31,7 +31,7 @@ class MealDetailsController extends GetxController {
     }
   }
 
-  void getMealDetails({var ID}) async {
+  Future getMealDetails({var ID}) async {
     try {
       isLoading(true);
       print(isLoading);
