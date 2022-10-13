@@ -1,6 +1,7 @@
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/SearchController.dart';
 import 'package:brsel_application/controllers/homeMealsController.dart';
+import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
@@ -25,6 +26,8 @@ class _MealsState extends State<Meals> {
   FocusNode myFocusNode = FocusNode();
   // HomeMealsController homeMealsController = Get.put(HomeMealsController());
   SearchController searchController = Get.put(SearchController());
+  MealDetailsController mealDetailsController =
+      Get.put(MealDetailsController());
   TextEditingController searchFieldController = TextEditingController();
 
   @override
@@ -151,12 +154,16 @@ class _MealsState extends State<Meals> {
   InkWell searchMealsCard(SearchData searchData) {
     return InkWell(
       onTap: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => MealDetails(
-        //               homeMeals: homeMeals,
-        //             )));
+        mealDetailsController.mealID.value = searchData.id.toString();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MealDetails(
+                      // homeMeals: homeMeals,
+                      // mealID: '1',
+                      mealID: mealDetailsController.mealID.value,
+                      // mealID: homeMeals.id.toString(),
+                    )));
       },
       child: Container(
         decoration: BoxDecoration(
