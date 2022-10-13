@@ -7,6 +7,7 @@ import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/controllers/homeCategoriesController.dart';
 import 'package:brsel_application/controllers/homeMealsController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
+import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
@@ -44,6 +45,8 @@ class _HomeState extends State<Home> {
   HomeCategoriesController homeCategoriesController =
       Get.put(HomeCategoriesController());
   HomeMealsController homeMealsController = Get.put(HomeMealsController());
+  MealDetailsController mealDetailsController =
+      Get.put(MealDetailsController());
 
   // final drawerController = ZoomDrawerController();
   int curruntCategory = 1;
@@ -333,13 +336,15 @@ class _HomeState extends State<Home> {
       onTap: () {
         print('card tap');
         print(homeMeals.id);
+        mealDetailsController.mealID.value = homeMeals.id.toString();
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => MealDetails(
                       // homeMeals: homeMeals,
                       // mealID: '1',
-                      mealID: homeMeals.id.toString(),
+                      mealID: mealDetailsController.mealID.value,
+                      // mealID: homeMeals.id.toString(),
                     )));
       },
       child: Container(
