@@ -14,7 +14,8 @@ class MealDetailsController extends GetxController {
   @override
   void onInit() {
     // isLoading(true);
-    getSharedPrefs().then((value) => getMealDetails(ID: mealID.value));
+    getSharedPrefs();
+    // getSharedPrefs().then((value) => getMealDetails(ID: mealID.value));
     // isLoading(false);
 
     super.onInit();

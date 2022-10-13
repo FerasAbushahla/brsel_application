@@ -35,7 +35,7 @@ class _MealDetailsState extends State<MealDetails> {
   @override
   void initState() {
     // TODO: implement initState
-    mealDetailsController.mealID.value = widget.mealID;
+    // mealDetailsController.mealID.value = widget.mealID;
     mealDetailsController.getMealDetails(ID: widget.mealID);
     super.initState();
   }
