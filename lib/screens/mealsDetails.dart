@@ -54,15 +54,8 @@ class _MealDetailsState extends State<MealDetails> {
     print('mealID......${widget.mealID}');
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton:
-          //  Expanded(
-          // child:
-
-          Padding(
+      floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
-        // constraints: BoxConstraints(
-        //   maxWidth: SizeConfig.screenWidth - 30,
-        // ),
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [
@@ -76,6 +69,16 @@ class _MealDetailsState extends State<MealDetails> {
           ),
           child: ElevatedButton(
             onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              // padding: EdgeInsets.symmetric(vertical: 8),
+              padding: EdgeInsets.zero,
+              elevation: 0,
+              backgroundColor: myPrimaryColor,
+              // primary: mySecondaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: Container(
@@ -88,10 +91,23 @@ class _MealDetailsState extends State<MealDetails> {
                     Expanded(
                       child: Container(
                         child: Center(
-                          child: Text(
-                            'إضافة الى السلة',
-                            style: MyCustomTextStyle.myButtonTextStyle,
-                          ),
+                          child: Obx((() {
+                            if (MealDetailsController.isLoading.value) {
+                              return SizedBox(
+                                  height: 18,
+                                  width: 18,
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 3,
+                                  )));
+                            } else {
+                              return Text(
+                                'إضافة الى السلة',
+                                style: MyCustomTextStyle.myButtonTextStyle,
+                              );
+                            }
+                          })),
                         ),
                       ),
                     ),
@@ -99,24 +115,28 @@ class _MealDetailsState extends State<MealDetails> {
                       color: Colors.white,
                       width: 100,
                       child: Center(
-                        child: Text(
-                          '15ر.ع',
-                          style: MyCustomTextStyle.myTextButtonTextStyle,
-                        ),
+                        child: Obx((() {
+                          if (MealDetailsController.isLoading.value) {
+                            return SizedBox(
+                                height: 18,
+                                width: 18,
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  color: myPrimaryColor,
+                                  strokeWidth: 3,
+                                )));
+                          } else {
+                            return Text(
+                              '${mealDetailsController.mealDetailsData.value.price!} ر.ع',
+                              // '15ر.ع',
+                              style: MyCustomTextStyle.myTextButtonTextStyle,
+                            );
+                          }
+                        })),
                       ),
                     )
                   ],
                 ),
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              // padding: EdgeInsets.symmetric(vertical: 8),
-              padding: EdgeInsets.zero,
-              elevation: 0,
-              backgroundColor: myPrimaryColor,
-              // primary: mySecondaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
               ),
             ),
           ),

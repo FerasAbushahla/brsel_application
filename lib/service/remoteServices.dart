@@ -72,6 +72,43 @@ class RemoteServices {
     }
   }
 
+  static Future logout({
+    String? access_token,
+  }) async {
+    print('token...$access_token');
+
+    Map<String, String> headers = {
+      "Content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token"
+    };
+    var response = await client.post(
+      Uri.parse(ApiSettings.logout),
+      headers: headers,
+    );
+    print(response);
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString)["message"];
+      print(mapOutput);
+
+      return mapOutput;
+    } else {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString)["message"];
+      print(mapOutput);
+
+      return mapOutput;
+    }
+  }
+
   static Future<PersonalInfoModel> userInfoRegister(
       {String? userID,
       String? firstName,
@@ -196,7 +233,6 @@ class RemoteServices {
   //   }
   // }
 
-  // static Future<Logout> logout({}){}
   static Future<List<HomeSlider>> getHomeSlider({String? access_token}) async {
     var response = await client.get(Uri.parse(ApiSettings.home), headers: {
       "Accept": "application/json",

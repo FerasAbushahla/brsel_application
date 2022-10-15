@@ -36,6 +36,7 @@ class MealDetailsController extends GetxController {
     try {
       isLoading(true);
       print(isLoading);
+      print('token....$token');
       var mealDetails =
           // await RemoteServices.getMealDetails(
           //     access_token: '32|B7QogsoOIOqiuUOf0OUVhUqpSkqeAXLxbpe83fmk',

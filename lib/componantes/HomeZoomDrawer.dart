@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/screens/home.dart';
+import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/meals.dart';
+import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -77,7 +79,7 @@ class _HomeZoomDrawerState extends State<HomeZoomDrawer> {
   }
 }
 
-class DrawerMenu extends StatelessWidget {
+class DrawerMenu extends StatefulWidget {
   final String firstName;
   final String lastName;
   final String personalImage;
@@ -88,6 +90,26 @@ class DrawerMenu extends StatelessWidget {
       required this.personalImage})
       : super(key: key);
 
+  @override
+  State<DrawerMenu> createState() => _DrawerMenuState();
+}
+
+class _DrawerMenuState extends State<DrawerMenu> {
+  String? token;
+
+  Future removePrefernces() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    token = preferences.getString('token');
+    preferences.remove('token');
+    preferences.remove('firstName');
+    preferences.remove('lastName');
+    preferences.remove('phoneNumber');
+    preferences.remove('sex');
+    preferences.remove('personalImage');
+    preferences.remove('currentPosition');
+  }
+
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +132,7 @@ class DrawerMenu extends StatelessWidget {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(6)),
                     child: Image.memory(
-                      base64Decode(personalImage),
+                      base64Decode(widget.personalImage),
                       fit: BoxFit.cover,
                     ),
                     // child: Image.asset(
@@ -136,7 +158,7 @@ class DrawerMenu extends StatelessWidget {
               height: 2,
             ),
             Text(
-              '$firstName $lastName',
+              '${widget.firstName} ${widget.lastName}',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -208,8 +230,27 @@ class DrawerMenu extends StatelessWidget {
                         IconButton(
                           onPressed: () async {
                             // print('pppppppppppppppppppppppppppp');
-                            // SharedPreferences preferences =
-                            //     await SharedPreferences.getInstance();
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            String? token = preferences.getString('token');
+                            if (token != null) {
+                              var response = await RemoteServices.logout(
+                                  access_token: token);
+                              if (response == 'logout Successfully') {
+                                await removePrefernces().then((value) =>
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login())));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
+                                  ),
+                                );
+                              }
+                            }
                             // if (true) {
                             //   print('pppppppppppppppppppppppppppp');
                             //   ApiResponse apiResponse =
