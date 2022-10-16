@@ -6,6 +6,7 @@ import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/personalInfoModel.dart';
@@ -218,7 +219,8 @@ class _LoginState extends State<Login> {
                                         await RemoteServices.login(
                                             email: emailController.text,
                                             password: passwordController.text);
-                                    print(response);
+                                    print(
+                                        'view Response>>>${response.message}');
                                     if (response.message ==
                                         "User Logged In Successfully") {
                                       await setPreferences(
@@ -235,38 +237,47 @@ class _LoginState extends State<Login> {
                                         phoneNumber: response.user!.phone!,
                                         sex: response.user!.gender!,
                                         token: response.token!,
-                                      ).then(
-                                        (value) => ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content:
-                                                Text("تم تسجيل الدخول بنجاح"),
-                                          ),
-                                        ),
-                                      );
+                                      ).then((value) => Fluttertoast.showToast(
+                                              msg: "تم تسجيل الدخول بنجاح",
+                                              backgroundColor: myDarkGreyColor)
+                                          // ScaffoldMessenger.of(context)
+                                          //     .showSnackBar(
+                                          //   SnackBar(
+                                          //     content:
+                                          //         Text("تم تسجيل الدخول بنجاح"),
+                                          //   ),
+                                          // ),
+                                          );
 
                                       Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: ((context) =>
                                                   Wraper())));
-                                    } else if (response ==
-                                        'Email or Password does not match with our record.') {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              "يوجد خطأ في البريد أو كلمة المرور"),
-                                        ),
-                                      );
+                                    } else if (response.message ==
+                                        "Email or Password does not match with our record.") {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "يوجد خطأ في البريد أو كلمة المرور",
+                                          backgroundColor: myDarkGreyColor);
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   SnackBar(
+                                      //     content: Text(
+                                      //         "يوجد خطأ في البريد أو كلمة المرور"),
+                                      //   ),
+                                      // );
                                     } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              "يوجد خطأ, أعد المحاولة لاحقاً"),
-                                        ),
-                                      );
+                                      Fluttertoast.showToast(
+                                          msg: "يوجد خطأ, أعد المحاولة لاحقاً",
+                                          backgroundColor: myDarkGreyColor);
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   SnackBar(
+                                      //     content: Text(
+                                      //         "يوجد خطأ, أعد المحاولة لاحقاً"),
+                                      //   ),
+                                      // );
                                     }
                                   }
                                   setState(() {

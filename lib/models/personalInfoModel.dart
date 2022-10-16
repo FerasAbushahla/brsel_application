@@ -16,7 +16,7 @@ class PersonalInfoModel {
         status: json["status"],
         message: json["message"],
         token: json["token"],
-        user: User.fromJson(json["user"]),
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {

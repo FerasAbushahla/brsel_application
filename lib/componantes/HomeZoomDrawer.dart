@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final ZoomDrawerController z = ZoomDrawerController();
@@ -237,18 +238,25 @@ class _DrawerMenuState extends State<DrawerMenu> {
                               var response = await RemoteServices.logout(
                                   access_token: token);
                               if (response == 'logout Successfully') {
-                                await removePrefernces().then((value) =>
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Login())));
+                                await removePrefernces().then((value) {
+                                  Fluttertoast.showToast(
+                                      msg: "تم تسجيل الخروج",
+                                      backgroundColor: myDarkGreyColor);
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()));
+                                });
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
-                                  ),
-                                );
+                                Fluttertoast.showToast(
+                                    msg: "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                    backgroundColor: myDarkGreyColor);
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     content:
+                                //         Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
+                                //   ),
+                                // );
                               }
                             }
                             // if (true) {

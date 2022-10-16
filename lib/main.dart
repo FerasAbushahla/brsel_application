@@ -5,6 +5,7 @@ import 'package:brsel_application/screens/mealsDetails.dart';
 import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/register.dart';
+import 'package:brsel_application/screens/splash.dart';
 import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Register(),
+      home: Splash(),
     );
   }
 }
