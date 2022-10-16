@@ -109,6 +109,57 @@ class RemoteServices {
     }
   }
 
+  static Future<PersonalInfoModel> login({
+    required String email,
+    required String password,
+  }) async {
+    // print('token...$access_token');
+
+    Map<String, String> headers = {
+      // "Content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      // "Authorization": "Bearer $access_token"
+    };
+    Map<String, String> body = {
+      "email": email,
+      "password": password,
+    };
+    var response = await client.post(
+      Uri.parse(ApiSettings.login),
+      headers: headers,
+      body: body,
+    );
+    print('login');
+    print(response);
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString);
+      print(mapOutput);
+
+      PersonalInfoModel personalInfoResponse =
+          PersonalInfoModel.fromJson(mapOutput);
+
+      return personalInfoResponse;
+    } else {
+      print('login error');
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString);
+      print(mapOutput);
+
+      PersonalInfoModel personalInfoResponse =
+          PersonalInfoModel.fromJson(mapOutput);
+
+      return personalInfoResponse;
+    }
+  }
+
   static Future<PersonalInfoModel> userInfoRegister(
       {String? userID,
       String? firstName,

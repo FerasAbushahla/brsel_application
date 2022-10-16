@@ -2,22 +2,27 @@ class PersonalInfoModel {
   bool? status;
   String? message;
   User? user;
+  String? token;
+
   PersonalInfoModel({
     this.status,
     this.message,
     this.user,
+    this.token,
   });
 
   factory PersonalInfoModel.fromJson(Map<String, dynamic> json) =>
       PersonalInfoModel(
         status: json["status"],
         message: json["message"],
+        token: json["token"],
         user: User.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
+        "token": token,
         "user": user!.toJson(),
       };
 }
@@ -27,15 +32,15 @@ class User {
   String? firstName;
   String? lastName;
   String? phone;
-  dynamic? avatar;
+  dynamic avatar;
   String? gender;
   String? email;
   String? address;
   String? latitude;
   String? longitude;
-  dynamic? emailVerifiedAt;
+  dynamic emailVerifiedAt;
   DateTime? createdAt;
-  dynamic? deletedAt;
+  dynamic deletedAt;
   User({
     this.id,
     this.firstName,
