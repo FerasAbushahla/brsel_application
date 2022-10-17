@@ -73,13 +73,6 @@ class _SettingsState extends State<Settings> {
           children: [
             MySettingsCustomAppBar(
               title: 'الإعدادات',
-              // leading: MyIconButton(
-              //     BackgroundColor: Colors.white,
-              //     borderRadius: 6,
-              //     iconWidget: SvgPicture.asset('assets/images/MenuIcon.svg'),
-              //     onPress: () {
-              //       ZoomDrawer.of(context)!.toggle();
-              //     }),
               cartButtonWidget: MyIconButton(
                   BackgroundColor: Colors.white,
                   borderRadius: 6,

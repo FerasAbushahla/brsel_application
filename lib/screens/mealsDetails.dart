@@ -492,7 +492,7 @@ class _MealDetailsState extends State<MealDetails> {
           right: 12,
           child: Container(
             height: 22,
-            width: 55,
+            width: 60,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6), color: Colors.white),
             child: Row(
@@ -503,7 +503,7 @@ class _MealDetailsState extends State<MealDetails> {
                   child: IconButton(
                     padding: EdgeInsets.all(5),
                     icon: Icon(
-                      Icons.remove,
+                      Icons.add,
                       size: 11.7,
                       color: myPrimaryColor,
                     ),
@@ -524,7 +524,7 @@ class _MealDetailsState extends State<MealDetails> {
                   child: IconButton(
                     padding: EdgeInsets.all(5),
                     icon: Icon(
-                      Icons.add,
+                      Icons.remove,
                       size: 11.7,
                       color: myPrimaryColor,
                     ),

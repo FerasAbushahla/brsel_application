@@ -1,4 +1,5 @@
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -67,6 +68,15 @@ class MyRestaurantesCustomAppBar extends StatelessWidget {
                     child: Container(
                       height: 42,
                       child: TextField(
+                        readOnly: true,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Meals(
+                                        focus: true,
+                                      )));
+                        },
                         style: MyCustomTextStyle.myH1TextStyle,
                         decoration: searchInputDecoration(
                           hint: 'ابحث عن أي مطعم,وجبة أو مطبخ',

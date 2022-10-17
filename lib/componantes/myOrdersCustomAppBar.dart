@@ -1,33 +1,32 @@
+import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../constants.dart';
 
-class MySettingsCustomAppBar extends StatefulWidget {
-  // final VoidCallback? leadingOnPressed;
+class MyOrdersCustomAppBar extends StatelessWidget {
+  // final String title;
+  // final Widget? leading;
+  final VoidCallback? leadingOnPressed;
   final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
-  // final Widget? leading;
-  final Widget? cartButtonWidget;
+  final Widget? leading;
   final String? title;
 
+  // const MyHomeCustomAppBar(
+  //     {Key? key, this.onPressed, required this.title, this.leading})
+  //     : super(key: key);
   @override
-  const MySettingsCustomAppBar({
+  const MyOrdersCustomAppBar({
     Key? key,
-    // this.leadingOnPressed,
+    this.leadingOnPressed,
     this.action1OnPressed,
     this.action2OnPressed,
-    // this.leading,
+    this.leading,
     this.title,
-    this.cartButtonWidget,
   }) : super(key: key);
 
-  @override
-  State<MySettingsCustomAppBar> createState() => _MySettingsCustomAppBarState();
-}
-
-class _MySettingsCustomAppBarState extends State<MySettingsCustomAppBar> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -44,19 +43,21 @@ class _MySettingsCustomAppBarState extends State<MySettingsCustomAppBar> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 42,
-                  ),
-                  // widget.leading!,
+                  leading!,
                   Text(
-                    widget.title!,
+                    title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
-                  widget.cartButtonWidget!,
+                  MyIconButton(
+                      BackgroundColor: Colors.white,
+                      borderRadius: 6,
+                      iconWidget:
+                          SvgPicture.asset('assets/images/CartIcon.svg'),
+                      onPress: action1OnPressed),
                 ],
               ),
               SizedBox(
-                height: 9,
+                height: 40,
               ),
             ],
           ),
