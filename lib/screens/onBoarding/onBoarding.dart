@@ -1,9 +1,9 @@
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -219,23 +219,20 @@ class _OnBoardingState extends State<OnBoarding> {
                             title: 'اطلب أول وجبة من بارسل',
                             color: myPrimaryColor,
                             loading: loading,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                loading = true;
+                              });
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Register()));
+                              setState(() {
+                                loading = false;
+                              });
+                            },
                           ),
                         ),
-
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                        //   child: OnboardingButtonsBar(skipOneStep: () {
-                        //     controller.nextPage(
-                        //         duration: kThemeAnimationDuration,
-                        //         curve: Curves.easeOut);
-                        //   }, skip: () {
-                        //     controller.jumpToPage(4);
-                        //   }),
-                        // ),
-                        // SizedBox(
-                        //   height: 52,
-                        // )
                       ],
                     ),
                     Positioned(
