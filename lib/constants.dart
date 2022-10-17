@@ -29,6 +29,7 @@ const mySecGreyColor = Color(0xFF8F92A1);
 const myYellowColor = Color(0xFFFFDE0A);
 const mySecondaryColor = Color(0xFF275D89);
 const myDarkBlueColor = Color(0xFF3E4958);
+const mylighterDarkBlueColor = Color(0xFF111934);
 const myRedColor = Color(0xFFE35757);
 
 class BrselApp {
@@ -236,6 +237,22 @@ class MyCustomTextStyle {
     fontSize: 13,
     color: myBlackColor,
     fontWeight: FontWeight.w700,
+  );
+  static const TextStyle myOnBoardingTextButtonTextStyle = TextStyle(
+    fontSize: 16,
+    color: myTextGreyColor,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle myOnBoardingTitleTextStyle = TextStyle(
+    fontSize: 16,
+    color: myDarkBlueColor,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle myOnBoardingTextStyle = TextStyle(
+    height: 1.7,
+    fontSize: 14,
+    color: mylighterDarkBlueColor.withOpacity(0.5),
+    fontWeight: FontWeight.w300,
   );
 }
 

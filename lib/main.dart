@@ -2,6 +2,7 @@ import 'package:brsel_application/screens/home.dart';
 import 'package:brsel_application/screens/location.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
+import 'package:brsel_application/screens/onBoarding/onBoarding.dart';
 import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/register.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Splash(),
+      home: OnBoarding(),
     );
   }
 }
