@@ -233,6 +233,11 @@ class MyCustomTextStyle {
     color: myBlackColor,
     fontWeight: FontWeight.w500,
   );
+  static const TextStyle myTextButtonLightTextStyle = TextStyle(
+    fontSize: 13,
+    color: myBlackColor,
+    fontWeight: FontWeight.w300,
+  );
   static const TextStyle myAppBarTitleTextStyle = TextStyle(
     fontSize: 13,
     color: myBlackColor,

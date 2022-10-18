@@ -26,7 +26,7 @@ class _OrdersState extends State<Orders> {
           mainAxisSize: MainAxisSize.max,
           children: [
             MyOrdersCustomAppBar(
-              title: 'المطاعم',
+              title: 'طلباتي',
               leading: MyIconButton(
                 onPress: () {
                   Navigator.pop(context);
@@ -42,17 +42,225 @@ class _OrdersState extends State<Orders> {
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: List.generate(
-                    3,
-                    (index) => Padding(
-                      padding: index == 0
-                          ? EdgeInsets.only(bottom: 6)
-                          : EdgeInsets.symmetric(vertical: 6),
-                      child: orderCard(),
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: List.generate(
+                        3,
+                        (index) => Padding(
+                          padding: index == 0
+                              ? EdgeInsets.only(bottom: 6)
+                              : EdgeInsets.symmetric(vertical: 6),
+                          child: orderCard(),
+                        ),
+                      ),
                     ),
+                  ),
+                  // Spacer(),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: SizeConfig.screenWidth,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 18, 0, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'ملخص الطلبية',
+                        style: MyCustomTextStyle.myCardTitletextStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'الإجمالي',
+                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            ),
+                            Text(
+                              '115 ر.ع',
+                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'الإجمالي',
+                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            ),
+                            Text(
+                              '115 ر.ع',
+                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'الإجمالي',
+                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            ),
+                            Text(
+                              '115 ر.ع',
+                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        width: SizeConfig.screenWidth,
+                        color: myPrimaryColor.withOpacity(0.4),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
+                          child: Row(
+                            children: [
+                              RawMaterialButton(
+                                constraints: BoxConstraints(),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                onPressed: () {},
+                                fillColor: myPrimaryColor,
+                                child: Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                  size: 14.0,
+                                ),
+                                padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                                shape: CircleBorder(),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'تعديل الكوبون',
+                                style: MyCustomTextStyle.myTextButtonTextStyle,
+                              ),
+                              Spacer(),
+                              Text(
+                                'تم توفير مبلع 15 ريال عماني',
+                                style: MyCustomTextStyle
+                                    .myTextButtonLightTextStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'إجمالي',
+                                  style:
+                                      MyCustomTextStyle.mySearchHintTextStyle,
+                                ),
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '210.80',
+                                      style: MyCustomTextStyle
+                                          .mySearchHintTextStyle,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      'ر.ع',
+                                      style: MyCustomTextStyle
+                                          .mySearchHintTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                // padding: EdgeInsets.symmetric(vertical: 8),
+                                padding: EdgeInsets.zero,
+                                elevation: 0,
+                                backgroundColor: myPrimaryColor,
+                                // primary: mySecondaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(6, 0, 16, 0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'الدفع',
+                                      style:
+                                          MyCustomTextStyle.myButtonTextStyle,
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 2, 3, 2),
+                                        child: Icon(
+                                          textDirection: TextDirection.ltr,
+                                          Icons.arrow_back_ios,
+                                          color: myPrimaryColor,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -85,10 +293,13 @@ class _OrdersState extends State<Orders> {
                       image: DecorationImage(
                           image: imageProvider, fit: BoxFit.cover)),
                 ),
-                placeholder: (context, url) =>
-                    Center(child: const CircularProgressIndicator()),
+                placeholder: (context, url) => Container(
+                    height: 70,
+                    width: 95,
+                    child: Center(child: const CircularProgressIndicator())),
                 errorWidget: (context, url, error) => Container(
-                  height: 76,
+                  height: 70,
+                  width: 95,
                   child: const Icon(
                     Icons.broken_image,
                     color: myGreyColor,
