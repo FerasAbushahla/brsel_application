@@ -48,12 +48,15 @@ class MyOrdersCustomAppBar extends StatelessWidget {
                     title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
-                  MyIconButton(
-                      BackgroundColor: Colors.white,
-                      borderRadius: 6,
-                      iconWidget:
-                          SvgPicture.asset('assets/images/CartIcon.svg'),
-                      onPress: action1OnPressed),
+                  // MyIconButton(
+                  //     BackgroundColor: Colors.white,
+                  //     borderRadius: 6,
+                  //     iconWidget:
+                  //         SvgPicture.asset('assets/images/CartIcon.svg'),
+                  //     onPress: action1OnPressed),
+                  Container(
+                    width: 42,
+                  )
                 ],
               ),
               SizedBox(

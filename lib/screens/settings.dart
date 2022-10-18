@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/MySettingsCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
+import 'package:brsel_application/screens/orders.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,13 @@ class _SettingsState extends State<Settings> {
                   BackgroundColor: Colors.white,
                   borderRadius: 6,
                   iconWidget: SvgPicture.asset('assets/images/CartIcon.svg'),
-                  onPress: () {}),
+                  onPress: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Orders(),
+                        ));
+                  }),
             ),
             Expanded(
                 child: SingleChildScrollView(
