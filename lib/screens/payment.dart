@@ -39,14 +39,109 @@ class _PaymentState extends State<Payment> {
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                    ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        // height: 65,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: myPrimaryColor.withOpacity(0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Center(
+                                    child: Icon(
+                                      size: 26,
+                                      Icons.location_on_outlined,
+                                      color: myPrimaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    'الموقع',
+                                    style:
+                                        MyCustomTextStyle.myCardTitletextStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    'data',
+                                    style: MyCustomTextStyle.myCardtextStyle,
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+
+                              Align(
+                                alignment: Alignment.center,
+                                child: RawMaterialButton(
+                                  constraints: BoxConstraints(),
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  onPressed: () {},
+                                  fillColor: myPrimaryColor,
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                    size: 14.0,
+                                  ),
+                                  padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                                  shape: CircleBorder(),
+                                ),
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(top: 8),
+                              //   child: ClipOval(
+                              //     child: Material(
+                              //       color: myPrimaryColor,
+                              //       child: InkWell(
+                              //         // splashColor: Colors.red, // Splash color
+                              //         onTap: () async {},
+                              //         child: SizedBox(
+                              //           width: 28,
+                              //           height: 28,
+                              //           child: Icon(
+                              //             Icons.edit,
+                              //             color: Colors.white,
+                              //             size: 20,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             Align(
