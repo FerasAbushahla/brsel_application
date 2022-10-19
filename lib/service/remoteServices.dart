@@ -198,7 +198,7 @@ class RemoteServices {
       var stream = http.ByteStream(DelegatingStream(image.openRead()));
       var length = await image.length();
       var multipartFile =
-          http.MultipartFile('image', stream, length, filename: fileName);
+          http.MultipartFile("image", stream, length, filename: fileName);
 
       request.files.add(multipartFile);
     }

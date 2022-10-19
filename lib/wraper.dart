@@ -37,6 +37,7 @@ class _WraperState extends State<Wraper> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        // resizeToAvoidBottomInset: true,
         body: PageStorage(
           bucket: bucket,
           child: currentScreen,

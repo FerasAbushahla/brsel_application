@@ -27,13 +27,19 @@ class MyHomeCustomAppBar extends StatefulWidget {
 
 class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
   String? userAddress = '';
+  String? userStreetAddress = '';
+  String? userLocalityAddress = '';
 
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // userAddress = preferences.getString("currentPosition");
     setState(() {
       userAddress = preferences.getString("currentPosition");
+      userStreetAddress = preferences.getString("currentStreetPosition");
+      userLocalityAddress = preferences.getString("currentLocalityPosition");
       print(userAddress);
+      print(userStreetAddress);
+      print(userLocalityAddress);
     });
 
     print(preferences.get('firstName'));
@@ -95,7 +101,7 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                                 width: 5,
                               ),
                               Text(
-                                'منزل',
+                                'الموقع',
                                 style: MyCustomTextStyle.myH1TextStyle,
                               ),
                               SizedBox(
@@ -108,15 +114,12 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                userAddress!,
-                                style:
-                                    MyCustomTextStyle.myH1withOpacityTextStyle,
-                              )
-                            ],
+                          Text(
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.rtl,
+                            // userAddress!,
+                            '${userLocalityAddress} ${userStreetAddress}',
+                            style: MyCustomTextStyle.myH1withOpacityTextStyle,
                           )
                         ],
                       ),

@@ -4,6 +4,8 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/screens/home.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/meals.dart';
+import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -181,12 +183,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 title: 'طلباتي',
                 icon: Icon(BrselApp.ordersicon),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Meals(
-                                focus: false,
-                              )));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Orders()));
                 }),
             SizedBox(
               height: 15,
@@ -194,14 +192,30 @@ class _DrawerMenuState extends State<DrawerMenu> {
             MyMenuListItem(
                 title: 'الوجبات',
                 icon: Icon(BrselApp.restaurantsicon),
-                onTap: () {}),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Meals(
+                        focus: false,
+                      ),
+                    ),
+                  );
+                }),
             SizedBox(
               height: 15,
             ),
             MyMenuListItem(
                 title: 'اعدادات',
                 icon: Icon(BrselApp.settingsicon),
-                onTap: () {}),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Settings(),
+                    ),
+                  );
+                }),
             SizedBox(
               height: 15,
             ),
