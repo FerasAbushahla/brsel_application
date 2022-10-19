@@ -1,3 +1,4 @@
+import 'package:brsel_application/screens/payment.dart';
 import 'package:brsel_application/screens/splash.dart';
 import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/wraper.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Splash(),
+      home: Payment(),
     );
   }
 }
