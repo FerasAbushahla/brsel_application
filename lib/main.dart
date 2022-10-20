@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Payment(),
+      home: Splash(),
     );
   }
 }

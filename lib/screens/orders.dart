@@ -1,6 +1,7 @@
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/myOrdersCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/screens/payment.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -214,7 +215,12 @@ class _OrdersState extends State<Orders> {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Payment()));
+                              },
                               style: ElevatedButton.styleFrom(
                                 // padding: EdgeInsets.symmetric(vertical: 8),
                                 padding: EdgeInsets.zero,
@@ -230,7 +236,7 @@ class _OrdersState extends State<Orders> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      'الدفع',
+                                      'استمرار',
                                       style:
                                           MyCustomTextStyle.myButtonTextStyle,
                                     ),
