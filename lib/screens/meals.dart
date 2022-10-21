@@ -17,7 +17,9 @@ import '../componantes/myIconButton.dart';
 
 class Meals extends StatefulWidget {
   final bool focus;
-  const Meals({Key? key, required this.focus}) : super(key: key);
+  final String? searchWord;
+  const Meals({Key? key, required this.focus, this.searchWord})
+      : super(key: key);
 
   @override
   State<Meals> createState() => _MealsState();
@@ -35,6 +37,8 @@ class _MealsState extends State<Meals> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
+      searchFieldController.text = widget.searchWord!;
+      searchController.getSearchMeals(word: widget.searchWord!);
       if (widget.focus) {
         FocusScope.of(context).requestFocus(myFocusNode);
       }
@@ -131,8 +135,11 @@ class _MealsState extends State<Meals> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Obx((() {
                         if (SearchController.isLoading.value) {
-                          return Center(child: CircularProgressIndicator());
-                        } else {
+                          return Container(
+                              height: 150,
+                              child:
+                                  Center(child: CircularProgressIndicator()));
+                        } else if (searchController.searchList.isNotEmpty) {
                           return GridView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
@@ -145,6 +152,35 @@ class _MealsState extends State<Meals> {
                                     mainAxisSpacing: 10),
                             itemBuilder: (context, index) => searchMealsCard(
                                 searchController.searchList[index]),
+                          );
+                        } else if (searchController.searchList.isEmpty) {
+                          return Container(
+                            height: 100,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.error_outline,
+                                    size: 40,
+                                    color: myGreyColor,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'لا يوجد وجبات بهذه المواصفات',
+                                    style: MyCustomTextStyle.myHintTextStyle,
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: Icon(
+                              Icons.error_outline,
+                            ),
                           );
                         }
                       })),

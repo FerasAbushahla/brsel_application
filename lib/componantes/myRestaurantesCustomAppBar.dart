@@ -44,7 +44,10 @@ class MyRestaurantesCustomAppBar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  leading!,
+                  // leading!,
+                  Container(
+                    width: 42,
+                  ),
                   Text(
                     title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:brsel_application/componantes/myHomeCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/SearchController.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/controllers/homeCategoriesController.dart';
 import 'package:brsel_application/controllers/homeMealsController.dart';
@@ -48,6 +49,7 @@ class _HomeState extends State<Home> {
   HomeMealsController homeMealsController = Get.put(HomeMealsController());
   MealDetailsController mealDetailsController =
       Get.put(MealDetailsController());
+  SearchController searchController = Get.put(SearchController());
 
   // final drawerController = ZoomDrawerController();
   int curruntCategory = 1;
@@ -483,52 +485,68 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Container availableRestautantsCard(HomeResturante homeResturante) {
-    return Container(
-      width: 76,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CachedNetworkImage(
-            imageUrl: homeResturante.image ?? "",
-            // imageUrl: homeResturante.image ??
-            //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
-            imageBuilder: (context, imageProvider) => Container(
-              width: SizeConfig.screenWidth,
-              height: 76,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(image: imageProvider, fit: BoxFit.fill)
-                  // DecorationImage(
-                  //   fit: BoxFit.cover,
-                  //   // image: NetworkImage(homeResturante.image!),
-                  //   image: CachedNetworkImageProvider(
-                  //     homeResturante.image ??
-                  //         'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
-                  //     errorListener: () => const Icon(Icons.broken_image_outlined),
-                  //   ),
-                  // ),
-                  ),
-            ),
-            placeholder: (context, url) =>
-                Center(child: const CircularProgressIndicator()),
-            errorWidget: (context, url, error) => Container(
-              height: 76,
-              child: const Icon(
-                Icons.broken_image,
-                color: myGreyColor,
-                size: 30,
+  InkWell availableRestautantsCard(HomeResturante homeResturante) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Meals(
+                      focus: false,
+                      searchWord: homeResturante.name,
+                      // homeMeals: homeMeals,
+                      // mealID: '1',
+                      // mealID: mealDetailsController.mealID.value,
+                      // mealID: homeMeals.id.toString(),
+                    )));
+      },
+      child: Container(
+        width: 76,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CachedNetworkImage(
+              imageUrl: homeResturante.image ?? "",
+              // imageUrl: homeResturante.image ??
+              //     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+              imageBuilder: (context, imageProvider) => Container(
+                width: SizeConfig.screenWidth,
+                height: 76,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    image:
+                        DecorationImage(image: imageProvider, fit: BoxFit.fill)
+                    // DecorationImage(
+                    //   fit: BoxFit.cover,
+                    //   // image: NetworkImage(homeResturante.image!),
+                    //   image: CachedNetworkImageProvider(
+                    //     homeResturante.image ??
+                    //         'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                    //     errorListener: () => const Icon(Icons.broken_image_outlined),
+                    //   ),
+                    // ),
+                    ),
+              ),
+              placeholder: (context, url) =>
+                  Center(child: const CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Container(
+                height: 76,
+                child: const Icon(
+                  Icons.broken_image,
+                  color: myGreyColor,
+                  size: 30,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            homeResturante.name!,
-            style: MyCustomTextStyle.myCardTitleBlackSecondTextStyle,
-          ),
-        ],
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              homeResturante.name!,
+              style: MyCustomTextStyle.myCardTitleBlackSecondTextStyle,
+            ),
+          ],
+        ),
       ),
     );
   }
