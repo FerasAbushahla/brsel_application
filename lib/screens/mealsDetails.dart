@@ -4,6 +4,7 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
+import 'package:brsel_application/screens/orders.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -151,6 +152,13 @@ class _MealDetailsState extends State<MealDetails> {
         mainAxisSize: MainAxisSize.max,
         children: [
           MyDetailsCustomAppBar(
+            action1OnPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Orders(),
+                  ));
+            },
             title: 'تفاصيل الوجبة',
             leading: MyIconButton(
               onPress: () {
