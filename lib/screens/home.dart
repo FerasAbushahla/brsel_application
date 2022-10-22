@@ -39,6 +39,12 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  void dispose() {
+    // TODO: implement dispose
+    searchController.dispose();
+    super.dispose();
+  }
+
   final ZoomDrawerController z = ZoomDrawerController();
   HomeRestaurantsController homeRestaurantsController =
       Get.put(HomeRestaurantsController());
@@ -234,7 +240,14 @@ class _HomeState extends State<Home> {
                             style: MyCustomTextStyle.myH2,
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Meals(
+                                            focus: false,
+                                          )));
+                            },
                             child: Text(
                               'مشاهدة الكل',
                               style: MyCustomTextStyle.myGreenTextStyle,
@@ -290,7 +303,14 @@ class _HomeState extends State<Home> {
                             style: MyCustomTextStyle.myH2,
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Meals(
+                                            focus: false,
+                                          )));
+                            },
                             child: Text(
                               'مشاهدة الكل',
                               style: MyCustomTextStyle.myGreenTextStyle,
@@ -557,6 +577,13 @@ class _HomeState extends State<Home> {
         setState(() {
           curruntCategory = homeCategories.id!;
         });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Meals(
+                      focus: false,
+                      searchWord: homeCategories.name,
+                    )));
       },
       child: Container(
         width: 57,

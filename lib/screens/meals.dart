@@ -37,8 +37,10 @@ class _MealsState extends State<Meals> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      searchFieldController.text = widget.searchWord!;
-      searchController.getSearchMeals(word: widget.searchWord!);
+      searchFieldController.text =
+          (widget.searchWord == null ? "" : widget.searchWord)!;
+      searchController.getSearchMeals(
+          word: widget.searchWord == null ? "" : widget.searchWord);
       if (widget.focus) {
         FocusScope.of(context).requestFocus(myFocusNode);
       }
