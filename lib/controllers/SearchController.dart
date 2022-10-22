@@ -23,16 +23,21 @@ class SearchController extends GetxController {
   // }
 
   Future getSharedPrefs() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    // userAddress = preferences.getString("currentPosition");
-    token = preferences.getString('token');
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      token = preferences.getString('token');
 
-    print('searchController token: $token');
+      print('MealDetailsController token: $token');
+    } catch (e) {
+      print(e);
+    }
   }
 
   void getSearchMeals({String? word}) async {
     try {
       isLoading(true);
+      print(isLoading);
+      print('token....$token');
       var search = await RemoteServices.getSearchMeals(
           access_token: token, searchWord: word == null ? "" : word);
       // var homeMeals = await RemoteServices.getHomeMeals(
