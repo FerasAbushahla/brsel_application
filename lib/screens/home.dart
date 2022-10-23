@@ -33,9 +33,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   void initState() {
-    // Future.delayed(const Duration(milliseconds: 100), () async {
-    //   SharedPreferences preferences = await SharedPreferences.getInstance();
-    // });
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      print("currentPosition ${preferences.get('currentPosition')}");
+      print("firstName ${preferences.get('firstName')}");
+      print("lastName ${preferences.get('lastName')}");
+      print("sex ${preferences.get('sex')}");
+      print("personalImage ${preferences.get('personalImage')}");
+      print(
+          "currentPositionLatitude ${preferences.get('currentPositionLatitude')}");
+      print(
+          "currentPositionLongitude ${preferences.get('currentPositionLongitude')}");
+      print("phoneNumber ${preferences.get('phoneNumber')}");
+      print("ID ${preferences.get('ID')}");
+      print("token ${preferences.get('token')}");
+    });
     super.initState();
   }
 

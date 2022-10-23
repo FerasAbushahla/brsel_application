@@ -11,6 +11,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MealDetails extends StatefulWidget {
   final String mealID;
@@ -22,6 +23,7 @@ class MealDetails extends StatefulWidget {
 }
 
 class _MealDetailsState extends State<MealDetails> {
+  late Box orderBox;
   List<String> extrasList = [
     "بصل",
     "مخللات",
@@ -37,7 +39,9 @@ class _MealDetailsState extends State<MealDetails> {
   void initState() {
     // TODO: implement initState
     // mealDetailsController.mealID.value = widget.mealID;
-    mealDetailsController.getMealDetails(ID: widget.mealID);
+    mealDetailsController.getSharedPrefs().then(
+        (value) => mealDetailsController.getMealDetails(ID: widget.mealID));
+
     super.initState();
   }
 
@@ -69,7 +73,12 @@ class _MealDetailsState extends State<MealDetails> {
             ],
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              orderBox = Hive.box('orders');
+              await orderBox.add(mealDetailsController.mealDetailsData).then(
+                  (value) => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Orders())));
+            },
             style: ElevatedButton.styleFrom(
               // padding: EdgeInsets.symmetric(vertical: 8),
               padding: EdgeInsets.zero,

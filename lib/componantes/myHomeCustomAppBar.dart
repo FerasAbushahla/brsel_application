@@ -114,12 +114,29 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                               ),
                             ],
                           ),
-                          Text(
-                            overflow: TextOverflow.ellipsis,
-                            textDirection: TextDirection.rtl,
-                            // userAddress!,
-                            '${userLocalityAddress} ${userStreetAddress}',
-                            style: MyCustomTextStyle.myH1withOpacityTextStyle,
+                          Column(
+                            children: [
+                              if (userLocalityAddress == null ||
+                                  userStreetAddress == null) ...[
+                                Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  textDirection: TextDirection.rtl,
+                                  // userAddress!,
+                                  '$userAddress',
+                                  style: MyCustomTextStyle
+                                      .myH1withOpacityTextStyle,
+                                ),
+                              ] else ...[
+                                Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  textDirection: TextDirection.rtl,
+                                  // userAddress!,
+                                  '${userLocalityAddress} ${userStreetAddress}',
+                                  style: MyCustomTextStyle
+                                      .myH1withOpacityTextStyle,
+                                ),
+                              ]
+                            ],
                           )
                         ],
                       ),

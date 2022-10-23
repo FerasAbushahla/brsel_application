@@ -1,4 +1,5 @@
 import 'package:brsel_application/controllers/userController.dart';
+import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/models/userModel.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path;
@@ -14,14 +15,14 @@ class LocaleDBHelper {
     Hive.init(dir.path);
     Hive.initFlutter('hive_db');
 
-    await Hive.openBox('user');
+    await Hive.openBox('orderBox');
   }
 
   /// create table
-  addUserLocally(User user) async {
+  addOrderLocally(MealDetailsData order) async {
     try {
-      final userBox = await Hive.box('user');
-      await userBox.add(user);
+      final userBox = await Hive.box('orderBox');
+      await userBox.add(order);
     } on Exception catch (e) {
       // TODO
     }

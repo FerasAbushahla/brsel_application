@@ -33,6 +33,7 @@ class MealDetailsController extends GetxController {
   }
 
   Future getMealDetails({var ID}) async {
+    // getSharedPrefs();
     try {
       isLoading(true);
       print(isLoading);

@@ -286,16 +286,22 @@ class _RegisterState extends State<Register> {
                                           'ID', registerResponse.user!.id!);
                                       print('ID');
 
-                                      userBox = Hive.box('user');
-                                      await userBox
-                                          .add(userController.user)
-                                          .then((value) => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: ((context) =>
-                                                      PersonalInfo()),
-                                                ),
-                                              ));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PersonalInfo()));
+
+                                      // userBox = Hive.box('user');
+                                      // await userBox
+                                      //     .add(userController.user)
+                                      //     .then((value) => Navigator.push(
+                                      //           context,
+                                      //           MaterialPageRoute(
+                                      //             builder: ((context) =>
+                                      //                 PersonalInfo()),
+                                      //           ),
+                                      //         ));
                                     } else if (registerResponse
                                             .errors!.email?[0] ==
                                         'قيمة الحقل البريد الالكتروني مُستخدمة من قبل') {

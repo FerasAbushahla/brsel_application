@@ -104,12 +104,20 @@ class _DrawerMenuState extends State<DrawerMenu> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     token = preferences.getString('token');
     preferences.remove('token');
+    preferences.remove('email');
     preferences.remove('firstName');
     preferences.remove('lastName');
     preferences.remove('phoneNumber');
     preferences.remove('sex');
     preferences.remove('personalImage');
     preferences.remove('currentPosition');
+    preferences.remove('ID');
+    preferences.remove('currentPositionLatitude');
+    preferences.remove('currentPositionLongitude');
+    preferences.remove('currentCountryPosition');
+    preferences.remove('currentLocalityPosition');
+    preferences.remove('currentStreetPosition');
+    preferences.remove('currentPositionDetailed');
   }
 
   bool loading = false;
