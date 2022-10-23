@@ -21,10 +21,16 @@ class Orders extends StatefulWidget {
 
 class _OrdersState extends State<Orders> {
   OrdersController ordersController = Get.put(OrdersController());
+
+  // double totalPrice = 0;
   @override
   void initState() {
     // TODO: implement initState
     ordersController.getOrders();
+    ordersController.getOrdersPrice();
+    print(
+        'ordersController.totalprice.value ${ordersController.totalprice.value}');
+    // totalPrice = await ordersController.getOrdersPrice();
     super.initState();
   }
 
@@ -257,7 +263,9 @@ class _OrdersState extends State<Orders> {
                                 Row(
                                   children: [
                                     Text(
-                                      '210.80',
+                                      ordersController.totalprice.value
+                                          .toString(),
+                                      // '210.80',
                                       style: MyCustomTextStyle
                                           .mySearchHintTextStyle,
                                     ),
