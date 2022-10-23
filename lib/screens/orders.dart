@@ -171,11 +171,11 @@ class _OrdersState extends State<Orders> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'الإجمالي',
+                              'رسوم التوصيل',
                               style: MyCustomTextStyle.mySearchHintTextStyle,
                             ),
                             Text(
-                              '115 ر.ع',
+                              '20 ر.ع',
                               style: MyCustomTextStyle.mySearchHintTextStyle,
                             ),
                           ],
@@ -190,11 +190,11 @@ class _OrdersState extends State<Orders> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'الإجمالي',
+                              'كوبون خصم',
                               style: MyCustomTextStyle.mySearchHintTextStyle,
                             ),
                             Text(
-                              '115 ر.ع',
+                              '15 ر.ع',
                               style: MyCustomTextStyle.mySearchHintTextStyle,
                             ),
                           ],

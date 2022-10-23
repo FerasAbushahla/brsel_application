@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
   }
 
   final ZoomDrawerController z = ZoomDrawerController();
-  // OrdersController ordersController = Get.put(OrdersController());
+  OrdersController ordersController = Get.put(OrdersController());
   HomeRestaurantsController homeRestaurantsController =
       Get.put(HomeRestaurantsController());
   HomeADsSliderController homeADsSliderController =
