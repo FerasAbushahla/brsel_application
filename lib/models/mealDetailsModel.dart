@@ -46,7 +46,7 @@ class MealDetailsData {
     this.attachments,
   });
 
-  factory MealDetailsData.fromJson(Map<String, dynamic> json) =>
+  factory MealDetailsData.fromJson(Map<dynamic, dynamic> json) =>
       MealDetailsData(
         id: json["id"],
         name: json["name"],
@@ -92,7 +92,7 @@ class Attachment {
     this.link,
   });
 
-  factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
+  factory Attachment.fromJson(Map<dynamic, dynamic> json) => Attachment(
         name: json["name"],
         order: json["order"],
         link: json["link"],
@@ -117,7 +117,7 @@ class MealsDetailsExtra {
     this.type,
   });
 
-  factory MealsDetailsExtra.fromJson(Map<String, dynamic> json) =>
+  factory MealsDetailsExtra.fromJson(Map<dynamic, dynamic> json) =>
       MealsDetailsExtra(
         id: json["id"],
         name: json["name"],

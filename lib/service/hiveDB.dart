@@ -21,39 +21,42 @@ class LocaleDBHelper {
   /// create table
   addOrderLocally(MealDetailsData order) async {
     try {
-      final userBox = await Hive.box('orderBox');
-      await userBox.add(order);
+      final orderBox = await Hive.box('orderBox');
+      await orderBox.add(order);
     } on Exception catch (e) {
       // TODO
     }
   }
 
-  deleteUserLocal() async {
-    final userBox = await Hive.box('user');
-    await userBox.clear();
-    print(userBox.length);
+  deleteOrdersLocal() async {
+    final orderBox = await Hive.box('orderBox');
+    await orderBox.clear();
+    print(orderBox.length);
   }
 
-  // Future<List<Survey>> getAllSurveys() async {
-  //   print('getAllSurveys');
-  //   List<Survey> surveys = [];
-  //   final surveyBox = await Hive.box('survey');
-  //   // surveyBox.getAt(1);
-  //   // print(surveyBox.getAt(0));
-  //   // print(surveyBox.getAt(1));
-  //   // print(surveyBox.getAt(2));
-  //   Map<dynamic, dynamic> survey = await surveyBox.getAt(0);
+  Future<List<MealDetailsData>> getAllOrders() async {
+    print('getAllOrders');
+    List<MealDetailsData> orders = [];
+    final orderBox = await Hive.box('orderBox');
+    // orderBox.getAt(1);
+    // print(orderBox.getAt(0));
+    // print(orderBox.getAt(1));
+    // print(surveyBox.getAt(2));
+    for (var i = 0; i < orderBox.length; i++) {
+      print(orderBox.getAt(i));
+      Map<dynamic, dynamic> order = await orderBox.getAt(i);
 
-  //   surveys.add(Survey.fromJson(survey));
-  //   // for (var i = 0; i < surveyBox.length; i++) {
-  //   //   print(surveyBox.getAt(i));
-  //   //   Map<dynamic, dynamic> survey = await surveyBox.getAt(i);
+      orders.add(MealDetailsData.fromJson(order));
+      print(orders);
+    }
+    return orders;
+  }
 
-  //   //   surveys.add(Survey.fromJson(survey));
-  //   //   print(surveys);
-  //   // }
-  //   return surveys;
-  // }
+  Future<int> getLocalOrdersListLength() async {
+    final orderBox = await Hive.box('orderBox');
+    return orderBox.length;
+  }
+
   // Future<List<Survey>> getAllSurveys() async {
   //   print('getAllSurveys');
   //   List<Survey> surveys = [];

@@ -14,6 +14,7 @@ import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
 import 'package:brsel_application/screens/orders.dart';
 import 'package:brsel_application/screens/restaurants.dart';
+import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -47,6 +48,7 @@ class _HomeState extends State<Home> {
       print("phoneNumber ${preferences.get('phoneNumber')}");
       print("ID ${preferences.get('ID')}");
       print("token ${preferences.get('token')}");
+      // LocaleDBHelper.dbHelper.deleteOrdersLocal();
     });
     super.initState();
   }

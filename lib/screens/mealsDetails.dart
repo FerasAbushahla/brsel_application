@@ -74,9 +74,10 @@ class _MealDetailsState extends State<MealDetails> {
           ),
           child: ElevatedButton(
             onPressed: () async {
-              orderBox = Hive.box('orders');
-              await orderBox.add(mealDetailsController.mealDetailsData).then(
-                  (value) => Navigator.push(context,
+              orderBox = Hive.box('orderBox');
+              await orderBox
+                  .add(mealDetailsController.mealDetailsData.toJson())
+                  .then((value) => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Orders())));
             },
             style: ElevatedButton.styleFrom(
