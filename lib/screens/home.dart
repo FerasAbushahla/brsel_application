@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 100), () async {
       SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setBool("userPersonalInfoDone", true);
       print("currentPosition ${preferences.get('currentPosition')}");
       print("firstName ${preferences.get('firstName')}");
       print("lastName ${preferences.get('lastName')}");

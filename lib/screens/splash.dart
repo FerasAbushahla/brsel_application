@@ -1,5 +1,6 @@
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/onBoarding/onBoarding.dart';
+import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   String? token;
   bool? firstTime;
+  bool? userPersonalInfoDone;
   // bool? _isFirstRun;
   // bool? _isFirstCall;
 
@@ -50,6 +52,7 @@ class _SplashState extends State<Splash> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       // firstTime = await preferences.setBool('firstTime', firstTime);
       firstTime = preferences.getBool('firstTime');
+      userPersonalInfoDone = preferences.getBool('userPersonalInfoDone');
       token = preferences.getString('token');
       if (firstTime == null) {
         Navigator.pushReplacement(context,
@@ -61,8 +64,13 @@ class _SplashState extends State<Splash> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: ((context) => Login())));
       } else if (token != null) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: ((context) => Wraper())));
+        if (userPersonalInfoDone != null) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: ((context) => Wraper())));
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: ((context) => PersonalInfo())));
+        }
       }
     });
     super.initState();

@@ -6,6 +6,7 @@ import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/orders.dart';
 import 'package:brsel_application/screens/settings.dart';
+import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -260,6 +261,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                               var response = await RemoteServices.logout(
                                   access_token: token);
                               if (response == 'logout Successfully') {
+                                await LocaleDBHelper.dbHelper
+                                    .deleteOrdersLocal();
                                 await removePrefernces().then((value) {
                                   Fluttertoast.showToast(
                                       msg: "تم تسجيل الخروج",

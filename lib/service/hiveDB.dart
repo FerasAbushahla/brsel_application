@@ -28,10 +28,11 @@ class LocaleDBHelper {
     }
   }
 
-  deleteOrdersLocal() async {
+  Future deleteOrdersLocal() async {
     final orderBox = await Hive.box('orderBox');
     await orderBox.clear();
-    print(orderBox.length);
+    print('deleteOrdersLocal');
+    print('length ${orderBox.length}');
   }
 
   Future<List<MealDetailsData>> getAllOrders() async {
