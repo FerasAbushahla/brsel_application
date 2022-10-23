@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/screens/register.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/personalInfoModel.dart';
 
@@ -43,7 +47,7 @@ class _LoginState extends State<Login> {
     required String firstName,
     required String lastName,
     required String sex,
-    // required String personalImage,
+    required String personalImage,
     required String currentPositionLatitude,
     required String currentPositionLongitude,
     required String phoneNumber,
@@ -55,7 +59,7 @@ class _LoginState extends State<Login> {
     preferences.setString('firstName', firstName);
     preferences.setString('lastName', lastName);
     preferences.setString('sex', sex);
-    // preferences.setString('personalImage', personalImage);
+    preferences.setString('personalImage', personalImage);
     preferences.setString('currentPositionLatitude', currentPositionLatitude);
     preferences.setString('currentPositionLongitude', currentPositionLongitude);
     preferences.setString('phoneNumber', phoneNumber);
@@ -79,6 +83,8 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +229,25 @@ class _LoginState extends State<Login> {
                                         'view Response>>>${response.message}');
                                     if (response.message ==
                                         "User Logged In Successfully") {
+                                      // final image = response.user!.avatar;
+                                      // final imageTemporary = File(image.path);
+                                      // setState(() {
+                                      //   this.image = imageTemporary;
+                                      // });
+                                      http.Response imagResponse =
+                                          await http.get(
+                                        Uri.parse(response.user!.avatar),
+                                      );
+                                      final bytes = imagResponse.bodyBytes;
+                                      print(bytes);
+                                      String base64Image = base64Encode(
+                                          bytes.buffer.asUint8List());
+                                      print(base64Image);
+                                      // SharedPreferences sharedPreferences =
+                                      //     await SharedPreferences.getInstance();
+                                      // sharedPreferences.setString('personalImage', base64Image);
                                       await setPreferences(
+                                        personalImage: base64Image,
                                         ID: response.user!.id!,
                                         currentPosition:
                                             response.user!.address!,
