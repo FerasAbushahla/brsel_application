@@ -51,6 +51,14 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   fluttertoast: ^8.1.1
   is_first_run: ^1.0.0
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/logo.png"
+
 
 dev_dependencies:
   flutter_test:
