@@ -9,16 +9,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OrdersController extends GetxController {
   static var isLoading = true.obs;
   var ordersList = <MealDetailsData>[].obs;
-  RxDouble totalprice = 0.0.obs;
+  var totalprice = 0.0.obs;
   String? token;
 
   @override
   void onInit() {
     // getSharedPrefs().then((value) => getOrders());
-    getOrders();
-    getOrdersPrice();
-
-    super.onInit();
+    getOrders().then((value) {
+      getOrdersPrice();
+      super.onInit();
+    });
+    // getOrdersPrice();
   }
 
   Future getSharedPrefs() async {
@@ -29,7 +30,7 @@ class OrdersController extends GetxController {
     print('ordersController token: $token');
   }
 
-  void getOrders() async {
+  Future getOrders() async {
     try {
       isLoading(true);
       int length = await LocaleDBHelper.dbHelper.getLocalOrdersListLength();
@@ -46,7 +47,13 @@ class OrdersController extends GetxController {
     }
   }
 
-  void getOrdersPrice() async {
+  Future deleteOrder(int index) async {
+    LocaleDBHelper.dbHelper.deleteOrder(index);
+    await getOrders();
+    await getOrdersPrice();
+  }
+
+  Future getOrdersPrice() async {
     double totallprice = 0;
     print(totallprice);
     print('getOrdersPrice');
@@ -58,11 +65,13 @@ class OrdersController extends GetxController {
         print('{ordersList[i]}  ${ordersList[i]}');
         totallprice += double.parse(ordersList[i].price!);
         print('totallprice $totallprice');
-        totalprice.value = totallprice;
+
         // totalprice += double.parse(ordersList[i].price!);
 
         print('Total price ${totalprice}');
       }
+      totalprice.value = totallprice;
+      totallprice = 0;
     } catch (e) {
       print(e);
     } finally {

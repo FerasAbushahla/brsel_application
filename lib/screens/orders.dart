@@ -4,16 +4,19 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/ordersController.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/screens/payment.dart';
+import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Orders extends StatefulWidget {
-  const Orders({Key? key}) : super(key: key);
+  Orders({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Orders> createState() => _OrdersState();
@@ -21,13 +24,23 @@ class Orders extends StatefulWidget {
 
 class _OrdersState extends State<Orders> {
   OrdersController ordersController = Get.put(OrdersController());
+  double totalWhithFees = 20;
+
+  late Box orderBox;
+
+  void getdata() async {
+    await ordersController.getOrders();
+    await ordersController.getOrdersPrice();
+  }
 
   // double totalPrice = 0;
   @override
   void initState() {
     // TODO: implement initState
-    ordersController.getOrders();
-    ordersController.getOrdersPrice();
+
+    // print('Get.currentRoute${ModalRoute.of(context)?.settings.name}');
+    getdata();
+    ordersController.totalprice;
     print(
         'ordersController.totalprice.value ${ordersController.totalprice.value}');
     // totalPrice = await ordersController.getOrdersPrice();
@@ -40,6 +53,10 @@ class _OrdersState extends State<Orders> {
     ordersController.dispose();
     super.dispose();
   }
+
+  // void deleteOrder(int index) async {
+  //   await LocaleDBHelper.dbHelper.deleteOrder(index);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +71,8 @@ class _OrdersState extends State<Orders> {
               title: 'طلباتي',
               leading: MyIconButton(
                 onPress: () {
-                  Navigator.pop(context);
+                  Get.back();
+                  // Navigator.pop(context);
                 },
                 borderRadius: 12,
                 BackgroundColor: Colors.white,
@@ -83,7 +101,64 @@ class _OrdersState extends State<Orders> {
                           padding: index == 0
                               ? EdgeInsets.only(bottom: 6)
                               : EdgeInsets.symmetric(vertical: 6),
-                          child: orderCard(ordersController.ordersList[index]),
+                          child: Slidable(
+                              useTextDirection: false,
+                              key: ValueKey(1),
+                              startActionPane: ActionPane(
+                                extentRatio: 0.3,
+                                motion: ScrollMotion(),
+                                // dismissible:
+                                //     DismissiblePane(onDismissed: () {}),
+                                children: [
+                                  CustomSlidableAction(
+                                    onPressed: ((context) async {
+                                      print(ordersController
+                                          .ordersList[index].price);
+                                      ordersController.deleteOrder(index);
+                                      // await LocaleDBHelper.dbHelper
+                                      //     .deleteOrder(index);
+                                      // ordersController.getOrders();
+                                      // ordersController.totalprice;
+                                    }),
+                                    backgroundColor: myBackgroundColor,
+                                    foregroundColor: myRedColor,
+                                    child: Icon(
+                                      Icons.delete,
+                                      size: 40,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    autoClose: true,
+                                  ),
+                                ],
+                              ),
+                              // endActionPane: ActionPane(
+                              //   // extentRatio: 0.5,
+                              //   motion: ScrollMotion(),
+                              //   dismissible:
+                              //       DismissiblePane(onDismissed: () {}),
+                              //   children: [
+                              //     // SlidableAction(
+                              //     //   onPressed: doNothing,
+                              //     //   backgroundColor: Color(0xFFFE4A49),
+                              //     //   foregroundColor: Colors.white,
+                              //     //   icon: Icons.delete,
+                              //     //   label: 'Delete',
+                              //     // ),
+                              //     CustomSlidableAction(
+                              //       onPressed: doNothing,
+                              //       backgroundColor: myBackgroundColor,
+                              //       foregroundColor: myRedColor,
+                              //       child: Icon(
+                              //         Icons.delete,
+                              //         size: 40,
+                              //       ),
+                              //       borderRadius: BorderRadius.circular(8),
+                              //       autoClose: true,
+                              //     ),
+                              //   ],
+                              // ),
+                              child: orderCard(
+                                  ordersController.ordersList[index])),
                         ),
                       ),
                     ),
@@ -155,9 +230,38 @@ class _OrdersState extends State<Orders> {
                               'الإجمالي',
                               style: MyCustomTextStyle.mySearchHintTextStyle,
                             ),
-                            Text(
-                              '115 ر.ع',
-                              style: MyCustomTextStyle.mySearchHintTextStyle,
+                            Row(
+                              children: [
+                                Obx(() {
+                                  if (OrdersController.isLoading.value) {
+                                    return Container(
+                                      height: getProportionalScreenHeight(5),
+                                      // child: Center(
+                                      //   child: SizedBox(
+                                      //       // height: 30,
+                                      //       // width: 30,
+                                      //       child: CircularProgressIndicator()),
+                                      // ),
+                                    );
+                                  } else {
+                                    return Text(
+                                      ordersController.totalprice.value
+                                          .toString(),
+                                      // '210.80',
+                                      style: MyCustomTextStyle
+                                          .mySearchHintTextStyle,
+                                    );
+                                  }
+                                }),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'ر.ع',
+                                  style:
+                                      MyCustomTextStyle.mySearchHintTextStyle,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -181,66 +285,66 @@ class _OrdersState extends State<Orders> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'كوبون خصم',
-                              style: MyCustomTextStyle.mySearchHintTextStyle,
-                            ),
-                            Text(
-                              '15 ر.ع',
-                              style: MyCustomTextStyle.mySearchHintTextStyle,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 6,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 25),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       Text(
+                      //         'كوبون خصم',
+                      //         style: MyCustomTextStyle.mySearchHintTextStyle,
+                      //       ),
+                      //       Text(
+                      //         '15 ر.ع',
+                      //         style: MyCustomTextStyle.mySearchHintTextStyle,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 12,
                       ),
-                      Container(
-                        width: SizeConfig.screenWidth,
-                        color: myPrimaryColor.withOpacity(0.4),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
-                          child: Row(
-                            children: [
-                              RawMaterialButton(
-                                constraints: BoxConstraints(),
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                onPressed: () {},
-                                fillColor: myPrimaryColor,
-                                child: Icon(
-                                  Icons.edit,
-                                  color: Colors.white,
-                                  size: 14.0,
-                                ),
-                                padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
-                                shape: CircleBorder(),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'تعديل الكوبون',
-                                style: MyCustomTextStyle.myTextButtonTextStyle,
-                              ),
-                              Spacer(),
-                              Text(
-                                'تم توفير مبلع 15 ريال عماني',
-                                style: MyCustomTextStyle
-                                    .myTextButtonLightTextStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   width: SizeConfig.screenWidth,
+                      //   color: myPrimaryColor.withOpacity(0.4),
+                      //   child: Padding(
+                      //     padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
+                      //     child: Row(
+                      //       children: [
+                      //         RawMaterialButton(
+                      //           constraints: BoxConstraints(),
+                      //           materialTapTargetSize:
+                      //               MaterialTapTargetSize.shrinkWrap,
+                      //           onPressed: () {},
+                      //           fillColor: myPrimaryColor,
+                      //           child: Icon(
+                      //             Icons.edit,
+                      //             color: Colors.white,
+                      //             size: 14.0,
+                      //           ),
+                      //           padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                      //           shape: CircleBorder(),
+                      //         ),
+                      //         SizedBox(
+                      //           width: 5,
+                      //         ),
+                      //         Text(
+                      //           'تعديل الكوبون',
+                      //           style: MyCustomTextStyle.myTextButtonTextStyle,
+                      //         ),
+                      //         Spacer(),
+                      //         Text(
+                      //           'تم توفير مبلع 15 ريال عماني',
+                      //           style: MyCustomTextStyle
+                      //               .myTextButtonLightTextStyle,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 15,
                       ),
@@ -262,12 +366,13 @@ class _OrdersState extends State<Orders> {
                                 ),
                                 Row(
                                   children: [
-                                    Text(
-                                      ordersController.totalprice.value
-                                          .toString(),
-                                      // '210.80',
-                                      style: MyCustomTextStyle
-                                          .mySearchHintTextStyle,
+                                    Obx(
+                                      () => Text(
+                                        '${ordersController.totalprice.value + totalWhithFees}',
+                                        // '210.80',
+                                        style: MyCustomTextStyle
+                                            .mySearchHintTextStyle,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 5,
