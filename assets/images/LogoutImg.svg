@@ -1,0 +1,10 @@
+<svg id="error-icon-face" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <g id="Icon_shopping_cart" data-name="Icon/shopping cart">
+    <rect id="Rectangle" width="60" height="60" rx="16" fill="#ffeaec"/>
+    <g id="Group" transform="translate(14 15)">
+      <path id="Path" d="M27.255,9.2a1.994,1.994,0,0,1-1.406-.58,16.258,16.258,0,0,0-22.462,0A1.985,1.985,0,0,1,.581,5.817a19.848,19.848,0,0,1,28.076,0,1.987,1.987,0,0,1,0,2.807A1.962,1.962,0,0,1,27.255,9.2Z" transform="translate(1.262 19.853)" fill="#f94450"/>
+      <circle id="Oval" cx="3.971" cy="3.971" r="3.971" transform="translate(0 0)" fill="#f94450"/>
+      <circle id="Oval-2" data-name="Oval" cx="3.971" cy="3.971" r="3.971" transform="translate(23.824 0)" fill="#f94450"/>
+    </g>
+  </g>
+</svg>

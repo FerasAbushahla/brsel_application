@@ -78,7 +78,8 @@ class _MealsState extends State<Meals> {
               title: 'الوجبات',
               leading: MyIconButton(
                 onPress: () {
-                  Navigator.pop(context);
+                  Get.back();
+                  // Navigator.pop(context);
                 },
                 borderRadius: 12,
                 BackgroundColor: Colors.white,

@@ -14,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final ZoomDrawerController z = ZoomDrawerController();
@@ -245,69 +246,184 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text(
-                        'تسجيل الخروج, هل أنت متأكد؟',
-                        style:
-                            TextStyle(fontSize: getProportionalScreenWidth(16)),
+                      contentPadding: EdgeInsets.only(top: 15),
+                      title: SvgPicture.asset(
+                        'assets/images/logoutError.svg',
                       ),
-                      actions: [
-                        IconButton(
-                          onPressed: () async {
-                            // print('pppppppppppppppppppppppppppp');
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
-                            String? token = preferences.getString('token');
-                            if (token != null) {
-                              var response = await RemoteServices.logout(
-                                  access_token: token);
-                              if (response == 'logout Successfully') {
-                                await LocaleDBHelper.dbHelper
-                                    .deleteOrdersLocal();
-                                await removePrefernces().then((value) {
-                                  Fluttertoast.showToast(
-                                      msg: "تم تسجيل الخروج",
-                                      backgroundColor: myDarkGreyColor);
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Login()));
-                                });
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: "يوجد مشكلة, أعد المحاولة لاحقاً",
-                                    backgroundColor: myDarkGreyColor);
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   SnackBar(
-                                //     content:
-                                //         Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
-                                //   ),
-                                // );
-                              }
-                            }
-                            // if (true) {
-                            //   print('pppppppppppppppppppppppppppp');
-                            //   ApiResponse apiResponse =
-                            //       await RemoteServices.logOut(
-                            //           phone: preferences.getString('phone'),
-                            //           token: preferences.getString('token'));
-                            //   if (apiResponse.message == 'Unauthenticated') {
-                            //     preferences.remove('token');
-                            //     preferences.remove('email');
-                            //     preferences.remove('first_name');
-                            //     preferences.remove('last_name');
-                            //     Navigator.pushReplacement(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) => WelcomeFormFirst(),
-                            //         ));
-                            //   }
-                            // }
-                          },
-                          icon: Icon(
-                            Icons.logout,
+                      content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'هل أنت متأكد من تسجيل الخروج',
+                              style: TextStyle(
+                                  color: mySecGreyColor,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Divider(
+                            height: 0,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text(
+                                    'الغاء',
+                                    style: TextStyle(
+                                        color: myGreyColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () async {
+                                    SharedPreferences preferences =
+                                        await SharedPreferences.getInstance();
+                                    String? token =
+                                        preferences.getString('token');
+                                    if (token != null) {
+                                      var response =
+                                          await RemoteServices.logout(
+                                              access_token: token);
+                                      if (response == 'logout Successfully') {
+                                        await LocaleDBHelper.dbHelper
+                                            .deleteOrdersLocal();
+                                        await removePrefernces().then((value) {
+                                          Fluttertoast.showToast(
+                                              msg: "تم تسجيل الخروج",
+                                              backgroundColor: myDarkGreyColor);
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Login()));
+                                        });
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                            backgroundColor: myDarkGreyColor);
+                                        // ScaffoldMessenger.of(context).showSnackBar(
+                                        //   SnackBar(
+                                        //     content:
+                                        //         Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
+                                        //   ),
+                                        // );
+                                      }
+                                    }
+                                  },
+                                  child: Text(
+                                    'تسجيل الخروج',
+                                    style: TextStyle(
+                                        color: myRedColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      // title: Text(
+                      //   'هل أنت متأكد من تسجيل الخروج',
+                      //   style: TextStyle(
+                      //       color: mySecGreyColor,
+                      //       fontSize: 13,
+                      //       fontWeight: FontWeight.w500),
+                      // ),
+                      // actionsAlignment: MainAxisAlignment.spaceBetween,
+                      // actionsPadding: EdgeInsets.all(20),
+                      // actions: [
+                      //   TextButton(
+                      //     onPressed: () {},
+                      //     child: Text(
+                      //       'تسجيل الخروج',
+                      //       style: TextStyle(
+                      //           color: myRedColor,
+                      //           fontSize: 13,
+                      //           fontWeight: FontWeight.w500),
+                      //     ),
+                      //   ),
+                      //   TextButton(
+                      //     onPressed: () {},
+                      //     child: Text(
+                      //       'تسجيل الخروج',
+                      //       style: TextStyle(
+                      //           color: myRedColor,
+                      //           fontSize: 13,
+                      //           fontWeight: FontWeight.w500),
+                      //     ),
+                      //   ),
+                      //   // IconButton(
+                      //   //   onPressed: () async {
+                      //   //     // print('pppppppppppppppppppppppppppp');
+                      //   //     SharedPreferences preferences =
+                      //   //         await SharedPreferences.getInstance();
+                      //   //     String? token = preferences.getString('token');
+                      //   //     if (token != null) {
+                      //   //       var response = await RemoteServices.logout(
+                      //   //           access_token: token);
+                      //   //       if (response == 'logout Successfully') {
+                      //   //         await LocaleDBHelper.dbHelper
+                      //   //             .deleteOrdersLocal();
+                      //   //         await removePrefernces().then((value) {
+                      //   //           Fluttertoast.showToast(
+                      //   //               msg: "تم تسجيل الخروج",
+                      //   //               backgroundColor: myDarkGreyColor);
+                      //   //           Navigator.pushReplacement(
+                      //   //               context,
+                      //   //               MaterialPageRoute(
+                      //   //                   builder: (context) => Login()));
+                      //   //         });
+                      //   //       } else {
+                      //   //         Fluttertoast.showToast(
+                      //   //             msg: "يوجد مشكلة, أعد المحاولة لاحقاً",
+                      //   //             backgroundColor: myDarkGreyColor);
+                      //   //         // ScaffoldMessenger.of(context).showSnackBar(
+                      //   //         //   SnackBar(
+                      //   //         //     content:
+                      //   //         //         Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
+                      //   //         //   ),
+                      //   //         // );
+                      //   //       }
+                      //   //     }
+                      //   //     // if (true) {
+                      //   //     //   print('pppppppppppppppppppppppppppp');
+                      //   //     //   ApiResponse apiResponse =
+                      //   //     //       await RemoteServices.logOut(
+                      //   //     //           phone: preferences.getString('phone'),
+                      //   //     //           token: preferences.getString('token'));
+                      //   //     //   if (apiResponse.message == 'Unauthenticated') {
+                      //   //     //     preferences.remove('token');
+                      //   //     //     preferences.remove('email');
+                      //   //     //     preferences.remove('first_name');
+                      //   //     //     preferences.remove('last_name');
+                      //   //     //     Navigator.pushReplacement(
+                      //   //     //         context,
+                      //   //     //         MaterialPageRoute(
+                      //   //     //           builder: (context) => WelcomeFormFirst(),
+                      //   //     //         ));
+                      //   //     //   }
+                      //   //     // }
+                      //   //   },
+                      //   //   icon: Icon(
+                      //   //     Icons.logout,
+                      //   //   ),
+                      //   // )
+                      // ],
                     ),
                   );
                 }),
