@@ -61,96 +61,121 @@ class _MealDetailsState extends State<MealDetails> {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
         child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 4,
-                blurRadius: 10,
-                offset: Offset(3, 3),
-              ),
-            ],
-          ),
-          child: ElevatedButton(
-            onPressed: () async {
-              orderBox = Hive.box('orderBox');
-              await orderBox
-                  .add(mealDetailsController.mealDetailsData.toJson())
-                  .then((value) => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Orders())));
-            },
-            style: ElevatedButton.styleFrom(
-              // padding: EdgeInsets.symmetric(vertical: 8),
-              padding: EdgeInsets.zero,
-              elevation: 0,
-              backgroundColor: myPrimaryColor,
-              // primary: mySecondaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: myPrimaryColor,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: Offset(3, 3),
                 ),
-                height: 55,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        child: Center(
-                          child: Obx((() {
-                            if (MealDetailsController.isLoading.value) {
-                              return SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 3,
-                                  )));
-                            } else {
-                              return Text(
-                                'إضافة الى السلة',
-                                style: MyCustomTextStyle.myButtonTextStyle,
-                              );
-                            }
-                          })),
+              ],
+            ),
+            child: Obx((() {
+              if (MealDetailsController.isLoading.value) {
+                return Container(
+                  color: Colors.white,
+                  height: 55,
+                  width: SizeConfig.screenWidth,
+                  child: Center(
+                    child: SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          // color: Colors.white,
+                          strokeWidth: 3,
                         ),
                       ),
                     ),
-                    Container(
-                      color: Colors.white,
-                      width: 100,
-                      child: Center(
-                        child: Obx((() {
-                          if (MealDetailsController.isLoading.value) {
-                            return SizedBox(
-                                height: 18,
-                                width: 18,
-                                child: Center(
-                                    child: CircularProgressIndicator(
-                                  color: myPrimaryColor,
-                                  strokeWidth: 3,
-                                )));
-                          } else {
-                            return Text(
-                              '${mealDetailsController.mealDetailsData.value.price!} ر.ع',
-                              // '15ر.ع',
-                              style: MyCustomTextStyle.myTextButtonTextStyle,
-                            );
-                          }
-                        })),
+                  ),
+                );
+              } else {
+                return ElevatedButton(
+                  onPressed: () async {
+                    orderBox = Hive.box('orderBox');
+                    await orderBox
+                        .add(mealDetailsController.mealDetailsData.toJson())
+                        .then((value) => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Orders())));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // padding: EdgeInsets.symmetric(vertical: 8),
+                    padding: EdgeInsets.zero,
+                    elevation: 0,
+                    backgroundColor: myPrimaryColor,
+                    // primary: mySecondaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: myPrimaryColor,
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+                      height: 55,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: Center(
+                                child: Obx((() {
+                                  if (MealDetailsController.isLoading.value) {
+                                    return SizedBox(
+                                      height: 18,
+                                      width: 18,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 3,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Text(
+                                      'إضافة الى السلة',
+                                      style:
+                                          MyCustomTextStyle.myButtonTextStyle,
+                                    );
+                                  }
+                                })),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            color: Colors.white,
+                            width: 100,
+                            child: Center(
+                              child: Obx((() {
+                                if (MealDetailsController.isLoading.value) {
+                                  return SizedBox(
+                                      height: 18,
+                                      width: 18,
+                                      child: Center(
+                                          child: CircularProgressIndicator(
+                                        color: myPrimaryColor,
+                                        strokeWidth: 3,
+                                      )));
+                                } else {
+                                  return Text(
+                                    '${mealDetailsController.mealDetailsData.value.price!} ر.ع',
+                                    // '15ر.ع',
+                                    style:
+                                        MyCustomTextStyle.myTextButtonTextStyle,
+                                  );
+                                }
+                              })),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }))),
       ),
 
       // ),

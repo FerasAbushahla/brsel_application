@@ -270,70 +270,78 @@ class _DrawerMenuState extends State<DrawerMenu> {
                           Divider(
                             height: 0,
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text(
-                                    'الغاء',
-                                    style: TextStyle(
-                                        color: myGreyColor,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500),
+                          IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: Text(
+                                      'الغاء',
+                                      style: TextStyle(
+                                          color: myGreyColor,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: TextButton(
-                                  onPressed: () async {
-                                    SharedPreferences preferences =
-                                        await SharedPreferences.getInstance();
-                                    String? token =
-                                        preferences.getString('token');
-                                    if (token != null) {
-                                      var response =
-                                          await RemoteServices.logout(
-                                              access_token: token);
-                                      if (response == 'logout Successfully') {
-                                        await LocaleDBHelper.dbHelper
-                                            .deleteOrdersLocal();
-                                        await removePrefernces().then((value) {
+                                VerticalDivider(
+                                  width: 0,
+                                  // thickness: 1,
+                                ),
+                                Expanded(
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      SharedPreferences preferences =
+                                          await SharedPreferences.getInstance();
+                                      String? token =
+                                          preferences.getString('token');
+                                      if (token != null) {
+                                        var response =
+                                            await RemoteServices.logout(
+                                                access_token: token);
+                                        if (response == 'logout Successfully') {
+                                          await LocaleDBHelper.dbHelper
+                                              .deleteOrdersLocal();
+                                          await removePrefernces()
+                                              .then((value) {
+                                            Fluttertoast.showToast(
+                                                msg: "تم تسجيل الخروج",
+                                                backgroundColor:
+                                                    myDarkGreyColor);
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Login()));
+                                          });
+                                        } else {
                                           Fluttertoast.showToast(
-                                              msg: "تم تسجيل الخروج",
+                                              msg:
+                                                  "يوجد مشكلة, أعد المحاولة لاحقاً",
                                               backgroundColor: myDarkGreyColor);
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Login()));
-                                        });
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "يوجد مشكلة, أعد المحاولة لاحقاً",
-                                            backgroundColor: myDarkGreyColor);
-                                        // ScaffoldMessenger.of(context).showSnackBar(
-                                        //   SnackBar(
-                                        //     content:
-                                        //         Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
-                                        //   ),
-                                        // );
+                                          // ScaffoldMessenger.of(context).showSnackBar(
+                                          //   SnackBar(
+                                          //     content:
+                                          //         Text("يوجد مشكلة, أعد المحاولة لاحقاً"),
+                                          //   ),
+                                          // );
+                                        }
                                       }
-                                    }
-                                  },
-                                  child: Text(
-                                    'تسجيل الخروج',
-                                    style: TextStyle(
-                                        color: myRedColor,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500),
+                                    },
+                                    child: Text(
+                                      'تسجيل الخروج',
+                                      style: TextStyle(
+                                          color: myRedColor,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           )
                         ],
                       ),

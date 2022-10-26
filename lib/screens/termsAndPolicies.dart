@@ -6,6 +6,7 @@ import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TermsAndPolicies extends StatefulWidget {
   const TermsAndPolicies({super.key});
@@ -15,8 +16,55 @@ class TermsAndPolicies extends StatefulWidget {
 }
 
 class _TermsAndPoliciesState extends State<TermsAndPolicies> {
-  bool switchValue = false;
+  // bool? switchValue;
+  // bool switchValue = false;
+  bool value = false;
+  bool switchSelect = false;
   bool loading = false;
+
+  // Future getSharedPrefs() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   preferences.getBool('acceptPolicies');
+  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSwitchValues();
+  }
+
+  getSwitchValues() async {
+    switchSelect = await getSwitchState();
+    setState(() {});
+  }
+
+  Future<bool> saveSwitchState(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("acceptPolicies", value);
+    print('Switch Value saved $value');
+    return prefs.setBool("acceptPolicies", value);
+  }
+
+  Future<bool> getSwitchState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool switchSelect = prefs.getBool("acceptPolicies") ?? false;
+    print(switchSelect);
+
+    return switchSelect;
+  }
+
+  // Future getValueFlag() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     switchSelect = preferences.getBool('acceptPolicies') ?? true;
+  //   });
+  // }
+
+  // Future setValueFlag(bool switchValue) async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   preferences.setBool('acceptPolicies', switchValue);
+  // }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -113,11 +161,15 @@ class _TermsAndPoliciesState extends State<TermsAndPolicies> {
                                   inactiveThumbColor: myGreyColor,
                                   inactiveTrackColor:
                                       myGreyColor.withOpacity(0.2),
-                                  value: switchValue,
-                                  onChanged: (val) {
+                                  value: switchSelect,
+                                  onChanged: (bool value) {
                                     setState(() {
-                                      switchValue = val;
+                                      switchSelect = value;
+                                      // saveSwitchState(value);
+                                      print('Saved state is $switchSelect');
+                                      //switch works
                                     });
+                                    print(switchSelect);
                                   },
                                 ),
                               ],
@@ -129,7 +181,9 @@ class _TermsAndPoliciesState extends State<TermsAndPolicies> {
                               loading: loading,
                               title: 'حفظ ومتابعة',
                               color: mySecondaryColor,
-                              onPressed: () {},
+                              onPressed: () {
+                                saveSwitchState(value);
+                              },
                             ),
                           ],
                         ),

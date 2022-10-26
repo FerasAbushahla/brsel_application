@@ -5,14 +5,17 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/screens/contactUs.dart';
+import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/orders.dart';
 import 'package:brsel_application/screens/termsAndPolicies.dart';
+import 'package:brsel_application/service/hiveDB.dart';
+import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +31,7 @@ class _SettingsState extends State<Settings> {
   String lastName = '';
   String personalImage = '';
   bool sharedPreferencesLoading = false;
+  String? token;
 
   HomeADsSliderController homeADsSliderController =
       Get.put(HomeADsSliderController());
@@ -55,6 +59,26 @@ class _SettingsState extends State<Settings> {
     print(preferences.get('token'));
     print(preferences.get('personalImage'));
     print(preferences.get('currentPosition'));
+  }
+
+  Future removePrefernces() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    token = preferences.getString('token');
+    preferences.remove('token');
+    preferences.remove('email');
+    preferences.remove('firstName');
+    preferences.remove('lastName');
+    preferences.remove('phoneNumber');
+    preferences.remove('sex');
+    preferences.remove('personalImage');
+    preferences.remove('currentPosition');
+    preferences.remove('ID');
+    preferences.remove('currentPositionLatitude');
+    preferences.remove('currentPositionLongitude');
+    preferences.remove('currentCountryPosition');
+    preferences.remove('currentLocalityPosition');
+    preferences.remove('currentStreetPosition');
+    preferences.remove('currentPositionDetailed');
   }
 
   @override
@@ -351,7 +375,117 @@ class _SettingsState extends State<Settings> {
                           icon: SvgPicture.asset(
                               'assets/images/logoutRedSVG.svg'),
                           title: 'تسجيل الخروج',
-                          onTap: () {},
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                contentPadding: EdgeInsets.only(top: 15),
+                                title: SvgPicture.asset(
+                                  'assets/images/logoutError.svg',
+                                ),
+                                content: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'هل أنت متأكد من تسجيل الخروج',
+                                        style: TextStyle(
+                                            color: mySecGreyColor,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Divider(
+                                      height: 0,
+                                    ),
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                              child: Text(
+                                                'الغاء',
+                                                style: TextStyle(
+                                                    color: myGreyColor,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
+                                          ),
+                                          VerticalDivider(
+                                            width: 0,
+                                            // thickness: 1,
+                                          ),
+                                          Expanded(
+                                            child: TextButton(
+                                              onPressed: () async {
+                                                SharedPreferences preferences =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                String? token = preferences
+                                                    .getString('token');
+                                                if (token != null) {
+                                                  var response =
+                                                      await RemoteServices
+                                                          .logout(
+                                                              access_token:
+                                                                  token);
+                                                  if (response ==
+                                                      'logout Successfully') {
+                                                    await LocaleDBHelper
+                                                        .dbHelper
+                                                        .deleteOrdersLocal();
+                                                    await removePrefernces()
+                                                        .then((value) {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "تم تسجيل الخروج",
+                                                          backgroundColor:
+                                                              myDarkGreyColor);
+                                                      Navigator.pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      Login()));
+                                                    });
+                                                  } else {
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                                        backgroundColor:
+                                                            myDarkGreyColor);
+                                                  }
+                                                }
+                                              },
+                                              child: Text(
+                                                'تسجيل الخروج',
+                                                style: TextStyle(
+                                                    color: myRedColor,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                           endWidget: IconButton(
                             onPressed: () {},
                             icon: Icon(
