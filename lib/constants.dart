@@ -31,6 +31,8 @@ const mySecondaryColor = Color(0xFF275D89);
 const myDarkBlueColor = Color(0xFF3E4958);
 const mylighterDarkBlueColor = Color(0xFF111934);
 const myRedColor = Color(0xFFE35757);
+const mySecRedColor = Color(0xFFF94450);
+const mySecAppBarTitle = Color(0xFF3E4958);
 
 class BrselApp {
   BrselApp._();
@@ -241,6 +243,16 @@ class MyCustomTextStyle {
   static const TextStyle myAppBarTitleTextStyle = TextStyle(
     fontSize: 13,
     color: myBlackColor,
+    fontWeight: FontWeight.w700,
+  );
+  static const TextStyle mySettingsTitleTextStyle = TextStyle(
+    fontSize: 13,
+    color: mylighterDarkBlueColor,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle myAppBarSecTitleTextStyle = TextStyle(
+    fontSize: 15,
+    color: mySecAppBarTitle,
     fontWeight: FontWeight.w700,
   );
   static const TextStyle myOnBoardingTextButtonTextStyle = TextStyle(

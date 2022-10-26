@@ -5,6 +5,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/termsAndPolicies.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -58,9 +59,8 @@ class _SettingsState extends State<Settings> {
   @override
   void initState() {
     // TODO: implement initState
-
-    super.initState();
     getSharedPrefs();
+    super.initState();
   }
 
   @override
@@ -241,51 +241,121 @@ class _SettingsState extends State<Settings> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'المعلومات الشخصية',
-                            onTap: () {}),
+                          icon: Icon(BrselApp.profile, color: mySecGreyColor),
+                          // icon: Icon(BrselApp.profile, color: mySecGreyColor),
+                          title: 'المعلومات الشخصية',
+                          subtitle: 'معلومات الاتصال والشخصية',
+                          onTap: () {},
+                          endWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              textDirection: TextDirection.ltr,
+                              size: 17,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'العنوان',
-                            onTap: () {}),
+                          icon: SvgPicture.asset('assets/images/homeSVG.svg'),
+                          title: 'العنوان',
+                          subtitle: 'معلومات عنوان السكن',
+                          onTap: () {},
+                          endWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              textDirection: TextDirection.ltr,
+                              size: 17,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'الإشعارات',
-                            onTap: () {}),
+                          icon: SvgPicture.asset(
+                              'assets/images/notificationSVG.svg'),
+                          title: 'الإشعارات',
+                          onTap: () {},
+                          endWidget: NotificationSwitch(),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'الشروط و الأحكام',
-                            onTap: () {}),
+                          icon:
+                              SvgPicture.asset('assets/images/policiesSVG.svg'),
+                          title: 'الشروط و الأحكام',
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TermsAndPolicies()));
+                          },
+                          endWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              textDirection: TextDirection.ltr,
+                              size: 17,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'الدعم والمساعدة',
-                            onTap: () {}),
+                          icon:
+                              SvgPicture.asset('assets/images/supportSVG.svg'),
+                          title: 'الدعم والمساعدة',
+                          onTap: () {},
+                          endWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              textDirection: TextDirection.ltr,
+                              size: 17,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'تواصل معنا',
-                            onTap: () {}),
+                          icon: SvgPicture.asset(
+                              'assets/images/contactUsSVG.svg'),
+                          title: 'تواصل معنا',
+                          onTap: () {},
+                          endWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              textDirection: TextDirection.ltr,
+                              size: 17,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         settingsListItem(
-                            icon: Icon(BrselApp.profile),
-                            title: 'تسجيل الخروج',
-                            onTap: () {}),
+                          icon: SvgPicture.asset(
+                              'assets/images/logoutRedSVG.svg'),
+                          title: 'تسجيل الخروج',
+                          onTap: () {},
+                          endWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              textDirection: TextDirection.ltr,
+                              size: 17,
+                              color: mySecRedColor,
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
@@ -389,57 +459,91 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  InkWell settingsListItem(
-      {String? title, String? subtitle, VoidCallback? onTap, Widget? icon}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-          child: Row(
-            children: [
-              Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: myBackgroundColor),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: icon!,
-                  )),
-              SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title!,
-                    style: MyCustomTextStyle.myH2,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'معولمات الاتصال والشخصية',
-                    style: MyCustomTextStyle.myH1TextStyle,
-                  ),
-                ],
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  textDirection: TextDirection.ltr,
-                  size: 17,
+  Material settingsListItem(
+      {String? title,
+      String? subtitle,
+      VoidCallback? onTap,
+      Widget? icon,
+      Widget? endWidget}) {
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8), color: Colors.white),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+            child: Row(
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: myBackgroundColor),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: icon!,
+                    )),
+                SizedBox(
+                  width: 15,
                 ),
-              ),
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title!,
+                      style: MyCustomTextStyle.myH2,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Column(
+                      children: [
+                        if (subtitle == null) ...[
+                          Container()
+                        ] else ...[
+                          Text(
+                            subtitle,
+                            style: MyCustomTextStyle.myH1TextStyle,
+                          ),
+                        ]
+                      ],
+                    ),
+                  ],
+                ),
+                Spacer(),
+                endWidget!,
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class NotificationSwitch extends StatefulWidget {
+  const NotificationSwitch({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<NotificationSwitch> createState() => _NotificationSwitchState();
+}
+
+class _NotificationSwitchState extends State<NotificationSwitch> {
+  bool switchValue = false;
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      inactiveThumbColor: myGreyColor,
+      inactiveTrackColor: myGreyColor.withOpacity(0.2),
+      value: switchValue,
+      onChanged: (val) {
+        setState(() {
+          switchValue = val;
+        });
+      },
     );
   }
 }

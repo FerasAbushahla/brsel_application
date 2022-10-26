@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.001" height="21.277" viewBox="0 0 22.001 21.277">
+  <g id="news" transform="translate(-0.499 -1.5)" opacity="0.5">
+    <path id="Path_72047" data-name="Path 72047" d="M2.448,18H1v6.517A2.133,2.133,0,0,0,3.172,26.69" transform="translate(0 -4.414)" fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Path_72048" data-name="Path 72048" d="M6.172,2V20.1A2.133,2.133,0,0,1,4,22.276H20.655A2.133,2.133,0,0,0,22.828,20.1V2Z" transform="translate(-0.828)" fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1"/>
+    <rect id="Rectangle_13078" data-name="Rectangle 13078" width="8.857" height="4.429" transform="translate(9.285 5.938)" fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1"/>
+    <line id="Line_1868" data-name="Line 1868" x1="8.857" transform="translate(9.285 18.338)" fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1"/>
+    <line id="Line_1869" data-name="Line 1869" x1="8.857" transform="translate(9.285 13.909)" fill="none" stroke="#212121" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>
