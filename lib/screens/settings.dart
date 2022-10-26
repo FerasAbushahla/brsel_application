@@ -7,6 +7,7 @@ import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/screens/contactUs.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/termsAndPolicies.dart';
 import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/service/remoteServices.dart';
@@ -270,7 +271,12 @@ class _SettingsState extends State<Settings> {
                           // icon: Icon(BrselApp.profile, color: mySecGreyColor),
                           title: 'المعلومات الشخصية',
                           subtitle: 'معلومات الاتصال والشخصية',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PersonalInfo()));
+                          },
                           endWidget: IconButton(
                             onPressed: () {},
                             icon: Icon(

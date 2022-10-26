@@ -13,29 +13,88 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 class PersonalInfo extends StatefulWidget {
-  const PersonalInfo({Key? key}) : super(key: key);
+  // final String? firstName;
+  // final String? lastName;
+  // final String? phoneNumber;
+  // final String? sex;
+  const PersonalInfo({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {
+  bool sharedPreferencesLoading = false;
+  String? firstName;
+  String? lastName;
+  String? phoneNumber;
+  String? sex;
+  String? token;
+  int? ID;
+  String? currentPosition;
+  String personalImage = '';
+
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 5), () async {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      print(preferences.get('firstName'));
-      print(preferences.get('lastName'));
-      print(preferences.get('phoneNumber'));
-      print(preferences.get('sex'));
-      print(preferences.get('token'));
-      print(preferences.get('ID'));
-      print(preferences.get('personalImage'));
-      // userBox = Hive.box('user');
-      // var myUser = await userBox.getAt(0);
-      // print(myUser);
+    // Future.delayed(const Duration(milliseconds: 5), () async {
+    //   SharedPreferences preferences = await SharedPreferences.getInstance();
+    //   print(preferences.get('firstName'));
+    //   print(preferences.get('lastName'));
+    //   print(preferences.get('phoneNumber'));
+    //   print(preferences.get('sex'));
+    //   print(preferences.get('token'));
+    //   print(preferences.get('ID'));
+    //   print(preferences.get('personalImage'));
+    //   // firstNameController.text = widget.firstName!;
+    //   // userBox = Hive.box('user');
+    //   // var myUser = await userBox.getAt(0);
+    //   // print(myUser);
+    // });
+    getSharedPrefs().then((value) {
+      if (firstName != null) {
+        firstNameController.text = firstName!;
+      }
+      if (lastName != null) {
+        lastNameController.text = lastName!;
+      }
+      if (phoneNumber != null) {
+        phoneController.text = phoneNumber!;
+      }
+      if (sex != null) {
+        mySexValue = sex!;
+      }
     });
+
     super.initState();
+  }
+
+  Future getSharedPrefs() async {
+    setState(() {
+      sharedPreferencesLoading = true;
+    });
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    // userAddress = preferences.getString("currentPosition");
+    setState(() {
+      firstName = preferences.getString("firstName");
+      lastName = preferences.getString("lastName");
+      phoneNumber = preferences.getString("phoneNumber");
+      sex = preferences.getString("sex");
+      token = preferences.getString("token");
+      ID = preferences.getInt("ID");
+      currentPosition = preferences.getString("currentPosition");
+      personalImage = preferences.getString("personalImage") ?? '';
+      sharedPreferencesLoading = false;
+    });
+
+    print(preferences.get('firstName'));
+    print(preferences.get('lastName'));
+    print(preferences.get('phoneNumber'));
+    print(preferences.get('sex'));
+    print(preferences.get('token'));
+    print(preferences.get('personalImage'));
+    print(preferences.get('currentPosition'));
   }
 
   String? validatePhoneNum(String? value) {
@@ -186,6 +245,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 height: 5,
                               ),
                               TextFormField(
+                                maxLength: 8,
                                 validator: (val) => validatePhoneNum(val),
                                 // validator: (val) =>
                                 //     val!.isEmpty ? 'أدخل رقم الهاتف' : null,
@@ -203,7 +263,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                           width: 20,
                                         ),
                                         Text(
-                                          '+973',
+                                          '+968',
                                           style: MyCustomTextStyle
                                               .myTextFieldTitletextStyle,
                                         ),

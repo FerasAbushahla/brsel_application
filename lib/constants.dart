@@ -303,6 +303,7 @@ InputDecoration searchInputDecoration(
 InputDecoration myInputDecoration(
     {Widget? prefix, String? hint, Widget? suffix}) {
   return InputDecoration(
+    counterText: "",
     fillColor: myBackgroundFillingColor,
     filled: true,
     hintStyle: MyCustomTextStyle.myHintTextStyle,
