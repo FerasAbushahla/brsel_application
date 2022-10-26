@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/MySettingsCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
+import 'package:brsel_application/screens/contactUs.dart';
 import 'package:brsel_application/screens/orders.dart';
 import 'package:brsel_application/screens/termsAndPolicies.dart';
 import 'package:brsel_application/size_config.dart';
@@ -328,7 +329,12 @@ class _SettingsState extends State<Settings> {
                           icon: SvgPicture.asset(
                               'assets/images/contactUsSVG.svg'),
                           title: 'تواصل معنا',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ContactUs()));
+                          },
                           endWidget: IconButton(
                             onPressed: () {},
                             icon: Icon(
