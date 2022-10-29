@@ -1,4 +1,6 @@
+import 'package:badges/badges.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,9 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
   String? userAddress = '';
   String? userStreetAddress = '';
   String? userLocalityAddress = '';
+  int? cartLength = 0;
+
+  CartController cartController = Get.put(CartController());
 
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -51,12 +56,18 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
     print(preferences.get('currentPosition'));
   }
 
+  Future getCartlength() async {
+    await cartController.getcartListLength();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
 
     super.initState();
     getSharedPrefs();
+    // getCartlength();
+    // cartController.cartListLength;
   }
 
   @override
@@ -142,12 +153,25 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                       ),
                     ),
                   ),
-                  MyIconButton(
-                      BackgroundColor: myBackgroundFillingColor,
-                      borderRadius: 6,
-                      iconWidget:
-                          SvgPicture.asset('assets/images/CartIcon.svg'),
-                      onPress: widget.action1OnPressed),
+                  Obx(
+                    () => Badge(
+                      position: BadgePosition(top: 0, start: -0),
+                      badgeColor: myPrimaryColor,
+                      badgeContent: Text(
+                        cartController.cartListLength.value.toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 6,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      child: MyIconButton(
+                          BackgroundColor: myBackgroundFillingColor,
+                          borderRadius: 6,
+                          iconWidget:
+                              SvgPicture.asset('assets/images/CartIcon.svg'),
+                          onPress: widget.action1OnPressed),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(

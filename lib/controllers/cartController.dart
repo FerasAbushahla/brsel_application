@@ -6,17 +6,19 @@ import 'package:brsel_application/service/remoteServices.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class OrdersController extends GetxController {
+class CartController extends GetxController {
   static var isLoading = true.obs;
-  var ordersList = <MealDetailsData>[].obs;
+  var cartList = <MealDetailsData>[].obs;
   var totalprice = 0.0.obs;
+  var cartListLength = 0.obs;
   String? token;
 
   @override
   void onInit() {
     // getSharedPrefs().then((value) => getOrders());
-    getOrders().then((value) {
-      getOrdersPrice();
+    getCartOrders().then((value) {
+      getCartOrdersPrice();
+      getcartListLength();
       super.onInit();
     });
     // getOrdersPrice();
@@ -30,7 +32,12 @@ class OrdersController extends GetxController {
     print('ordersController token: $token');
   }
 
-  Future getOrders() async {
+  Future getcartListLength() async {
+    cartListLength.value = cartList.length;
+    update();
+  }
+
+  Future getCartOrders() async {
     try {
       isLoading(true);
       int length = await LocaleDBHelper.dbHelper.getLocalOrdersListLength();
@@ -41,7 +48,8 @@ class OrdersController extends GetxController {
       // var homeMeals = await RemoteServices.getHomeMeals(
       //     access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
       // access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
-      ordersList.value = order;
+      cartList.value = order;
+      await getcartListLength();
     } finally {
       isLoading(false);
     }
@@ -49,21 +57,21 @@ class OrdersController extends GetxController {
 
   Future deleteOrder(int index) async {
     LocaleDBHelper.dbHelper.deleteOrder(index);
-    await getOrders();
-    await getOrdersPrice();
+    await getCartOrders();
+    await getCartOrdersPrice();
   }
 
-  Future getOrdersPrice() async {
+  Future getCartOrdersPrice() async {
     double totallprice = 0;
     print(totallprice);
     print('getOrdersPrice');
     try {
       print('try');
-      print('ordersList.length ${ordersList.length}');
+      print('ordersList.length ${cartList.length}');
       isLoading(true);
-      for (var i = 0; i < ordersList.length; i++) {
-        print('{ordersList[i]}  ${ordersList[i]}');
-        totallprice += double.parse(ordersList[i].price!);
+      for (var i = 0; i < cartList.length; i++) {
+        print('{ordersList[i]}  ${cartList[i]}');
+        totallprice += double.parse(cartList[i].price!);
         print('totallprice $totallprice');
 
         // totalprice += double.parse(ordersList[i].price!);

@@ -9,7 +9,7 @@ import 'package:brsel_application/controllers/homeCategoriesController.dart';
 import 'package:brsel_application/controllers/homeMealsController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/controllers/mealDetailsController.dart';
-import 'package:brsel_application/controllers/ordersController.dart';
+import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
   }
 
   final ZoomDrawerController z = ZoomDrawerController();
-  OrdersController ordersController = Get.put(OrdersController());
+  CartController cartController = Get.put(CartController());
   HomeRestaurantsController homeRestaurantsController =
       Get.put(HomeRestaurantsController());
   HomeADsSliderController homeADsSliderController =

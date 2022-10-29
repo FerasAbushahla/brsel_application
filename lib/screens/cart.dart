@@ -1,7 +1,7 @@
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/myOrdersCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
-import 'package:brsel_application/controllers/ordersController.dart';
+import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/screens/payment.dart';
 import 'package:brsel_application/service/hiveDB.dart';
@@ -23,14 +23,14 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  OrdersController ordersController = Get.put(OrdersController());
+  CartController cartController = Get.put(CartController());
   double totalWhithFees = 20;
 
   late Box orderBox;
 
   void getdata() async {
-    await ordersController.getOrders();
-    await ordersController.getOrdersPrice();
+    await cartController.getCartOrders();
+    await cartController.getCartOrdersPrice();
   }
 
   // double totalPrice = 0;
@@ -40,19 +40,20 @@ class _CartState extends State<Cart> {
 
     // print('Get.currentRoute${ModalRoute.of(context)?.settings.name}');
     getdata();
-    ordersController.totalprice;
+    cartController.totalprice;
+    cartController.cartListLength;
     print(
-        'ordersController.totalprice.value ${ordersController.totalprice.value}');
+        'ordersController.totalprice.value ${cartController.totalprice.value}');
     // totalPrice = await ordersController.getOrdersPrice();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    ordersController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   cartController.dispose();
+  //   super.dispose();
+  // }
 
   // void deleteOrder(int index) async {
   //   await LocaleDBHelper.dbHelper.deleteOrder(index);
@@ -86,17 +87,17 @@ class _CartState extends State<Cart> {
             ),
             Expanded(
               child: Obx((() {
-                if (OrdersController.isLoading.value) {
+                if (CartController.isLoading.value) {
                   return SizedBox(
                       // width: 25,
                       height: 96,
                       child: Center(child: CircularProgressIndicator()));
-                } else if (ordersController.ordersList.isNotEmpty) {
+                } else if (cartController.cartList.isNotEmpty) {
                   return SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: List.generate(
-                        ordersController.ordersList.length,
+                        cartController.cartList.length,
                         (index) => Padding(
                           padding: index == 0
                               ? EdgeInsets.only(bottom: 6)
@@ -112,9 +113,9 @@ class _CartState extends State<Cart> {
                                 children: [
                                   CustomSlidableAction(
                                     onPressed: ((context) async {
-                                      print(ordersController
-                                          .ordersList[index].price);
-                                      ordersController.deleteOrder(index);
+                                      print(
+                                          cartController.cartList[index].price);
+                                      cartController.deleteOrder(index);
                                       // await LocaleDBHelper.dbHelper
                                       //     .deleteOrder(index);
                                       // ordersController.getOrders();
@@ -157,13 +158,12 @@ class _CartState extends State<Cart> {
                               //     ),
                               //   ],
                               // ),
-                              child: orderCard(
-                                  ordersController.ordersList[index])),
+                              child: orderCard(cartController.cartList[index])),
                         ),
                       ),
                     ),
                   );
-                } else if (ordersController.ordersList.isEmpty) {
+                } else if (cartController.cartList.isEmpty) {
                   return Container(
                     height: 100,
                     child: Center(
@@ -233,7 +233,7 @@ class _CartState extends State<Cart> {
                             Row(
                               children: [
                                 Obx(() {
-                                  if (OrdersController.isLoading.value) {
+                                  if (CartController.isLoading.value) {
                                     return Container(
                                       height: getProportionalScreenHeight(5),
                                       // child: Center(
@@ -245,7 +245,7 @@ class _CartState extends State<Cart> {
                                     );
                                   } else {
                                     return Text(
-                                      ordersController.totalprice.value
+                                      cartController.totalprice.value
                                           .toString(),
                                       // '210.80',
                                       style: MyCustomTextStyle
@@ -368,7 +368,7 @@ class _CartState extends State<Cart> {
                                   children: [
                                     Obx(
                                       () => Text(
-                                        '${ordersController.totalprice.value + totalWhithFees}',
+                                        '${cartController.totalprice.value + totalWhithFees}',
                                         // '210.80',
                                         style: MyCustomTextStyle
                                             .mySearchHintTextStyle,
