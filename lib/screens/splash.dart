@@ -1,5 +1,5 @@
 import 'package:brsel_application/screens/login.dart';
-import 'package:brsel_application/screens/onBoarding/onBoarding.dart';
+import 'package:brsel_application/screens/onBoarding.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';

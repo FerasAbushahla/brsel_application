@@ -100,17 +100,6 @@ class _SettingsState extends State<Settings> {
           children: [
             MySettingsCustomAppBar(
               title: 'الإعدادات',
-              cartButtonWidget: MyIconButton(
-                  BackgroundColor: Colors.white,
-                  borderRadius: 6,
-                  iconWidget: SvgPicture.asset('assets/images/CartIcon.svg'),
-                  onPress: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Cart(),
-                        ));
-                  }),
             ),
             Expanded(
                 child: SingleChildScrollView(
@@ -340,23 +329,23 @@ class _SettingsState extends State<Settings> {
                         SizedBox(
                           height: 10,
                         ),
-                        settingsListItem(
-                          icon:
-                              SvgPicture.asset('assets/images/supportSVG.svg'),
-                          title: 'الدعم والمساعدة',
-                          onTap: () {},
-                          endWidget: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              textDirection: TextDirection.ltr,
-                              size: 17,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // settingsListItem(
+                        //   icon:
+                        //       SvgPicture.asset('assets/images/supportSVG.svg'),
+                        //   title: 'الدعم والمساعدة',
+                        //   onTap: () {},
+                        //   endWidget: IconButton(
+                        //     onPressed: () {},
+                        //     icon: Icon(
+                        //       Icons.arrow_back_ios,
+                        //       textDirection: TextDirection.ltr,
+                        //       size: 17,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
                         settingsListItem(
                           icon: SvgPicture.asset(
                               'assets/images/contactUsSVG.svg'),

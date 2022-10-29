@@ -229,16 +229,16 @@ class _DrawerMenuState extends State<DrawerMenu> {
             SizedBox(
               height: 15,
             ),
-            MyMenuListItem(
-                title: 'الدعم والاستعادة',
-                icon: Icon(
-                  Icons.info_outline,
-                  size: 22,
-                ),
-                onTap: () {}),
-            SizedBox(
-              height: 15,
-            ),
+            // MyMenuListItem(
+            //     title: 'الدعم والاستعادة',
+            //     icon: Icon(
+            //       Icons.info_outline,
+            //       size: 22,
+            //     ),
+            //     onTap: () {}),
+            // SizedBox(
+            //   height: 15,
+            // ),
             MyMenuListItem(
                 title: 'تسجيل الخروج',
                 icon: Icon(BrselApp.logouticon),

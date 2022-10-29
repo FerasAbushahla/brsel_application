@@ -1,6 +1,8 @@
 import 'package:badges/badges.dart';
+import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/controllers/cartController.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +35,6 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
   String? userLocalityAddress = '';
   int? cartLength = 0;
 
-  CartController cartController = Get.put(CartController());
-
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // userAddress = preferences.getString("currentPosition");
@@ -56,9 +56,9 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
     print(preferences.get('currentPosition'));
   }
 
-  Future getCartlength() async {
-    await cartController.getcartListLength();
-  }
+  // Future getCartlength() async {
+  //   await cartController.getcartListLength();
+  // }
 
   @override
   void initState() {
@@ -153,25 +153,12 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                       ),
                     ),
                   ),
-                  Obx(
-                    () => Badge(
-                      position: BadgePosition(top: 0, start: -0),
-                      badgeColor: myPrimaryColor,
-                      badgeContent: Text(
-                        cartController.cartListLength.value.toString(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 6,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      child: MyIconButton(
-                          BackgroundColor: myBackgroundFillingColor,
-                          borderRadius: 6,
-                          iconWidget:
-                              SvgPicture.asset('assets/images/CartIcon.svg'),
-                          onPress: widget.action1OnPressed),
-                    ),
-                  ),
+
+                  MyCartBadgedButton(),
+
+                  // Obx(
+                  //   () => MyCartBadge(),
+                  // ),
                 ],
               ),
               SizedBox(

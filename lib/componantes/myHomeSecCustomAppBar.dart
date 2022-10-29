@@ -1,3 +1,4 @@
+import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -57,12 +58,13 @@ class _MyHomeSecCustomAppBarState extends State<MyHomeSecCustomAppBar> {
                     widget.title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
-                  MyIconButton(
-                      BackgroundColor: myBackgroundFillingColor,
-                      borderRadius: 6,
-                      iconWidget:
-                          SvgPicture.asset('assets/images/CartIcon.svg'),
-                      onPress: widget.action1OnPressed),
+                  MyCartBadgedButton(),
+                  // MyIconButton(
+                  //     BackgroundColor: myBackgroundFillingColor,
+                  //     borderRadius: 6,
+                  //     iconWidget:
+                  //         SvgPicture.asset('assets/images/CartIcon.svg'),
+                  //     onPress: widget.action1OnPressed),
                 ],
               ),
               SizedBox(

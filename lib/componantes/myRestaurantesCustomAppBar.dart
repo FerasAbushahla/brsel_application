@@ -1,3 +1,4 @@
+import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
@@ -52,12 +53,13 @@ class MyRestaurantesCustomAppBar extends StatelessWidget {
                     title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
-                  MyIconButton(
-                      BackgroundColor: myBackgroundFillingColor,
-                      borderRadius: 6,
-                      iconWidget:
-                          SvgPicture.asset('assets/images/CartIcon.svg'),
-                      onPress: action1OnPressed),
+                  MyCartBadgedButton(),
+                  // MyIconButton(
+                  //     BackgroundColor: myBackgroundFillingColor,
+                  //     borderRadius: 6,
+                  //     iconWidget:
+                  //         SvgPicture.asset('assets/images/CartIcon.svg'),
+                  //     onPress: action1OnPressed),
                 ],
               ),
               SizedBox(

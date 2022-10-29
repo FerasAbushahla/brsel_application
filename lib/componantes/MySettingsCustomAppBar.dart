@@ -1,3 +1,4 @@
+import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +10,6 @@ class MySettingsCustomAppBar extends StatefulWidget {
   final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
   // final Widget? leading;
-  final Widget? cartButtonWidget;
   final String? title;
 
   @override
@@ -20,7 +20,6 @@ class MySettingsCustomAppBar extends StatefulWidget {
     this.action2OnPressed,
     // this.leading,
     this.title,
-    this.cartButtonWidget,
   }) : super(key: key);
 
   @override
@@ -52,7 +51,7 @@ class _MySettingsCustomAppBarState extends State<MySettingsCustomAppBar> {
                     widget.title!,
                     style: MyCustomTextStyle.myAppBarTitleTextStyle,
                   ),
-                  widget.cartButtonWidget!,
+                  MyCartBadgedButton(),
                 ],
               ),
               SizedBox(
