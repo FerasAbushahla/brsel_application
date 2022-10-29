@@ -211,6 +211,22 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
 
   Set<Marker> markers = {};
 
+  Future getSharedPreferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      userAddress = sharedPreferences.getString('currentPosition');
+      userFirstName = sharedPreferences.getString('firstName');
+      userLastName = sharedPreferences.getString('lastName');
+      userGender = sharedPreferences.getString('sex');
+      userImage = sharedPreferences.getString('personalImage');
+      userLat = sharedPreferences.getString('currentPositionLatitude');
+      userLong = sharedPreferences.getString('currentPositionLongitude');
+      userPhoneNumber = sharedPreferences.getString('phoneNumber');
+      userID = sharedPreferences.getInt('ID');
+      accessToken = sharedPreferences.getString('token');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -438,22 +454,23 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                 setState(() {
                   loading = true;
                 });
-                SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                setState(() {
-                  userAddress = sharedPreferences.getString('currentPosition');
-                  userFirstName = sharedPreferences.getString('firstName');
-                  userLastName = sharedPreferences.getString('lastName');
-                  userGender = sharedPreferences.getString('sex');
-                  userImage = sharedPreferences.getString('personalImage');
-                  userLat =
-                      sharedPreferences.getString('currentPositionLatitude');
-                  userLong =
-                      sharedPreferences.getString('currentPositionLongitude');
-                  userPhoneNumber = sharedPreferences.getString('phoneNumber');
-                  userID = sharedPreferences.getInt('ID');
-                  accessToken = sharedPreferences.getString('token');
-                });
+                getSharedPreferences();
+                // SharedPreferences sharedPreferences =
+                //     await SharedPreferences.getInstance();
+                // setState(() {
+                //   userAddress = sharedPreferences.getString('currentPosition');
+                //   userFirstName = sharedPreferences.getString('firstName');
+                //   userLastName = sharedPreferences.getString('lastName');
+                //   userGender = sharedPreferences.getString('sex');
+                //   userImage = sharedPreferences.getString('personalImage');
+                //   userLat =
+                //       sharedPreferences.getString('currentPositionLatitude');
+                //   userLong =
+                //       sharedPreferences.getString('currentPositionLongitude');
+                //   userPhoneNumber = sharedPreferences.getString('phoneNumber');
+                //   userID = sharedPreferences.getInt('ID');
+                //   accessToken = sharedPreferences.getString('token');
+                // });
                 print(widget.image);
                 PersonalInfoModel personalInfoResponse =
                     await RemoteServices.userInfoRegister(

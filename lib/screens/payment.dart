@@ -512,7 +512,7 @@ class _PaymentState extends State<Payment> {
                           fillColor: Colors.white,
                           filled: true,
                           hintStyle: MyCustomTextStyle.myHintTextStyle,
-                          hintText: 'اكتب أي ملاحظة',
+                          hintText: 'أكتب أي ملاحظة',
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 11, vertical: 15),
                           border: OutlineInputBorder(

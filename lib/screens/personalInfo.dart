@@ -2,7 +2,9 @@ import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/controllers/userController.dart';
+import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/screens/personalImage.dart';
+import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,9 +19,8 @@ class PersonalInfo extends StatefulWidget {
   // final String? lastName;
   // final String? phoneNumber;
   // final String? sex;
-  const PersonalInfo({
-    Key? key,
-  }) : super(key: key);
+  final bool? fromSettings;
+  const PersonalInfo({Key? key, required this.fromSettings}) : super(key: key);
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
@@ -34,7 +35,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
   String? token;
   int? ID;
   String? currentPosition;
-  String personalImage = '';
+  String? personalImage;
+  String? lat;
+  String? long;
 
   @override
   void initState() {
@@ -77,15 +80,26 @@ class _PersonalInfoState extends State<PersonalInfo> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // userAddress = preferences.getString("currentPosition");
     setState(() {
-      firstName = preferences.getString("firstName");
-      lastName = preferences.getString("lastName");
-      phoneNumber = preferences.getString("phoneNumber");
-      sex = preferences.getString("sex");
-      token = preferences.getString("token");
-      ID = preferences.getInt("ID");
-      currentPosition = preferences.getString("currentPosition");
-      personalImage = preferences.getString("personalImage") ?? '';
-      sharedPreferencesLoading = false;
+      currentPosition = preferences.getString('currentPosition');
+      firstName = preferences.getString('firstName');
+      lastName = preferences.getString('lastName');
+      sex = preferences.getString('sex');
+      personalImage = preferences.getString('personalImage');
+      lat = preferences.getString('currentPositionLatitude');
+      long = preferences.getString('currentPositionLongitude');
+      phoneNumber = preferences.getString('phoneNumber');
+      ID = preferences.getInt('ID');
+      token = preferences.getString('token');
+
+      // firstName = preferences.getString("firstName");
+      // lastName = preferences.getString("lastName");
+      // phoneNumber = preferences.getString("phoneNumber");
+      // sex = preferences.getString("sex");
+      // token = preferences.getString("token");
+      // ID = preferences.getInt("ID");
+      // currentPosition = preferences.getString("currentPosition");
+      // personalImage = preferences.getString("personalImage") ?? '';
+      // sharedPreferencesLoading = false;
     });
 
     print(preferences.get('firstName'));
@@ -93,8 +107,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
     print(preferences.get('phoneNumber'));
     print(preferences.get('sex'));
     print(preferences.get('token'));
+    print(preferences.get('ID'));
     print(preferences.get('personalImage'));
     print(preferences.get('currentPosition'));
+    print(preferences.get('currentPositionLatitude'));
+    print(preferences.get('currentPositionLongitude'));
   }
 
   String? validatePhoneNum(String? value) {
@@ -390,6 +407,61 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 color: mySecondaryColor,
                                 title: 'حفظ ومتابعة',
                                 onPressed: () async {
+                                  // if (widget.fromSettings == true) {
+                                  // if (_formKey.currentState!.validate()) {
+                                  //   setState(() {
+                                  //     loading = true;
+                                  //   });
+                                  //   SharedPreferences sharedPreferences =
+                                  //       await SharedPreferences.getInstance();
+                                  //   sharedPreferences.setString('firstName',
+                                  //       firstNameController.text);
+                                  //   print('firstName');
+                                  //   print(firstNameController.text);
+                                  //   sharedPreferences.setString(
+                                  //       'lastName', lastNameController.text);
+                                  //   print('lastName');
+                                  //   print(lastNameController.text);
+                                  //   sharedPreferences.setString(
+                                  //       'phoneNumber', phoneController.text);
+                                  //   print('phoneNumber');
+                                  //   print(phoneController.text);
+                                  //   sharedPreferences.setString(
+                                  //       'sex', mySexValue.toString());
+                                  //   print('sex');
+                                  //   print(mySexValue);
+                                  //   getSharedPrefs().then(
+                                  //     (value) async {
+                                  //       PersonalInfoModel
+                                  //           personalInfoResponse =
+                                  //           await RemoteServices
+                                  //               .userInfoRegister(
+                                  //         access_token: token,
+                                  //         address: currentPosition,
+                                  //         firstName: firstName,
+                                  //         lastName: lastName,
+                                  //         gender: sex,
+                                  //         // image: widget.image,
+                                  //         lat: lat,
+                                  //         long: long,
+                                  //         phoneNumber: phoneNumber,
+                                  //         userID: ID.toString(),
+                                  //       );
+                                  //     },
+                                  //   );
+                                  //   setState(() {
+                                  //     loading = false;
+                                  //   });
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: ((context) =>
+                                  //           PersonalImage()),
+                                  //     ),
+                                  //   );
+                                  // }
+                                  // }
+                                  // else {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       loading = true;
@@ -422,6 +494,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                       ),
                                     );
                                   }
+                                  // }
                                 },
                               ),
                             ],

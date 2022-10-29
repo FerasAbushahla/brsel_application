@@ -13,16 +13,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class Orders extends StatefulWidget {
-  Orders({
+class Cart extends StatefulWidget {
+  Cart({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Orders> createState() => _OrdersState();
+  State<Cart> createState() => _CartState();
 }
 
-class _OrdersState extends State<Orders> {
+class _CartState extends State<Cart> {
   OrdersController ordersController = Get.put(OrdersController());
   double totalWhithFees = 20;
 

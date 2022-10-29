@@ -11,4 +11,5 @@ class ApiSettings {
   static const meals = _apiUrl + 'meals';
   static const search = _apiUrl + 'meals/search?word=';
   static const mealDetails = _apiUrl + 'meals';
+  static const contactUs = _apiUrl + 'contact_us';
 }

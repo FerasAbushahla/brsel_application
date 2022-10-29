@@ -290,7 +290,9 @@ class _RegisterState extends State<Register> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  PersonalInfo()));
+                                                  PersonalInfo(
+                                                    fromSettings: false,
+                                                  )));
 
                                       // userBox = Hive.box('user');
                                       // await userBox

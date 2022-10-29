@@ -68,8 +68,12 @@ class _SplashState extends State<Splash> {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: ((context) => Wraper())));
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: ((context) => PersonalInfo())));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => PersonalInfo(
+                        fromSettings: false,
+                      ))));
         }
       }
     });

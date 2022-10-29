@@ -501,4 +501,62 @@ class RemoteServices {
       return [];
     }
   }
+
+  static Future contacUs({
+    required String userID,
+    required String message,
+    required File file,
+    required String access_token,
+  }) async {
+    var request =
+        http.MultipartRequest("POST", Uri.parse(ApiSettings.contactUs));
+
+    Map<String, String> body = {
+      "user_id": userID,
+      "message": message,
+    };
+    Map<String, String> headers = {
+      "Content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token"
+    };
+    request.headers.addAll(headers);
+    request.fields.addAll(body);
+    if (file != null) {
+      String fileName = file.path.split("/").last;
+      var stream = http.ByteStream(DelegatingStream(file.openRead()));
+      var length = await file.length();
+      var multipartFile =
+          http.MultipartFile("file", stream, length, filename: fileName);
+
+      request.files.add(multipartFile);
+    }
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+
+    var output = json.decode(response.body);
+    print(output);
+
+    print(response);
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString)["message"];
+      print(mapOutput);
+      return mapOutput;
+    } else {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString)["message"];
+      print(mapOutput);
+
+      return mapOutput;
+    }
+  }
 }
