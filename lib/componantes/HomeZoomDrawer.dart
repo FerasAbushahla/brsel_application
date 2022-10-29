@@ -4,7 +4,7 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/screens/home.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/meals.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/service/remoteServices.dart';
@@ -193,8 +193,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 title: 'طلباتي',
                 icon: Icon(BrselApp.ordersicon),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Orders()));
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Cart()));
                 }),
             SizedBox(
               height: 15,

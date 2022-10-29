@@ -6,7 +6,7 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/screens/contactUs.dart';
 import 'package:brsel_application/screens/login.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/termsAndPolicies.dart';
 import 'package:brsel_application/service/hiveDB.dart';
@@ -108,7 +108,7 @@ class _SettingsState extends State<Settings> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Orders(),
+                          builder: (context) => Cart(),
                         ));
                   }),
             ),
@@ -275,7 +275,9 @@ class _SettingsState extends State<Settings> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PersonalInfo()));
+                                    builder: (context) => PersonalInfo(
+                                          fromSettings: true,
+                                        )));
                           },
                           endWidget: IconButton(
                             onPressed: () {},

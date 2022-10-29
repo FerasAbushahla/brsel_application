@@ -3,7 +3,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -97,7 +97,7 @@ class _MealDetailsState extends State<MealDetails> {
                     await orderBox
                         .add(mealDetailsController.mealDetailsData.toJson())
                         .then((value) => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Orders())));
+                            MaterialPageRoute(builder: (context) => Cart())));
                   },
                   style: ElevatedButton.styleFrom(
                     // padding: EdgeInsets.symmetric(vertical: 8),
@@ -190,7 +190,7 @@ class _MealDetailsState extends State<MealDetails> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Orders(),
+                    builder: (context) => Cart(),
                   ));
             },
             title: 'تفاصيل الوجبة',

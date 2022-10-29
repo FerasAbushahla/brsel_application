@@ -6,7 +6,7 @@ import 'package:brsel_application/controllers/SearchController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class _RestaurantsState extends State<Restaurants> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Orders(),
+                      builder: (context) => Cart(),
                     ));
               },
             ),

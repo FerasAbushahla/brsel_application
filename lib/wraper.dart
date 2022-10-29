@@ -2,7 +2,7 @@ import 'package:brsel_application/componantes/HomeZoomDrawer.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/screens/home.dart';
 import 'package:brsel_application/screens/meals.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/restaurants.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/size_config.dart';
@@ -22,7 +22,7 @@ class _WraperState extends State<Wraper> {
   final List<Widget> Screens = [
     HomeZoomDrawer(),
     // Home(),
-    Orders(),
+    Cart(),
     Meals(focus: false),
     Restaurants(),
     Settings(),
@@ -117,7 +117,7 @@ class _WraperState extends State<Wraper> {
                       onPressed: () {
                         setState(() {
                           currentPage = 1;
-                          currentScreen = Orders();
+                          currentScreen = Cart();
                         });
                       },
                       child: Column(

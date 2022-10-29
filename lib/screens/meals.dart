@@ -5,7 +5,7 @@ import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class _MealsState extends State<Meals> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Orders(),
+                      builder: (context) => Cart(),
                     ));
               },
               focus: widget.focus,

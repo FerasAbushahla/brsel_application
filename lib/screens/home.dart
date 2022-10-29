@@ -13,7 +13,7 @@ import 'package:brsel_application/controllers/ordersController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
-import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/restaurants.dart';
 import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/size_config.dart';
@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Orders(),
+                      builder: (context) => Cart(),
                     ));
               },
             ),
