@@ -299,6 +299,9 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                     setState(() {
                       currentPosition = position;
                       userCurrentPlace = placemark;
+                      print(userCurrentPlace);
+                      print(
+                          'current location in detail country:${placemark[0].locality}, country:${placemark[0].locality},subLocality:${placemark[0].subLocality}, street:${placemark[0].street},');
                       // print(userCurrentPlace!.elementAt(0).toString());
                       print(userCurrentPlace![0].toJson());
                       sharedPreferences.setString('currentPositionDetailed',
@@ -454,7 +457,7 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                 setState(() {
                   loading = true;
                 });
-                getSharedPreferences();
+                await getSharedPreferences();
                 // SharedPreferences sharedPreferences =
                 //     await SharedPreferences.getInstance();
                 // setState(() {

@@ -1,26 +1,20 @@
-import 'package:badges/badges.dart';
 import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
-import 'package:brsel_application/controllers/cartController.dart';
-import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 
 class MyHomeCustomAppBar extends StatefulWidget {
-  final VoidCallback? action1OnPressed;
   final VoidCallback? action2OnPressed;
   final Widget? leading;
 
   @override
   const MyHomeCustomAppBar({
     Key? key,
-    this.action1OnPressed,
     this.action2OnPressed,
     this.leading,
   }) : super(key: key);
@@ -63,9 +57,8 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
   @override
   void initState() {
     // TODO: implement initState
-
-    super.initState();
     getSharedPrefs();
+    super.initState();
     // getCartlength();
     // cartController.cartListLength;
   }

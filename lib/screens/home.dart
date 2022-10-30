@@ -13,9 +13,7 @@ import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
-import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/restaurants.dart';
-import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -24,7 +22,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -34,26 +31,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void initState() {
-    Future.delayed(const Duration(milliseconds: 100), () async {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.setBool("userPersonalInfoDone", true);
-      print("currentPosition ${preferences.get('currentPosition')}");
-      print("firstName ${preferences.get('firstName')}");
-      print("lastName ${preferences.get('lastName')}");
-      print("sex ${preferences.get('sex')}");
-      print("personalImage ${preferences.get('personalImage')}");
-      print(
-          "currentPositionLatitude ${preferences.get('currentPositionLatitude')}");
-      print(
-          "currentPositionLongitude ${preferences.get('currentPositionLongitude')}");
-      print("phoneNumber ${preferences.get('phoneNumber')}");
-      print("ID ${preferences.get('ID')}");
-      print("token ${preferences.get('token')}");
-      // LocaleDBHelper.dbHelper.deleteOrdersLocal();
-    });
-    super.initState();
-  }
+  // void initState() {
+  //   Future.delayed(const Duration(milliseconds: 100), () async {
+  //     SharedPreferences preferences = await SharedPreferences.getInstance();
+  //     preferences.setBool("userPersonalInfoDone", true);
+  //     print("currentPosition ${preferences.get('currentPosition')}");
+  //     print("firstName ${preferences.get('firstName')}");
+  //     print("lastName ${preferences.get('lastName')}");
+  //     print("sex ${preferences.get('sex')}");
+  //     print("personalImage ${preferences.get('personalImage')}");
+  //     print(
+  //         "currentPositionLatitude ${preferences.get('currentPositionLatitude')}");
+  //     print(
+  //         "currentPositionLongitude ${preferences.get('currentPositionLongitude')}");
+  //     print("phoneNumber ${preferences.get('phoneNumber')}");
+  //     print("ID ${preferences.get('ID')}");
+  //     print("token ${preferences.get('token')}");
+  //     // LocaleDBHelper.dbHelper.deleteOrdersLocal();
+  //   });
+  //   super.initState();
+  // }
 
   void dispose() {
     // TODO: implement dispose
@@ -93,13 +90,13 @@ class _HomeState extends State<Home> {
                   onPress: () {
                     ZoomDrawer.of(context)!.toggle();
                   }),
-              action1OnPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Cart(),
-                    ));
-              },
+              // action1OnPressed: () {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => Cart(),
+              //       ));
+              // },
             ),
             Expanded(
               child: SingleChildScrollView(

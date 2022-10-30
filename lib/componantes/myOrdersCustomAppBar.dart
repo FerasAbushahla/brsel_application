@@ -1,3 +1,4 @@
+import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +55,10 @@ class MyOrdersCustomAppBar extends StatelessWidget {
                   //     iconWidget:
                   //         SvgPicture.asset('assets/images/CartIcon.svg'),
                   //     onPress: action1OnPressed),
-                  Container(
-                    width: 42,
-                  )
+                  MyCartBadgedButton(),
+                  // Container(
+                  //   width: 42,
+                  // )
                 ],
               ),
               SizedBox(

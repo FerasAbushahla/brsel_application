@@ -186,13 +186,6 @@ class _MealDetailsState extends State<MealDetails> {
         mainAxisSize: MainAxisSize.max,
         children: [
           MyDetailsCustomAppBar(
-            action1OnPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Cart(),
-                  ));
-            },
             title: 'تفاصيل الوجبة',
             leading: MyIconButton(
               onPress: () {

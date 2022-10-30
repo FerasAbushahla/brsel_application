@@ -62,7 +62,7 @@ class User {
         firstName: json["first_name"],
         lastName: json["last_name"],
         phone: json["phone"],
-        avatar: json["avatar"],
+        avatar: json["avatar"] == null ? '' : json["avatar"],
         gender: json["gender"],
         email: json["email"],
         address: json["address"],

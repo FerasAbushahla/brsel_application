@@ -25,6 +25,7 @@ class _MyCartBadgedButtonState extends State<MyCartBadgedButton> {
         children: [
           if (cartController.cartList.value.length != 0) ...[
             Badge(
+              animationType: BadgeAnimationType.fade,
               position: BadgePosition(top: 0, start: -0),
               badgeColor: myPrimaryColor,
               badgeContent: Text(
@@ -39,11 +40,12 @@ class _MyCartBadgedButtonState extends State<MyCartBadgedButton> {
                   borderRadius: 6,
                   iconWidget: SvgPicture.asset('assets/images/CartIcon.svg'),
                   onPress: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Cart(),
-                        ));
+                    Get.to(Cart());
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => Cart(),
+                    //     ));
                   }),
             ),
           ] else ...[
@@ -52,11 +54,12 @@ class _MyCartBadgedButtonState extends State<MyCartBadgedButton> {
                 borderRadius: 6,
                 iconWidget: SvgPicture.asset('assets/images/CartIcon.svg'),
                 onPress: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Cart(),
-                      ));
+                  Get.to(Cart());
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => Cart(),
+                  //     ));
                 }),
           ]
         ],

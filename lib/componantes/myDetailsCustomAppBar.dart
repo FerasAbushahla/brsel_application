@@ -8,16 +8,13 @@ import '../constants.dart';
 
 class MyDetailsCustomAppBar extends StatelessWidget {
   final VoidCallback? leadingOnPressed;
-  final VoidCallback? action1OnPressed;
-  final VoidCallback? action2OnPressed;
+
   final Widget? leading;
   final String? title;
   @override
   const MyDetailsCustomAppBar({
     Key? key,
     this.leadingOnPressed,
-    this.action1OnPressed,
-    this.action2OnPressed,
     this.leading,
     this.title,
   }) : super(key: key);

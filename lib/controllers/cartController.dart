@@ -52,6 +52,23 @@ class CartController extends GetxController {
       isLoading(false);
     }
   }
+  // Future getCartOrders() async {
+  //   try {
+  //     isLoading(true);
+  //     int length = await LocaleDBHelper.dbHelper.getLocalOrdersListLength();
+  //     print('length ${length}');
+  //     var order = await LocaleDBHelper.dbHelper.getAllOrders();
+  //     // RemoteServices.getSearchMeals(
+  //     //     access_token: token, searchWord: word == null ? "" : word);
+  //     // var homeMeals = await RemoteServices.getHomeMeals(
+  //     //     access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
+  //     // access_token: '5|IHLNEHPjbGfserZVbDfBMuyoJsHcmzbHZt0VHV1Z');
+  //     cartList.value = order;
+  //     await getcartListLength();
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
   Future deleteOrder(int index) async {
     LocaleDBHelper.dbHelper.deleteOrder(index);
