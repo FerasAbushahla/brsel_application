@@ -1,8 +1,5 @@
-import 'package:brsel_application/models/SearchModel.dart';
-import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/service/hiveDB.dart';
-import 'package:brsel_application/service/remoteServices.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +8,7 @@ class CartController extends GetxController {
   var cartList = <MealDetailsData>[].obs;
   var totalprice = 0.0.obs;
   var cartListLength = 0.obs;
+  RxBool isButtonDisabled = true.obs;
   String? token;
 
   @override
@@ -80,6 +78,11 @@ class CartController extends GetxController {
       }
       totalprice.value = totallprice;
       totallprice = 0;
+      if (totalprice.value > 0) {
+        isButtonDisabled.value = false;
+      } else {
+        isButtonDisabled.value = true;
+      }
     } catch (e) {
       print(e);
     } finally {

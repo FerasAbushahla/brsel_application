@@ -25,6 +25,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   CartController cartController = Get.put(CartController());
   double totalWhithFees = 20;
+  bool isButtonDisabled = true;
 
   late Box orderBox;
 
@@ -42,6 +43,15 @@ class _CartState extends State<Cart> {
     getdata();
     cartController.totalprice;
     cartController.cartListLength;
+    if (cartController.totalprice > 0) {
+      setState(() {
+        isButtonDisabled = false;
+      });
+    } else {
+      setState(() {
+        isButtonDisabled = true;
+      });
+    }
     print(
         'ordersController.totalprice.value ${cartController.totalprice.value}');
     // totalPrice = await ordersController.getOrdersPrice();
@@ -69,7 +79,7 @@ class _CartState extends State<Cart> {
           mainAxisSize: MainAxisSize.max,
           children: [
             MyOrdersCustomAppBar(
-              title: 'طلباتي',
+              title: 'السلة',
               leading: MyIconButton(
                 onPress: () {
                   Get.back();
@@ -386,52 +396,58 @@ class _CartState extends State<Cart> {
                                 ),
                               ],
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Payment()));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                // padding: EdgeInsets.symmetric(vertical: 8),
-                                padding: EdgeInsets.zero,
-                                elevation: 0,
-                                backgroundColor: myPrimaryColor,
-                                // primary: mySecondaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
+                            Obx(
+                              () => ElevatedButton(
+                                onPressed: cartController.isButtonDisabled.value
+                                    ? null
+                                    : () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Payment()));
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  // padding: EdgeInsets.symmetric(vertical: 8),
+                                  padding: EdgeInsets.zero,
+                                  elevation: 0,
+                                  backgroundColor: myPrimaryColor,
+                                  // primary: mySecondaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(6, 0, 16, 0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'استمرار',
-                                      style:
-                                          MyCustomTextStyle.myButtonTextStyle,
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(6, 0, 16, 0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'استمرار',
+                                        style:
+                                            MyCustomTextStyle.myButtonTextStyle,
                                       ),
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 2, 3, 2),
-                                        child: Icon(
-                                          textDirection: TextDirection.ltr,
-                                          Icons.arrow_back_ios,
-                                          color: myPrimaryColor,
-                                          size: 20.0,
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(10, 2, 3, 2),
+                                          child: Icon(
+                                            textDirection: TextDirection.ltr,
+                                            Icons.arrow_back_ios,
+                                            color: myPrimaryColor,
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
