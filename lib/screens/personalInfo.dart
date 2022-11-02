@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/controllers/userController.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/screens/personalImage.dart';
+import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -408,60 +409,58 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 title: 'حفظ ومتابعة',
                                 onPressed: () async {
                                   // if (widget.fromSettings == true) {
-                                  // if (_formKey.currentState!.validate()) {
-                                  //   setState(() {
-                                  //     loading = true;
-                                  //   });
-                                  //   SharedPreferences sharedPreferences =
-                                  //       await SharedPreferences.getInstance();
-                                  //   sharedPreferences.setString('firstName',
-                                  //       firstNameController.text);
-                                  //   print('firstName');
-                                  //   print(firstNameController.text);
-                                  //   sharedPreferences.setString(
-                                  //       'lastName', lastNameController.text);
-                                  //   print('lastName');
-                                  //   print(lastNameController.text);
-                                  //   sharedPreferences.setString(
-                                  //       'phoneNumber', phoneController.text);
-                                  //   print('phoneNumber');
-                                  //   print(phoneController.text);
-                                  //   sharedPreferences.setString(
-                                  //       'sex', mySexValue.toString());
-                                  //   print('sex');
-                                  //   print(mySexValue);
-                                  //   getSharedPrefs().then(
-                                  //     (value) async {
-                                  //       PersonalInfoModel
-                                  //           personalInfoResponse =
-                                  //           await RemoteServices
-                                  //               .userInfoRegister(
-                                  //         access_token: token,
-                                  //         address: currentPosition,
-                                  //         firstName: firstName,
-                                  //         lastName: lastName,
-                                  //         gender: sex,
-                                  //         // image: widget.image,
-                                  //         lat: lat,
-                                  //         long: long,
-                                  //         phoneNumber: phoneNumber,
-                                  //         userID: ID.toString(),
-                                  //       );
-                                  //     },
-                                  //   );
-                                  //   setState(() {
-                                  //     loading = false;
-                                  //   });
-                                  //   Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: ((context) =>
-                                  //           PersonalImage()),
-                                  //     ),
-                                  //   );
-                                  // }
-                                  // }
-                                  // else {
+                                  //   if (_formKey.currentState!.validate()) {
+                                  //     setState(() {
+                                  //       loading = true;
+                                  //     });
+                                  //     SharedPreferences sharedPreferences =
+                                  //         await SharedPreferences.getInstance();
+                                  //     sharedPreferences.setString('firstName',
+                                  //         firstNameController.text);
+                                  //     print('firstName');
+                                  //     print(firstNameController.text);
+                                  //     sharedPreferences.setString(
+                                  //         'lastName', lastNameController.text);
+                                  //     print('lastName');
+                                  //     print(lastNameController.text);
+                                  //     sharedPreferences.setString(
+                                  //         'phoneNumber', phoneController.text);
+                                  //     print('phoneNumber');
+                                  //     print(phoneController.text);
+                                  //     sharedPreferences.setString(
+                                  //         'sex', mySexValue.toString());
+                                  //     print('sex');
+                                  //     print(mySexValue);
+                                  //     getSharedPrefs().then(
+                                  //       (value) async {
+                                  //         PersonalInfoModel
+                                  //             personalInfoResponse =
+                                  //             await RemoteServices
+                                  //                 .userInfoRegister(
+                                  //           access_token: token,
+                                  //           address: currentPosition,
+                                  //           firstName: firstName,
+                                  //           lastName: lastName,
+                                  //           gender: sex,
+                                  //           // image: widget.image,
+                                  //           lat: lat,
+                                  //           long: long,
+                                  //           phoneNumber: phoneNumber,
+                                  //           userID: ID.toString(),
+                                  //         );
+                                  //       },
+                                  //     );
+                                  //     setState(() {
+                                  //       loading = false;
+                                  //     });
+                                  //     Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder: ((context) => Settings()),
+                                  //       ),
+                                  //     );
+                                  //   }
+                                  // } else {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       loading = true;
@@ -493,8 +492,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                         builder: ((context) => PersonalImage()),
                                       ),
                                     );
+                                    // }
                                   }
-                                  // }
                                 },
                               ),
                             ],

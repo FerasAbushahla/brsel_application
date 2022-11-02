@@ -36,6 +36,7 @@ class _LocationState extends State<Location> {
       print(preferences.get('sex'));
       print(preferences.get('token'));
       print(preferences.get('personalImage'));
+      print(preferences.get('personalImageFileLocation'));
       // userBox = Hive.box('user');
       // var myUser = await userBox.getAt(0);
       // print(myUser);

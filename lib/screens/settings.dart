@@ -7,6 +7,7 @@ import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/screens/contactUs.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/cart.dart';
+import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/termsAndPolicies.dart';
 import 'package:brsel_application/service/hiveDB.dart';
@@ -80,6 +81,7 @@ class _SettingsState extends State<Settings> {
     preferences.remove('currentLocalityPosition');
     preferences.remove('currentStreetPosition');
     preferences.remove('currentPositionDetailed');
+    preferences.remove('personalImageFileLocation');
   }
 
   @override
@@ -140,21 +142,31 @@ class _SettingsState extends State<Settings> {
                                       height: 55,
                                       child: CircularProgressIndicator()))
                             ] else if (!sharedPreferencesLoading) ...[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(6),
-                                child: Container(
-                                  width: 55,
-                                  height: 55,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6)),
-                                  child: Image.memory(
-                                    base64Decode(personalImage),
-                                    fit: BoxFit.cover,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PersonalImage(
+                                                fromSettings: true,
+                                              )));
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: Container(
+                                    width: 55,
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6)),
+                                    child: Image.memory(
+                                      base64Decode(personalImage),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    // child: Image.asset(
+                                    //   'assets/images/Profile.jpg',
+                                    //   fit: BoxFit.cover,
+                                    // ),
                                   ),
-                                  // child: Image.asset(
-                                  //   'assets/images/Profile.jpg',
-                                  //   fit: BoxFit.cover,
-                                  // ),
                                 ),
                               ),
                             ],
