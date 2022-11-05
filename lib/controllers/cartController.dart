@@ -22,6 +22,16 @@ class CartController extends GetxController {
     // getOrdersPrice();
   }
 
+  Future<int> getMealCount(int id) async {
+    int meal = await LocaleDBHelper.dbHelper.getMealCount(id);
+    return meal;
+  }
+
+  Future<int> getIndex(int id) async {
+    int index = await LocaleDBHelper.dbHelper.getIndex(id);
+    return index;
+  }
+
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     // userAddress = preferences.getString("currentPosition");
@@ -86,7 +96,8 @@ class CartController extends GetxController {
       isLoading(true);
       for (var i = 0; i < cartList.length; i++) {
         print('{ordersList[i]}  ${cartList[i]}');
-        totallprice += double.parse(cartList[i].price!);
+        print('cartList[i].count!  ${cartList[i].count!}');
+        totallprice += double.parse(cartList[i].price!) * cartList[i].count!;
         print('totallprice $totallprice');
 
         // totalprice += double.parse(ordersList[i].price!);

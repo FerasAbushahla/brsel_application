@@ -553,7 +553,26 @@ class _CartState extends State<Cart> {
                                       size: 11.7,
                                       color: myPrimaryColor,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      orderBox = Hive.box('orderBox');
+                                      Map<String, dynamic> mealWithCounter =
+                                          mealDetailsData.toJson();
+                                      int count = await cartController
+                                          .getMealCount(mealDetailsData.id!);
+                                      int index = await cartController
+                                          .getIndex(mealDetailsData.id!);
+
+                                      mealWithCounter['count'] = count += 1;
+                                      await orderBox.putAt(
+                                          index, mealWithCounter);
+                                      setState(() {
+                                        mealWithCounter;
+                                        mealDetailsData.count;
+                                        print(mealWithCounter);
+                                        // mealDetailsData.count =
+                                        //     mealDetailsData.count! + 1;
+                                      });
+                                    },
                                   ),
                                 ),
                                 Expanded(
