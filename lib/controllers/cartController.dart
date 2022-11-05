@@ -106,4 +106,9 @@ class CartController extends GetxController {
       isLoading(false);
     }
   }
+
+  // Future<bool> checkMealById(String id) async {
+  //   bool isFound = await LocaleDBHelper.dbHelper.checkMealById(id);
+  //   return isFound;
+  // }
 }

@@ -5,6 +5,7 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Payment extends StatefulWidget {
   const Payment({super.key});
@@ -16,11 +17,43 @@ class Payment extends StatefulWidget {
 class _PaymentState extends State<Payment> {
   bool switchValue = false;
   bool loading = false;
+  bool isButtonDisabled = true;
+
+  String? userAddress;
 
   final cardOwnerName = TextEditingController();
   final cardNum = TextEditingController();
   final cardExpDate = TextEditingController();
   final cardSecNum = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (switchValue = false) {
+      setState(() {
+        isButtonDisabled = false;
+      });
+    } else {
+      setState(() {
+        isButtonDisabled = true;
+      });
+    }
+    getSharedPrefs();
+  }
+
+  Future getSharedPrefs() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    // userAddress = preferences.getString("currentPosition");
+    setState(() {
+      userAddress = preferences.getString("currentPosition");
+
+      print(userAddress);
+    });
+
+    print(preferences.get('currentPosition'));
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -107,7 +140,8 @@ class _PaymentState extends State<Payment> {
                                         height: 3,
                                       ),
                                       Text(
-                                        'data',
+                                        overflow: TextOverflow.ellipsis,
+                                        userAddress!,
                                         style:
                                             MyCustomTextStyle.myCardtextStyle,
                                       ),
@@ -196,7 +230,7 @@ class _PaymentState extends State<Payment> {
                                           height: 20,
                                         ),
                                         Text(
-                                          'بارسل',
+                                          'عنوان المنزل',
                                           style: MyCustomTextStyle
                                               .myCardTitletextStyle,
                                         ),
@@ -204,7 +238,8 @@ class _PaymentState extends State<Payment> {
                                           height: 3,
                                         ),
                                         Text(
-                                          'طلبات |  وقت التوصيل المتوقع 30 دقيقة',
+                                          overflow: TextOverflow.ellipsis,
+                                          userAddress!,
                                           style:
                                               MyCustomTextStyle.myHintTextStyle,
                                         ),
@@ -495,6 +530,7 @@ class _PaymentState extends State<Payment> {
                                 onChanged: (val) {
                                   setState(() {
                                     switchValue = val;
+                                    isButtonDisabled = !val;
                                   });
                                 },
                               ),
@@ -582,7 +618,7 @@ class _PaymentState extends State<Payment> {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: isButtonDisabled ? null : () {},
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.zero,
                                 elevation: 0,

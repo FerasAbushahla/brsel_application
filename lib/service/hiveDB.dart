@@ -69,6 +69,28 @@ class LocaleDBHelper {
     return orderBox.length;
   }
 
+  Future<bool> checkMealById(int newid) async {
+    final orderBox = await Hive.box('orderBox');
+    int length = orderBox.values.where((c) => c['id'] == newid).toList().length;
+    print('lengthhhh$length');
+    return length > 0 ? true : false;
+  }
+
+  Future<int> getMealCount(int newid) async {
+    final orderBox = await Hive.box('orderBox');
+    var meal = orderBox.values.where((c) => c['id'] == newid).toList().first;
+    print('mealss$meal');
+    return meal['count'] ?? 0;
+  }
+
+  Future<int> getIndex(int newid) async {
+    final orderBox = await Hive.box('orderBox');
+
+    int index = orderBox.values.toList().indexWhere((e) => e['id'] == newid);
+    print('index$index');
+    return index;
+  }
+
   // Future<List<Survey>> getAllSurveys() async {
   //   print('getAllSurveys');
   //   List<Survey> surveys = [];

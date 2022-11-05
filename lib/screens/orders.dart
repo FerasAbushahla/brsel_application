@@ -41,7 +41,7 @@ class _OrdersState extends State<Orders> {
             //   title: 'الطلبات',
             // ),
             MyOrdersCustomAppBar(
-              title: 'السلة',
+              title: 'الطلبات',
               leading: MyIconButton(
                 onPress: () {
                   Get.back();

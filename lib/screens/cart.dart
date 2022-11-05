@@ -4,7 +4,6 @@ import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/screens/payment.dart';
-import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -563,7 +562,7 @@ class _CartState extends State<Cart> {
                                         BoxDecoration(color: myPrimaryColor),
                                     child: Center(
                                         child: Text(
-                                      '1',
+                                      mealDetailsData.count.toString(),
                                       style: MyCustomTextStyle.myCounter,
                                     )),
                                   ),

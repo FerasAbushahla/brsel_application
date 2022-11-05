@@ -94,9 +94,28 @@ class _MealDetailsState extends State<MealDetails> {
                 return ElevatedButton(
                   onPressed: () async {
                     orderBox = Hive.box('orderBox');
-                    await orderBox
-                        .add(mealDetailsController.mealDetailsData.toJson())
-                        .then((value) => Get.to(Cart()));
+                    bool isFound = await mealDetailsController.checkMealById(
+                        mealDetailsController.mealDetailsData.value.id);
+                    Map<String, dynamic> mealWithCounter =
+                        mealDetailsController.mealDetailsData.toJson();
+                    if (isFound == false) {
+                      mealWithCounter['count'] = 1;
+                      print('mealWithCounter$mealWithCounter');
+                      await orderBox
+                          .add(mealWithCounter)
+                          .then((value) => Get.to(Cart()));
+                    } else {
+                      int count = await mealDetailsController.getMealCount(
+                          mealDetailsController.mealDetailsData.value.id);
+                      int index = await mealDetailsController.getIndex(
+                          mealDetailsController.mealDetailsData.value.id);
+
+                      mealWithCounter['count'] = count += 1;
+                      await orderBox
+                          .putAt(index, mealWithCounter)
+                          .then((value) => Get.to(Cart()));
+                    }
+
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => Cart())));
                   },

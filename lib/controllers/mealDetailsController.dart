@@ -4,6 +4,8 @@ import 'package:brsel_application/service/remoteServices.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../service/hiveDB.dart';
+
 class MealDetailsController extends GetxController {
   static var isLoading = true.obs;
   RxObjectMixin mealDetailsData = MealDetailsData().obs;
@@ -30,6 +32,21 @@ class MealDetailsController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<bool> checkMealById(int id) async {
+    bool isFound = await LocaleDBHelper.dbHelper.checkMealById(id);
+    return isFound;
+  }
+
+  Future<int> getMealCount(int id) async {
+    int meal = await LocaleDBHelper.dbHelper.getMealCount(id);
+    return meal;
+  }
+
+  Future<int> getIndex(int id) async {
+    int index = await LocaleDBHelper.dbHelper.getIndex(id);
+    return index;
   }
 
   Future getMealDetails({var ID}) async {

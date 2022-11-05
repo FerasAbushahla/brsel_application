@@ -19,6 +19,7 @@ class MealDetailsModel {
 }
 
 class MealDetailsData {
+  int? count;
   int? id;
   String? name;
   String? price;
@@ -32,6 +33,7 @@ class MealDetailsData {
   List<MealsDetailsExtra>? extras;
   List<Attachment>? attachments;
   MealDetailsData({
+    this.count = 0,
     this.id,
     this.name,
     this.price,
@@ -49,6 +51,7 @@ class MealDetailsData {
   factory MealDetailsData.fromJson(Map<dynamic, dynamic> json) =>
       MealDetailsData(
         id: json["id"],
+        count: json["count"],
         name: json["name"],
         price: json["price"],
         description: json["description"],
@@ -67,6 +70,7 @@ class MealDetailsData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "count": count,
         "name": name,
         "price": price,
         "description": description,
