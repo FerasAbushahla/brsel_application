@@ -96,8 +96,9 @@ class _MealDetailsState extends State<MealDetails> {
                     orderBox = Hive.box('orderBox');
                     await orderBox
                         .add(mealDetailsController.mealDetailsData.toJson())
-                        .then((value) => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Cart())));
+                        .then((value) => Get.to(Cart()));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => Cart())));
                   },
                   style: ElevatedButton.styleFrom(
                     // padding: EdgeInsets.symmetric(vertical: 8),

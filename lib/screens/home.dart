@@ -22,6 +22,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -31,6 +32,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setSharedPreferences();
+  }
+
   // void initState() {
   //   Future.delayed(const Duration(milliseconds: 100), () async {
   //     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -51,6 +59,10 @@ class _HomeState extends State<Home> {
   //   });
   //   super.initState();
   // }
+  Future setSharedPreferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool("userPersonalInfoDone", true);
+  }
 
   void dispose() {
     // TODO: implement dispose

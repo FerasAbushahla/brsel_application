@@ -19,6 +19,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
@@ -63,6 +64,14 @@ class _SettingsState extends State<Settings> {
     print(preferences.get('currentPosition'));
   }
 
+  Future<void> _deleteCacheDir() async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+    }
+  }
+
   Future removePrefernces() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     token = preferences.getString('token');
@@ -82,6 +91,7 @@ class _SettingsState extends State<Settings> {
     preferences.remove('currentStreetPosition');
     preferences.remove('currentPositionDetailed');
     preferences.remove('personalImageFileLocation');
+    preferences.remove('userPersonalInfoDone');
   }
 
   @override
@@ -489,6 +499,7 @@ class _SettingsState extends State<Settings> {
                                                     await LocaleDBHelper
                                                         .dbHelper
                                                         .deleteOrdersLocal();
+                                                    await _deleteCacheDir();
                                                     await removePrefernces()
                                                         .then((value) {
                                                       Fluttertoast.showToast(

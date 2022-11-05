@@ -6,12 +6,14 @@ import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/screens/location.dart';
+import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -137,7 +139,8 @@ class _PersonalImageState extends State<PersonalImage> {
             ),
             MyIconButton(
               onPress: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                Get.off(PersonalInfo(fromSettings: false));
               },
               borderRadius: 12,
               BackgroundColor: Colors.white,
@@ -426,6 +429,16 @@ class _PersonalImageState extends State<PersonalImage> {
                           ),
                         );
                       } else if (image != null) {
+                        if (base64Image == null) {
+                          final bytes = File(image!.path).readAsBytesSync();
+                          print(bytes);
+
+                          setState(() {
+                            base64Image =
+                                base64Encode(bytes.buffer.asUint8List());
+                          });
+                        }
+
                         await setSharedPreferences().then((value) => {
                               Navigator.push(
                                   context,

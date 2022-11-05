@@ -1,5 +1,7 @@
+import 'package:brsel_application/screens/location.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/onBoarding.dart';
+import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
@@ -19,6 +21,8 @@ class _SplashState extends State<Splash> {
   String? token;
   bool? firstTime;
   bool? userPersonalInfoDone;
+  String? userFirstName;
+  String? userPesonalImage;
   // bool? _isFirstRun;
   // bool? _isFirstCall;
 
@@ -54,6 +58,8 @@ class _SplashState extends State<Splash> {
       firstTime = preferences.getBool('firstTime');
       userPersonalInfoDone = preferences.getBool('userPersonalInfoDone');
       token = preferences.getString('token');
+      userFirstName = preferences.getString('firstName');
+      userPesonalImage = preferences.getString('personalImage');
       if (firstTime == null) {
         Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: ((context) => OnBoarding())))
@@ -68,12 +74,24 @@ class _SplashState extends State<Splash> {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: ((context) => Wraper())));
         } else {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: ((context) => PersonalInfo(
-                        fromSettings: false,
-                      ))));
+          if (userFirstName == null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => PersonalInfo(
+                          fromSettings: false,
+                        ))));
+          } else if (userPesonalImage == null) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => PersonalImage(
+                          fromSettings: false,
+                        ))));
+          } else {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: ((context) => Location())));
+          }
         }
       }
     });

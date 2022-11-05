@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/controllers/userController.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/screens/personalImage.dart';
+import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
@@ -150,7 +151,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
             ),
             MyIconButton(
               onPress: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                Get.off(Register());
               },
               borderRadius: 12,
               BackgroundColor: Colors.white,

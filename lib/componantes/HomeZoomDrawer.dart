@@ -15,6 +15,7 @@ import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final ZoomDrawerController z = ZoomDrawerController();
@@ -120,6 +121,15 @@ class _DrawerMenuState extends State<DrawerMenu> {
     preferences.remove('currentLocalityPosition');
     preferences.remove('currentStreetPosition');
     preferences.remove('currentPositionDetailed');
+    preferences.remove('userPersonalInfoDone');
+  }
+
+  Future<void> _deleteCacheDir() async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+    }
   }
 
   bool loading = false;
@@ -305,6 +315,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                                         if (response == 'logout Successfully') {
                                           await LocaleDBHelper.dbHelper
                                               .deleteOrdersLocal();
+                                          await _deleteCacheDir();
                                           await removePrefernces()
                                               .then((value) {
                                             Fluttertoast.showToast(

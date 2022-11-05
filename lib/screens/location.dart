@@ -5,6 +5,7 @@ import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
+import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,7 +63,8 @@ class _LocationState extends State<Location> {
             ),
             MyIconButton(
               onPress: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                Get.off(PersonalImage(fromSettings: false));
               },
               borderRadius: 12,
               BackgroundColor: Colors.white,
