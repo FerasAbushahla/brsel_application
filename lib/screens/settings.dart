@@ -142,33 +142,68 @@ class _SettingsState extends State<Settings> {
                                       height: 55,
                                       child: CircularProgressIndicator()))
                             ] else if (!sharedPreferencesLoading) ...[
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => PersonalImage(
-                                                fromSettings: true,
-                                              )));
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: Container(
-                                    width: 55,
-                                    height: 55,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6)),
-                                    child: Image.memory(
-                                      base64Decode(personalImage),
-                                      fit: BoxFit.cover,
+                              // InkWell(
+                              //   onTap: () {
+                              //     Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) => PersonalImage(
+                              //                   fromSettings: true,
+                              //                 )));
+                              //   },
+                              //   child:
+                              Stack(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6)),
+                                        child: Image.memory(
+                                          base64Decode(personalImage),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        // child: Image.asset(
+                                        //   'assets/images/Profile.jpg',
+                                        //   fit: BoxFit.cover,
+                                        // ),
+                                      ),
                                     ),
-                                    // child: Image.asset(
-                                    //   'assets/images/Profile.jpg',
-                                    //   fit: BoxFit.cover,
-                                    // ),
                                   ),
-                                ),
+                                  Positioned(
+                                    bottom: 0,
+                                    left: 0,
+                                    child: RawMaterialButton(
+                                      constraints: BoxConstraints(),
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PersonalImage(
+                                                      fromSettings: true,
+                                                    )));
+                                      },
+                                      fillColor: myPrimaryColor,
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                        size: 10.0,
+                                      ),
+                                      padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                                      shape: CircleBorder(),
+                                    ),
+                                  )
+                                ],
                               ),
+                              // ),
                             ],
                             Expanded(
                               child: IntrinsicHeight(
