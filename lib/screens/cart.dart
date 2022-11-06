@@ -465,6 +465,7 @@ class _CartState extends State<Cart> {
   }
 
   Container orderCard(MealDetailsData mealDetailsData) {
+    String mealCount = mealDetailsData.count.toString();
     return Container(
       color: Colors.white,
       child: Padding(
@@ -566,11 +567,11 @@ class _CartState extends State<Cart> {
                                       await orderBox.putAt(
                                           index, mealWithCounter);
                                       setState(() {
-                                        mealWithCounter;
-                                        mealDetailsData.count;
+                                        getdata();
+                                        // mealWithCounter;
+                                        // mealDetailsData.count;
+                                        // mealDetailsData;
                                         print(mealWithCounter);
-                                        // mealDetailsData.count =
-                                        //     mealDetailsData.count! + 1;
                                       });
                                     },
                                   ),
@@ -581,7 +582,8 @@ class _CartState extends State<Cart> {
                                         BoxDecoration(color: myPrimaryColor),
                                     child: Center(
                                         child: Text(
-                                      mealDetailsData.count.toString(),
+                                      mealCount,
+                                      // mealDetailsData.count.toString(),
                                       style: MyCustomTextStyle.myCounter,
                                     )),
                                   ),
@@ -594,7 +596,29 @@ class _CartState extends State<Cart> {
                                       size: 11.7,
                                       color: myPrimaryColor,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      orderBox = Hive.box('orderBox');
+                                      Map<String, dynamic> mealWithCounter =
+                                          mealDetailsData.toJson();
+                                      int count = await cartController
+                                          .getMealCount(mealDetailsData.id!);
+                                      int index = await cartController
+                                          .getIndex(mealDetailsData.id!);
+
+                                      mealWithCounter['count'] = count -= 1;
+                                      mealWithCounter['count'] < 1
+                                          ? mealWithCounter['count'] = 1
+                                          : mealWithCounter['count'];
+                                      await orderBox.putAt(
+                                          index, mealWithCounter);
+                                      setState(() {
+                                        getdata();
+                                        // mealWithCounter;
+                                        // mealDetailsData.count;
+                                        // mealDetailsData;
+                                        print(mealWithCounter);
+                                      });
+                                    },
                                   ),
                                 ),
                               ],
