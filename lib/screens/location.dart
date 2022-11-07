@@ -394,12 +394,14 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                                     if ('${userCurrentPlace![0].locality}' ==
                                         '') ...[
                                       Text(
+                                        overflow: TextOverflow.ellipsis,
                                         '${userCurrentPlace![0].street}',
                                         style:
                                             MyCustomTextStyle.myCardtextStyle,
                                       ),
                                     ] else ...[
                                       Text(
+                                        overflow: TextOverflow.ellipsis,
                                         '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}',
                                         // 'مسقط ,عمان,1988',
                                         style:

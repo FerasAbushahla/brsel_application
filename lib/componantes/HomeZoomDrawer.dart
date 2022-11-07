@@ -192,7 +192,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             MyMenuListItem(
                 title: 'الرئيسية',
-                icon: Icon(Icons.home),
+                icon: SvgPicture.asset(
+                  'assets/images/homeIcon.svg',
+                  color: myGreyColor,
+                ),
                 onTap: () {
                   ZoomDrawer.of(context)!.toggle();
                 }),
@@ -201,7 +204,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             MyMenuListItem(
                 title: 'طلباتي',
-                icon: Icon(BrselApp.ordersicon),
+                icon: Icon(
+                  BrselApp.ordersicon,
+                  color: myGreyColor,
+                ),
                 onTap: () {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (context) => Cart()));
@@ -211,7 +217,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             MyMenuListItem(
                 title: 'الوجبات',
-                icon: Icon(BrselApp.restaurantsicon),
+                icon: Icon(
+                  BrselApp.restaurantsicon,
+                  color: myGreyColor,
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -227,7 +236,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             MyMenuListItem(
                 title: 'اعدادات',
-                icon: Icon(BrselApp.settingsicon),
+                icon: Icon(
+                  BrselApp.settingsicon,
+                  color: myGreyColor,
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -251,7 +263,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             // ),
             MyMenuListItem(
                 title: 'تسجيل الخروج',
-                icon: Icon(BrselApp.logouticon),
+                icon: SvgPicture.asset('assets/images/logoutRedSVG.svg'),
                 onTap: () {
                   showDialog(
                     context: context,
@@ -472,7 +484,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ),
                 Text(
                   title!,
-                  style: MyCustomTextStyle.myH2,
+                  style: MyCustomTextStyle.myH22,
                 ),
               ],
             ),

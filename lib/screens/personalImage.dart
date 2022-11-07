@@ -140,7 +140,11 @@ class _PersonalImageState extends State<PersonalImage> {
             MyIconButton(
               onPress: () {
                 // Navigator.pop(context);
-                Get.off(PersonalInfo(fromSettings: false));
+                if (widget.fromSettings == true) {
+                  Get.back();
+                } else {
+                  Get.off(PersonalInfo(fromSettings: false));
+                }
               },
               borderRadius: 12,
               BackgroundColor: Colors.white,

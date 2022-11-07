@@ -6,6 +6,7 @@ import 'package:brsel_application/screens/restaurants.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Wraper extends StatefulWidget {
   // final int currentPageGlobale;
@@ -90,12 +91,17 @@ class _WraperState extends State<Wraper> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.home_outlined,
-                            size: 25,
+                          SvgPicture.asset(
+                            'assets/images/homeIcon.svg',
                             color:
                                 currentPage == 0 ? myPrimaryColor : myGreyColor,
                           ),
+                          // Icon(
+                          //   Icons.home_outlined,
+                          //   size: 25,
+                          //   color:
+                          //       currentPage == 0 ? myPrimaryColor : myGreyColor,
+                          // ),
                           SizedBox(
                             height: 4,
                           ),

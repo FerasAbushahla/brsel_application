@@ -134,6 +134,11 @@ class MyCustomTextStyle {
     color: myDarkGreyColor,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle myH22 = TextStyle(
+    fontSize: 12,
+    color: myGreyColor,
+    fontWeight: FontWeight.w500,
+  );
   static TextStyle myH3 = TextStyle(
     fontSize: 12,
     color: myDarkGreyColor,

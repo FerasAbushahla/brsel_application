@@ -151,8 +151,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
             ),
             MyIconButton(
               onPress: () {
+                if (widget.fromSettings == true) {
+                  Get.back();
+                } else {
+                  Get.off(Register());
+                }
                 // Navigator.pop(context);
-                Get.off(Register());
               },
               borderRadius: 12,
               BackgroundColor: Colors.white,
