@@ -24,37 +24,38 @@ class _OrderSuccessState extends State<OrderSuccess> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: MyCustomAppBar(
-        leading: Column(
-          children: [
-            SizedBox(
-              height: 11,
-            ),
-            MyIconButton(
-              onPress: () {
-                Get.back();
+      // appBar: MyCustomAppBar(
+      //   leading: Column(
+      //     children: [
+      //       SizedBox(
+      //         height: 11,
+      //       ),
+      //       MyIconButton(
+      //         onPress: () {
+      //           Get.back();
 
-                // Navigator.pop(context);
-              },
-              borderRadius: 12,
-              BackgroundColor: Colors.white,
-              iconWidget: Padding(
-                padding: EdgeInsets.all(5),
-                child: SvgPicture.asset(
-                  'assets/images/ArrowBack Icon.svg',
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      //           // Navigator.pop(context);
+      //         },
+      //         borderRadius: 12,
+      //         BackgroundColor: Colors.white,
+      //         iconWidget: Padding(
+      //           padding: EdgeInsets.all(5),
+      //           child: SvgPicture.asset(
+      //             'assets/images/ArrowBack Icon.svg',
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: SafeArea(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 130,
-          ),
+          // SizedBox(
+          //   height: 130,
+          // ),
           SvgPicture.asset(
             'assets/images/sucssesIcon.svg',
           ),
