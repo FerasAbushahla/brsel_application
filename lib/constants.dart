@@ -33,6 +33,7 @@ const mylighterDarkBlueColor = Color(0xFF111934);
 const myRedColor = Color(0xFFE35757);
 const mySecRedColor = Color(0xFFF94450);
 const mySecAppBarTitle = Color(0xFF3E4958);
+const myDarkBlue = Color(0xFF05172B);
 
 class BrselApp {
   BrselApp._();
@@ -269,6 +270,16 @@ class MyCustomTextStyle {
     fontSize: 16,
     color: myDarkBlueColor,
     fontWeight: FontWeight.w700,
+  );
+  static const TextStyle mySuccessPageTitleTextStyle = TextStyle(
+    fontSize: 18,
+    color: myDarkBlue,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle mySuccessPageTextStyle = TextStyle(
+    fontSize: 14,
+    color: myDarkBlue,
+    fontWeight: FontWeight.w500,
   );
   static TextStyle myOnBoardingTextStyle = TextStyle(
     height: 1.7,
