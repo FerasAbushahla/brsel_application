@@ -495,7 +495,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: ((context) => PersonalImage()),
+                                        builder: ((context) => PersonalImage(
+                                              fromSettings: false,
+                                            )),
                                       ),
                                     );
                                     // }

@@ -5,6 +5,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
 import 'package:brsel_application/screens/contactUs.dart';
+import 'package:brsel_application/screens/location.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/personalImage.dart';
@@ -91,7 +92,18 @@ class _SettingsState extends State<Settings> {
     preferences.remove('currentStreetPosition');
     preferences.remove('currentPositionDetailed');
     preferences.remove('personalImageFileLocation');
-    preferences.remove('userPersonalInfoDone');
+    preferences.setBool('userPersonalInfoDone', false);
+
+    print('firstName ${preferences.get('firstName')}');
+    print('lastName ${preferences.get('lastName')}');
+    print(preferences.get('phoneNumber'));
+    print(preferences.get('sex'));
+    print(preferences.get('token'));
+    print(preferences.get('personalImage'));
+    print(preferences.get('currentPosition'));
+    print(
+        'personalImageFileLocation ${preferences.get('personalImageFileLocation')}');
+    print('userPersonalInfoDone ${preferences.get('userPersonalInfoDone')}');
   }
 
   @override
@@ -325,13 +337,10 @@ class _SettingsState extends State<Settings> {
                                           fromSettings: true,
                                         )));
                           },
-                          endWidget: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              textDirection: TextDirection.ltr,
-                              size: 17,
-                            ),
+                          endWidget: Icon(
+                            Icons.arrow_back_ios,
+                            textDirection: TextDirection.ltr,
+                            size: 17,
                           ),
                         ),
                         SizedBox(
@@ -341,14 +350,18 @@ class _SettingsState extends State<Settings> {
                           icon: SvgPicture.asset('assets/images/homeSVG.svg'),
                           title: 'العنوان',
                           subtitle: 'معلومات عنوان السكن',
-                          onTap: () {},
-                          endWidget: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              textDirection: TextDirection.ltr,
-                              size: 17,
-                            ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Location(
+                                          fromSettings: true,
+                                        )));
+                          },
+                          endWidget: Icon(
+                            Icons.arrow_back_ios,
+                            textDirection: TextDirection.ltr,
+                            size: 17,
                           ),
                         ),
                         SizedBox(
@@ -374,13 +387,10 @@ class _SettingsState extends State<Settings> {
                                 MaterialPageRoute(
                                     builder: (context) => TermsAndPolicies()));
                           },
-                          endWidget: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              textDirection: TextDirection.ltr,
-                              size: 17,
-                            ),
+                          endWidget: Icon(
+                            Icons.arrow_back_ios,
+                            textDirection: TextDirection.ltr,
+                            size: 17,
                           ),
                         ),
                         SizedBox(
@@ -413,13 +423,10 @@ class _SettingsState extends State<Settings> {
                                 MaterialPageRoute(
                                     builder: (context) => ContactUs()));
                           },
-                          endWidget: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              textDirection: TextDirection.ltr,
-                              size: 17,
-                            ),
+                          endWidget: Icon(
+                            Icons.arrow_back_ios,
+                            textDirection: TextDirection.ltr,
+                            size: 17,
                           ),
                         ),
                         SizedBox(
@@ -541,14 +548,11 @@ class _SettingsState extends State<Settings> {
                               ),
                             );
                           },
-                          endWidget: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              textDirection: TextDirection.ltr,
-                              size: 17,
-                              color: mySecRedColor,
-                            ),
+                          endWidget: Icon(
+                            Icons.arrow_back_ios,
+                            textDirection: TextDirection.ltr,
+                            size: 17,
+                            color: mySecRedColor,
                           ),
                         ),
                         SizedBox(
@@ -667,7 +671,7 @@ class _SettingsState extends State<Settings> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8), color: Colors.white),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+            padding: const EdgeInsets.fromLTRB(21, 15, 15, 15),
             child: Row(
               children: [
                 Container(

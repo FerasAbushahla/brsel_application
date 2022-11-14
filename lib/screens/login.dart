@@ -10,8 +10,12 @@ import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../models/personalInfoModel.dart';
 
@@ -48,6 +52,7 @@ class _LoginState extends State<Login> {
     required String lastName,
     required String sex,
     required String personalImage,
+    required String personalImageePath,
     required String currentPositionLatitude,
     required String currentPositionLongitude,
     required String phoneNumber,
@@ -60,6 +65,7 @@ class _LoginState extends State<Login> {
     preferences.setString('lastName', lastName);
     preferences.setString('sex', sex);
     preferences.setString('personalImage', personalImage);
+    preferences.setString('personalImageFileLocation', personalImageePath);
     preferences.setString('currentPositionLatitude', currentPositionLatitude);
     preferences.setString('currentPositionLongitude', currentPositionLongitude);
     preferences.setString('phoneNumber', phoneNumber);
@@ -229,8 +235,9 @@ class _LoginState extends State<Login> {
                                         'view Response>>>${response.message}');
                                     if (response.message ==
                                         "User Logged In Successfully") {
-                                      // final image = response.user!.avatar;
-                                      // final imageTemporary = File(image.path);
+                                      // image = response.user!.avatar;
+                                      // final imageTemporary = File(image!.path);
+                                      // print('image.path ${image!.path}');
                                       // setState(() {
                                       //   this.image = imageTemporary;
                                       // });
@@ -243,10 +250,21 @@ class _LoginState extends State<Login> {
                                       String base64Image = base64Encode(
                                           bytes.buffer.asUint8List());
                                       print(base64Image);
-                                      // SharedPreferences sharedPreferences =
-                                      //     await SharedPreferences.getInstance();
-                                      // sharedPreferences.setString('personalImage', base64Image);
+
+                                      Directory documentDirectory =
+                                          await getApplicationDocumentsDirectory();
+                                      File file = new File(join(
+                                          documentDirectory.path,
+                                          'imagetest.png'));
+                                      file.writeAsBytesSync(
+                                          imagResponse.bodyBytes);
+                                      setState(() {
+                                        image = file;
+                                        print('image $image');
+                                      });
+
                                       await setPreferences(
+                                        personalImageePath: image!.path,
                                         personalImage: base64Image,
                                         ID: response.user!.id!,
                                         currentPosition:

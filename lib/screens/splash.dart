@@ -57,6 +57,7 @@ class _SplashState extends State<Splash> {
       // firstTime = await preferences.setBool('firstTime', firstTime);
       firstTime = preferences.getBool('firstTime');
       userPersonalInfoDone = preferences.getBool('userPersonalInfoDone');
+      print('userPersonalInfoDone...$userPersonalInfoDone');
       token = preferences.getString('token');
       userFirstName = preferences.getString('firstName');
       userPesonalImage = preferences.getString('personalImage');
@@ -67,14 +68,19 @@ class _SplashState extends State<Splash> {
           preferences.setBool('firstTime', true);
         });
       } else if (token == null) {
+        print('token == null');
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: ((context) => Login())));
       } else if (token != null) {
-        if (userPersonalInfoDone != null) {
+        print('token != null');
+        if (userPersonalInfoDone != false) {
+          print('userPersonalInfoDone != false');
+
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: ((context) => Wraper())));
         } else {
           if (userFirstName == null) {
+            print('userFirstName == null');
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -82,6 +88,7 @@ class _SplashState extends State<Splash> {
                           fromSettings: false,
                         ))));
           } else if (userPesonalImage == null) {
+            print('userPesonalImage == null');
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -90,7 +97,11 @@ class _SplashState extends State<Splash> {
                         ))));
           } else {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: ((context) => Location())));
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => Location(
+                          fromSettings: false,
+                        ))));
           }
         }
       }

@@ -20,8 +20,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../componantes/myButton.dart';
 
 class Location extends StatefulWidget {
+  final bool fromSettings;
   final File? image;
-  const Location({Key? key, this.image}) : super(key: key);
+  const Location({Key? key, this.image, required this.fromSettings})
+      : super(key: key);
 
   @override
   State<Location> createState() => _LocationState();
@@ -30,6 +32,15 @@ class Location extends StatefulWidget {
 class _LocationState extends State<Location> {
   void initState() {
     Future.delayed(const Duration(milliseconds: 5), () async {
+      if (widget.fromSettings == true) {
+        setState(() {
+          index = 1;
+        });
+      } else {
+        setState(() {
+          index = 0;
+        });
+      }
       SharedPreferences preferences = await SharedPreferences.getInstance();
       print('personalImagePage......................');
       print(preferences.get('firstName'));
@@ -303,7 +314,11 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                     setState(() {
                       currentPosition = position;
                       userCurrentPlace = placemark;
-                      print(userCurrentPlace);
+                      print('userCurrentPlace $userCurrentPlace');
+                      print('userCurrentPlace ${userCurrentPlace.toString()}');
+                      sharedPreferences.setString(
+                          'userCurrentPlace', userCurrentPlace.toString());
+
                       print(
                           'current location in detail country:${placemark[0].locality}, country:${placemark[0].locality},subLocality:${placemark[0].subLocality}, street:${placemark[0].street},');
                       // print(userCurrentPlace!.elementAt(0).toString());
@@ -313,15 +328,7 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                       sharedPreferences.setString('currentPosition',
                           '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}');
                       print(
-                          'Preferences::::::: ${sharedPreferences.setString('currentPosition', '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}')}');
-                      // sharedPreferences.setString(
-                      //     'currentLat', position.latitude.toString());
-                      // print(sharedPreferences.setString(
-                      //     'currentLat', position.latitude.toString()));
-                      // sharedPreferences.setString(
-                      //     'currentLong', position.longitude.toString());
-                      // print(sharedPreferences.setString(
-                      //     'currentLong', position.longitude.toString()));
+                          'Preferences currentPosition::::::: ${sharedPreferences.setString('currentPosition', '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}')}');
                       print(sharedPreferences.get('currentPosition'));
                       sharedPreferences.setString('currentCountryPosition',
                           '${userCurrentPlace![0].country}');
@@ -480,7 +487,7 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                 //   userID = sharedPreferences.getInt('ID');
                 //   accessToken = sharedPreferences.getString('token');
                 // });
-                print(widget.image);
+                print('widget.image ${widget.image}');
                 PersonalInfoModel personalInfoResponse =
                     await RemoteServices.userInfoRegister(
                   access_token: accessToken,

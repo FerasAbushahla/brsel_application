@@ -63,6 +63,8 @@ class _PersonalImageState extends State<PersonalImage> {
 
   Future getSharedPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    print(
+        'personalImageFileLocation ${sharedPreferences.get('personalImageFileLocation')}');
     setState(() {
       userAddress = sharedPreferences.getString('currentPosition');
       userFirstName = sharedPreferences.getString('firstName');
@@ -78,6 +80,10 @@ class _PersonalImageState extends State<PersonalImage> {
       if (sharedPreferenceImagePath != null) {
         setState(() {
           image = File(sharedPreferenceImagePath!);
+        });
+      } else {
+        setState(() {
+          image = null;
         });
       }
     });
@@ -449,6 +455,7 @@ class _PersonalImageState extends State<PersonalImage> {
                                   MaterialPageRoute(
                                       builder: (context) => Location(
                                             image: image,
+                                            fromSettings: false,
                                           )))
                             });
                       }

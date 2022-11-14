@@ -5,6 +5,8 @@ import 'package:brsel_application/screens/home.dart';
 import 'package:brsel_application/screens/login.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/cart.dart';
+import 'package:brsel_application/screens/orders.dart';
+import 'package:brsel_application/screens/restaurants.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/service/remoteServices.dart';
@@ -121,7 +123,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
     preferences.remove('currentLocalityPosition');
     preferences.remove('currentStreetPosition');
     preferences.remove('currentPositionDetailed');
-    preferences.remove('userPersonalInfoDone');
+    preferences.remove('personalImageFileLocation');
+    preferences.setBool('userPersonalInfoDone', false);
   }
 
   Future<void> _deleteCacheDir() async {
@@ -209,14 +212,14 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   color: myGreyColor,
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Orders()));
                 }),
             SizedBox(
               height: 15,
             ),
             MyMenuListItem(
-                title: 'الوجبات',
+                title: 'المطاعم',
                 icon: Icon(
                   BrselApp.restaurantsicon,
                   color: myGreyColor,
@@ -225,9 +228,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Meals(
-                        focus: false,
-                      ),
+                      builder: (context) => Restaurants(),
                     ),
                   );
                 }),
