@@ -412,7 +412,7 @@ class _HomeState extends State<Home> {
                 color: Colors.grey.withOpacity(0.3),
                 spreadRadius: 1,
                 blurRadius: 1,
-                offset: Offset(0, 0),
+                offset: Offset(0, 3),
               )
             ]),
         child: Column(
@@ -632,21 +632,30 @@ class _HomeState extends State<Home> {
             ),
             Text(
               homeCategories.name!,
-              style: MyCustomTextStyle.myCardSecondTitleBlackSecondTextStyle,
+              style: curruntCategory == homeCategories.id!
+                  ? MyCustomTextStyle
+                      .myCardSecondTitleBlackClickedSecondTextStyle
+                  : MyCustomTextStyle.myCardSecondTitleBlackSecondTextStyle,
             ),
             SizedBox(
               height: 3,
             ),
             Text(
               '(13)',
-              style: MyCustomTextStyle.myH1withOpacityTextStyle,
+              style: curruntCategory == homeCategories.id!
+                  ? MyCustomTextStyle
+                      .myCardSecondTitleBlackClickedSecondTextStyle
+                  : MyCustomTextStyle.myH1withOpacityTextStyle,
             ),
             Text(
-              'مطعم',
-              style: MyCustomTextStyle.myH1withOpacityTextStyle,
+              'وجبة',
+              style: curruntCategory == homeCategories.id!
+                  ? MyCustomTextStyle
+                      .myCardSecondTitleBlackClickedSecondTextStyle
+                  : MyCustomTextStyle.myH1withOpacityTextStyle,
             ),
             SizedBox(
-              height: 3,
+              height: 6,
             ),
           ],
         ),

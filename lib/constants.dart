@@ -34,6 +34,7 @@ const myRedColor = Color(0xFFE35757);
 const mySecRedColor = Color(0xFFF94450);
 const mySecAppBarTitle = Color(0xFF3E4958);
 const myDarkBlue = Color(0xFF05172B);
+const myBlackHalfOpacity = Color(0xFF141212);
 
 class BrselApp {
   BrselApp._();
@@ -224,6 +225,12 @@ class MyCustomTextStyle {
   static const TextStyle myCardSecondTitleBlackSecondTextStyle = TextStyle(
     fontSize: 11,
     color: myBlackSecondColor,
+    fontWeight: FontWeight.w300,
+  );
+  static const TextStyle myCardSecondTitleBlackClickedSecondTextStyle =
+      TextStyle(
+    fontSize: 11,
+    color: Colors.white,
     fontWeight: FontWeight.w300,
   );
   static const TextStyle myLoginForgetPasswordTextStyle = TextStyle(

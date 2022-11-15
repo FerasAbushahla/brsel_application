@@ -696,7 +696,7 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
                     width: SizeConfig.screenWidth,
                     height: 200,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
+                        // borderRadius: BorderRadius.circular(6),
                         image: DecorationImage(
                             image: imageProvider, fit: BoxFit.fill)),
                   ),
@@ -732,6 +732,54 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
         Positioned(
           child: Container(
             decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(width: 1, color: Colors.white),
+            ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(7, 1, 7, 1),
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/StarIcon.svg',
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    double.parse(widget.mealDetailsData!.review!).toString(),
+                    style: MyCustomTextStyle.myLoginForgetPasswordTextStyle,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          top: 12,
+          left: 20,
+        ),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            width: SizeConfig.screenWidth,
+            height: 28,
+            color: myBlackHalfOpacity.withOpacity(0.5),
+          ),
+        ),
+        Positioned(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+                widget.mealDetailsData!.attachments!.length,
+                // widget.homeMeals!.attachments!.length,
+                (index) => buildDot(index)),
+          ),
+          bottom: 10,
+          width: SizeConfig.screenWidth,
+        ),
+        Positioned(
+          child: Container(
+            decoration: BoxDecoration(
               color: myBlackColor.withOpacity(0.5),
               borderRadius: BorderRadius.circular(6),
               border: Border.all(width: 1, color: Colors.white),
@@ -745,21 +793,9 @@ class _MyMealDetailsSliderState extends State<MyMealDetailsSlider> {
               ),
             ),
           ),
-          bottom: 8,
-          left: 25,
+          bottom: 5,
+          left: 20,
         ),
-        Positioned(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-                widget.mealDetailsData!.attachments!.length,
-                // widget.homeMeals!.attachments!.length,
-                (index) => buildDot(index)),
-          ),
-          bottom: 10,
-          width: SizeConfig.screenWidth,
-        )
       ],
     );
   }
