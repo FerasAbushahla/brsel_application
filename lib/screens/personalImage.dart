@@ -10,6 +10,7 @@ import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -424,10 +425,14 @@ class _PersonalImageState extends State<PersonalImage> {
                               myButtonLoading = false;
                             });
 
+                            // Navigator.pop(context);
+
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Settings()));
+                                    builder: (context) => Wraper(
+                                          currentPageGlobale: 4,
+                                        )));
                           });
                         }
                       }

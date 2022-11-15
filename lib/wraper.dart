@@ -9,15 +9,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Wraper extends StatefulWidget {
-  // final int currentPageGlobale;
-  // const Wraper({Key? key, required this.currentPageGlobale}) : super(key: key);
-  const Wraper({Key? key}) : super(key: key);
+  final int? currentPageGlobale;
+  const Wraper({Key? key, this.currentPageGlobale}) : super(key: key);
+  // const Wraper({Key? key}) : super(key: key);
 
   @override
   State<Wraper> createState() => _WraperState();
 }
 
 class _WraperState extends State<Wraper> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.currentPageGlobale == 0) {
+      setState(() {
+        currentPage = 0;
+        currentScreen = HomeZoomDrawer();
+      });
+    } else if (widget.currentPageGlobale == 1) {
+      setState(() {
+        currentPage = 1;
+        currentScreen = Orders();
+      });
+    } else if (widget.currentPageGlobale == 2) {
+      setState(() {
+        currentPage = 2;
+        currentScreen = Meals(
+          focus: false,
+        );
+      });
+    } else if (widget.currentPageGlobale == 3) {
+      setState(() {
+        currentPage = 3;
+        currentScreen = Restaurants();
+      });
+    } else if (widget.currentPageGlobale == 4) {
+      setState(() {
+        currentPage = 4;
+        currentScreen = Settings();
+      });
+    } else {
+      setState(() {
+        currentPage = 0;
+        currentScreen = HomeZoomDrawer();
+      });
+    }
+  }
+
   int currentPage = 0;
   final List<Widget> Screens = [
     HomeZoomDrawer(),
