@@ -36,9 +36,9 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
       userAddress = preferences.getString("currentPosition");
       userStreetAddress = preferences.getString("currentStreetPosition");
       userLocalityAddress = preferences.getString("currentLocalityPosition");
-      print(userAddress);
-      print(userStreetAddress);
-      print(userLocalityAddress);
+      print('userAddress $userAddress');
+      print('userStreetAddress $userStreetAddress');
+      print('userLocalityAddress $userLocalityAddress');
     });
 
     print(preferences.get('firstName'));

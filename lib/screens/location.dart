@@ -75,7 +75,8 @@ class _LocationState extends State<Location> {
             MyIconButton(
               onPress: () {
                 // Navigator.pop(context);
-                Get.off(PersonalImage(fromSettings: false));
+                Get.back();
+                // Get.off(PersonalImage(fromSettings: false));
               },
               borderRadius: 12,
               BackgroundColor: Colors.white,
@@ -181,7 +182,8 @@ class _LocationState extends State<Location> {
                       height: 11,
                     ),
                   ] else if (index == 1) ...[
-                    CurrentLocationMap(image: widget.image),
+                    CurrentLocationMap(
+                        image: widget.image, fromSettings: widget.fromSettings),
                   ]
                 ],
               ),
@@ -194,8 +196,9 @@ class _LocationState extends State<Location> {
 }
 
 class CurrentLocationMap extends StatefulWidget {
+  final bool fromSettings;
   final File? image;
-  const CurrentLocationMap({super.key, this.image});
+  const CurrentLocationMap({super.key, this.image, required this.fromSettings});
 
   @override
   State<CurrentLocationMap> createState() => _CurrentLocationMapState();
@@ -204,6 +207,7 @@ class CurrentLocationMap extends StatefulWidget {
 class _CurrentLocationMapState extends State<CurrentLocationMap> {
   bool loading = false;
   bool determinePositionLoading = false;
+  bool mapLoading = false;
   var address;
   Position? currentPosition;
 
@@ -217,11 +221,19 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
   String? userLat;
   String? userLong;
   String? accessToken;
+  String? userStreet;
+  String? userLocality;
+  String? userCountry;
 
   late GoogleMapController googleMapController;
+  Completer<GoogleMapController> _controller = Completer();
+  late CameraPosition cameraPosition;
 
-  static final CameraPosition _kGooglePlex =
+  static final CameraPosition muscatPosition =
       CameraPosition(target: LatLng(23.5880, 58.3829), zoom: 12);
+  late CameraPosition userPosition = CameraPosition(
+      target: LatLng(double.parse(userLat!), double.parse(userLong!)),
+      zoom: 12);
   List<Placemark>? userCurrentPlace;
 
   Set<Marker> markers = {};
@@ -239,7 +251,65 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
       userPhoneNumber = sharedPreferences.getString('phoneNumber');
       userID = sharedPreferences.getInt('ID');
       accessToken = sharedPreferences.getString('token');
+      userStreet = sharedPreferences.getString('currentStreetPosition');
+      userLocality = sharedPreferences.getString('currentLocalityPosition');
+      userCountry = sharedPreferences.getString('currentCountryPosition');
     });
+    print('userStreet $userStreet');
+    print('userLocality $userLocality');
+    print('userCountry $userCountry');
+    print('userLattttttttt $userLat');
+  }
+
+  Future displaySavedLocation() async {
+    try {
+      // setState(() {
+      //   mapLoading = true;
+      // });
+      await getSharedPreferences();
+      print('userLonggg  $userLong');
+      print('userLattt  $userLat');
+      print('userLonggg double  ${double.parse(userLong!)}');
+
+      double doubleLat = double.parse(userLat!);
+      double doubleLong = double.parse(userLong!);
+      final GoogleMapController controller = await _controller.future;
+
+      controller.moveCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(doubleLat, doubleLong), zoom: 12)));
+
+      // await googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+      //   CameraPosition(target: LatLng(31.5148864, 34.4519451), zoom: 12),
+      // ));
+      // setState(() {});
+
+      markers.clear();
+      markers.add(Marker(
+          markerId: const MarkerId('currentLocation'),
+          position: LatLng(double.parse(userLat!), double.parse(userLong!))));
+
+      List<Placemark> placemark = await placemarkFromCoordinates(
+          double.parse(userLat!), double.parse(userLong!),
+          localeIdentifier: "ar");
+
+      setState(() {
+        mapLoading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // Timer(Duration(milliseconds: 500), () {
+    getSharedPreferences();
+    print('userLocality $userLocality');
+    displaySavedLocation();
+    // });
+    // TODO: implement initState
+
+    super.initState();
   }
 
   @override
@@ -251,15 +321,23 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
           padding: const EdgeInsets.symmetric(horizontal: 36),
           child: SizedBox(
             height: 250,
-            child: GoogleMap(
+            child:
+                // mapLoading
+                //     ? Center(
+                //         child: SizedBox(
+                //             height: 30,
+                //             width: 30,
+                //             child: CircularProgressIndicator()))
+                //     :
+                GoogleMap(
               mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
+              initialCameraPosition: muscatPosition,
+              // userLat == null ? muscatPosition : muscatPosition,
               onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
                 googleMapController = controller;
               },
               markers: markers,
-              // initialCameraPosition: CameraPosition(
-              //     target: LatLng(37.773972, -122.431297), zoom: 12),
               zoomControlsEnabled: false,
             ),
           ),
@@ -272,7 +350,7 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (currentPosition == null) ...[
+              if (userLat == null) ...[
                 // Container(
                 //   decoration: BoxDecoration(
                 //   color: Colors.white,
@@ -341,6 +419,9 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                       sharedPreferences.setString('currentPositionLongitude',
                           position.longitude.toString());
 
+                      userLat = sharedPreferences
+                          .getString('currentPositionLatitude');
+
                       // print(address.value =
                       //     'Address: ${userCurrentPlace![0].locality ?? userCurrentPlace![0].street}');
 
@@ -398,18 +479,17 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                                 ),
                                 Column(
                                   children: [
-                                    if ('${userCurrentPlace![0].locality}' ==
-                                        '') ...[
+                                    if (userLocality == null) ...[
                                       Text(
                                         overflow: TextOverflow.ellipsis,
-                                        '${userCurrentPlace![0].street}',
+                                        userStreet!,
                                         style:
                                             MyCustomTextStyle.myCardtextStyle,
                                       ),
                                     ] else ...[
                                       Text(
                                         overflow: TextOverflow.ellipsis,
-                                        '${userCurrentPlace![0].country}, ${userCurrentPlace![0].locality}, ${userCurrentPlace![0].street}',
+                                        '$userCountry, $userLocality, $userStreet',
                                         // 'مسقط ,عمان,1988',
                                         style:
                                             MyCustomTextStyle.myCardtextStyle,
@@ -428,7 +508,9 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                         //       color: myPrimaryColor,
                         //       child: InkWell(
                         //         // splashColor: Colors.red, // Splash color
-                        //         onTap: () async {},
+                        //         onTap: () async {
+                        //           await getSharedPreferences();
+                        //         },
                         //         child: SizedBox(
                         //           width: 28,
                         //           height: 28,
@@ -453,75 +535,89 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
         SizedBox(
           height: 45,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36),
-          child: MyButton(
-            loading: loading,
-            color: mySecondaryColor,
-            title: 'حفظ ومتابعة',
-            onPressed: () async {
-              if (currentPosition == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("يجب تحديد المكان الحالي"),
-                  ),
-                );
-              } else {
-                setState(() {
-                  loading = true;
-                });
-                await getSharedPreferences();
-                // SharedPreferences sharedPreferences =
-                //     await SharedPreferences.getInstance();
-                // setState(() {
-                //   userAddress = sharedPreferences.getString('currentPosition');
-                //   userFirstName = sharedPreferences.getString('firstName');
-                //   userLastName = sharedPreferences.getString('lastName');
-                //   userGender = sharedPreferences.getString('sex');
-                //   userImage = sharedPreferences.getString('personalImage');
-                //   userLat =
-                //       sharedPreferences.getString('currentPositionLatitude');
-                //   userLong =
-                //       sharedPreferences.getString('currentPositionLongitude');
-                //   userPhoneNumber = sharedPreferences.getString('phoneNumber');
-                //   userID = sharedPreferences.getInt('ID');
-                //   accessToken = sharedPreferences.getString('token');
-                // });
-                print('widget.image ${widget.image}');
-                PersonalInfoModel personalInfoResponse =
-                    await RemoteServices.userInfoRegister(
-                  access_token: accessToken,
-                  address: userAddress,
-                  firstName: userFirstName,
-                  lastName: userLastName,
-                  gender: userGender,
-                  image: widget.image,
-                  lat: userLat,
-                  long: userLong,
-                  phoneNumber: userPhoneNumber,
-                  userID: userID.toString(),
-                );
-                // PersonalInfoModel personalInfoResponse =
-                //     await RemoteServices.userInfoRegister(
-                //   address: userAddress,
-                //   firstName: userFirstName,
-                //   lastName: userLastName,
-                //   gender: userGender,
-                //   // image: userImage,
-                //   lat: userLat,
-                //   long: userLong,
-                //   phoneNumber: userPhoneNumber,
-                //   userID: userID.toString(),
-                // );
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Wraper()));
-                setState(() {
-                  loading = false;
-                });
-              }
-            },
+        if (widget.fromSettings) ...[
+          Container()
+        ] else ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 36),
+            child: MyButton(
+              loading: loading,
+              color: mySecondaryColor,
+              title: 'حفظ ومتابعة',
+              onPressed: () async {
+                if (userLat == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("يجب تحديد المكان الحالي"),
+                    ),
+                  );
+                } else {
+                  setState(() {
+                    loading = true;
+                  });
+                  await getSharedPreferences();
+                  // SharedPreferences sharedPreferences =
+                  //     await SharedPreferences.getInstance();
+                  // setState(() {
+                  //   userAddress = sharedPreferences.getString('currentPosition');
+                  //   userFirstName = sharedPreferences.getString('firstName');
+                  //   userLastName = sharedPreferences.getString('lastName');
+                  //   userGender = sharedPreferences.getString('sex');
+                  //   userImage = sharedPreferences.getString('personalImage');
+                  //   userLat =
+                  //       sharedPreferences.getString('currentPositionLatitude');
+                  //   userLong =
+                  //       sharedPreferences.getString('currentPositionLongitude');
+                  //   userPhoneNumber = sharedPreferences.getString('phoneNumber');
+                  //   userID = sharedPreferences.getInt('ID');
+                  //   accessToken = sharedPreferences.getString('token');
+                  // });
+                  // print('widget.image ${widget.image}');
+                  // PersonalInfoModel personalInfoResponse =
+                  //     await RemoteServices.userInfoRegister(
+                  //   access_token: accessToken,
+                  //   address: userAddress,
+                  //   firstName: userFirstName,
+                  //   lastName: userLastName,
+                  //   gender: userGender,
+                  //   image: widget.image,
+                  //   lat: userLat,
+                  //   long: userLong,
+                  //   phoneNumber: userPhoneNumber,
+                  //   userID: userID.toString(),
+                  // );
+                  // PersonalInfoModel personalInfoResponse =
+                  //     await RemoteServices.userInfoRegister(
+                  //   address: userAddress,
+                  //   firstName: userFirstName,
+                  //   lastName: userLastName,
+                  //   gender: userGender,
+                  //   // image: userImage,
+                  //   lat: userLat,
+                  //   long: userLong,
+                  //   phoneNumber: userPhoneNumber,
+                  //   userID: userID.toString(),
+                  // );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Wraper()));
+                  setState(() {
+                    loading = false;
+                  });
+                }
+              },
+            ),
           ),
-        ),
+        ]
+
+        // TextButton(
+        //     onPressed: () async {
+        //       displaySavedLocation();
+        //     },
+        //     child: Container(
+        //       height: 30,
+        //       width: 80,
+        //       color: myPrimaryColor,
+        //     ))
       ],
     );
   }

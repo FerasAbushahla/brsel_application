@@ -2,9 +2,11 @@ import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/myOrdersCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/screens/orderSuccess.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Payment extends StatefulWidget {
@@ -618,7 +620,104 @@ class _PaymentState extends State<Payment> {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: isButtonDisabled ? null : () {},
+                              onPressed: isButtonDisabled
+                                  ? null
+                                  : () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          contentPadding:
+                                              EdgeInsets.only(top: 15),
+                                          title: Icon(
+                                            BrselApp.paymenticon,
+                                            color: myPrimaryColor,
+                                          ),
+                                          content: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'تأكيد الطلب ؟',
+                                                  style: TextStyle(
+                                                      color: mySecGreyColor,
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Divider(
+                                                height: 0,
+                                              ),
+                                              IntrinsicHeight(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          Get.back();
+                                                        },
+                                                        child: Text(
+                                                          'الغاء',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  myGreyColor,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    VerticalDivider(
+                                                      width: 0,
+                                                      // thickness: 1,
+                                                    ),
+                                                    Expanded(
+                                                      child: TextButton(
+                                                        onPressed: () async {
+                                                          // Navigator.pop(
+                                                          //     context);
+                                                          Navigator.pushReplacement(
+                                                              Get.context!,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          OrderSuccess()));
+                                                          // Get.back();
+                                                          // Navigator.pushAndRemoveUntil(
+                                                          //     context,
+                                                          //     MaterialPageRoute(
+                                                          //         builder:
+                                                          //             (context) =>
+                                                          //                 OrderSuccess()),
+                                                          //     (r) => false);
+                                                        },
+                                                        child: Text(
+                                                          'تأكيد',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  myPrimaryColor,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.zero,
                                 elevation: 0,
