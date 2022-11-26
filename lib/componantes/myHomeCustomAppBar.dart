@@ -1,5 +1,6 @@
 import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/screens/location.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -80,69 +81,79 @@ class _MyHomeCustomAppBarState extends State<MyHomeCustomAppBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   widget.leading!,
-                  Container(
-                    height: getProportionalScreenHeight(42),
-                    width: getProportionalScreenWidth(140),
-                    decoration: BoxDecoration(
-                      color: myBackgroundFillingColor,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: myBorderGreyColor),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                size: 14,
-                                color: myPrimaryColor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'الموقع',
-                                style: MyCustomTextStyle.myH1TextStyle,
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 14,
-                                color: myPrimaryColor,
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              if (userLocalityAddress == null ||
-                                  userStreetAddress == null) ...[
-                                Text(
-                                  overflow: TextOverflow.ellipsis,
-                                  textDirection: TextDirection.rtl,
-                                  // userAddress!,
-                                  '$userAddress',
-                                  style: MyCustomTextStyle
-                                      .myH1withOpacityTextStyle,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Location(
+                                    fromSettings: true,
+                                  )));
+                    },
+                    child: Container(
+                      height: getProportionalScreenHeight(42),
+                      width: getProportionalScreenWidth(140),
+                      decoration: BoxDecoration(
+                        color: myBackgroundFillingColor,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: myBorderGreyColor),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 14,
+                                  color: myPrimaryColor,
                                 ),
-                              ] else ...[
-                                Text(
-                                  overflow: TextOverflow.ellipsis,
-                                  textDirection: TextDirection.rtl,
-                                  // userAddress!,
-                                  '${userLocalityAddress} ${userStreetAddress}',
-                                  style: MyCustomTextStyle
-                                      .myH1withOpacityTextStyle,
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ]
-                            ],
-                          )
-                        ],
+                                Text(
+                                  'الموقع',
+                                  style: MyCustomTextStyle.myH1TextStyle,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 14,
+                                  color: myPrimaryColor,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                if (userLocalityAddress == null ||
+                                    userStreetAddress == null) ...[
+                                  Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    textDirection: TextDirection.rtl,
+                                    // userAddress!,
+                                    '$userAddress',
+                                    style: MyCustomTextStyle
+                                        .myH1withOpacityTextStyle,
+                                  ),
+                                ] else ...[
+                                  Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    textDirection: TextDirection.rtl,
+                                    // userAddress!,
+                                    '${userLocalityAddress} ${userStreetAddress}',
+                                    style: MyCustomTextStyle
+                                        .myH1withOpacityTextStyle,
+                                  ),
+                                ]
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

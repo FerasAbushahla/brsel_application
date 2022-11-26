@@ -34,7 +34,7 @@ class OrderModel {
 class Meal {
   int? mealId;
   int? numberOfMeals;
-  int? totalPrice;
+  double? totalPrice;
   List<Extra>? extras;
   List<Extra>? mealExtras;
   Meal({

@@ -2,10 +2,15 @@ import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/myOrdersCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/controllers/cartController.dart';
+import 'package:brsel_application/models/mealDetailsModel.dart';
+import 'package:brsel_application/models/orderModel.dart';
 import 'package:brsel_application/screens/orderSuccess.dart';
+import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,16 +22,24 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
+  CartController cartController = Get.put(CartController());
   bool switchValue = false;
   bool loading = false;
   bool isButtonDisabled = true;
 
   String? userAddress;
+  String? token;
+  int? userId;
 
   final cardOwnerName = TextEditingController();
   final cardNum = TextEditingController();
   final cardExpDate = TextEditingController();
   final cardSecNum = TextEditingController();
+
+  Future getCartdata() async {
+    await cartController.getCartOrders();
+    await cartController.getCartOrdersPrice();
+  }
 
   @override
   void initState() {
@@ -44,11 +57,35 @@ class _PaymentState extends State<Payment> {
     getSharedPrefs();
   }
 
+  getListOfMeals({required List<MealDetailsData> listOfMeals}) {
+    OrderModel orderModel = OrderModel();
+    List<Meal>? meals = [];
+    meals = listOfMeals.map((meal) {
+      return Meal(
+        numberOfMeals: meal.count,
+        mealExtras: meal.extraIngredients!
+            .map(
+              (e) => Extra(name: e),
+            )
+            .toList(),
+        extras: meal.extras!
+            .map(
+              (e) => Extra(id: e.id, name: e.name),
+            )
+            .toList(),
+        mealId: meal.id,
+        totalPrice: double.parse(meal.price!),
+      );
+    }).toList();
+    return meals;
+  }
+
   Future getSharedPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    // userAddress = preferences.getString("currentPosition");
     setState(() {
       userAddress = preferences.getString("currentPosition");
+      token = preferences.getString('token');
+      userId = preferences.getInt('ID');
 
       print(userAddress);
     });
@@ -681,22 +718,51 @@ class _PaymentState extends State<Payment> {
                                                     Expanded(
                                                       child: TextButton(
                                                         onPressed: () async {
-                                                          // Navigator.pop(
-                                                          //     context);
-                                                          Navigator.pushReplacement(
-                                                              Get.context!,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          OrderSuccess()));
-                                                          // Get.back();
-                                                          // Navigator.pushAndRemoveUntil(
-                                                          //     context,
-                                                          //     MaterialPageRoute(
-                                                          //         builder:
-                                                          //             (context) =>
-                                                          //                 OrderSuccess()),
-                                                          //     (r) => false);
+                                                          await getSharedPrefs();
+                                                          await getCartdata();
+
+                                                          List<Meal> meals =
+                                                              getListOfMeals(
+                                                                  listOfMeals:
+                                                                      cartController
+                                                                          .cartList);
+
+                                                          OrderModel orderModel = OrderModel(
+                                                              meals: meals,
+                                                              paymentWay:
+                                                                  "BY_HAND",
+                                                              status:
+                                                                  "NOT_GET_YET",
+                                                              totalPrice:
+                                                                  cartController
+                                                                      .totalprice
+                                                                      .value
+                                                                      .toInt(),
+                                                              userId: userId!);
+
+                                                          var response =
+                                                              await RemoteServices.order(
+                                                                  access_token:
+                                                                      token,
+                                                                  orderModel:
+                                                                      orderModel);
+
+                                                          if (response
+                                                                  .toString() ==
+                                                              "تم تنفيذ طلبك بنجاح") {
+                                                            Navigator.pushReplacement(
+                                                                Get.context!,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            OrderSuccess()));
+                                                          } else {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                                                backgroundColor:
+                                                                    myDarkGreyColor);
+                                                          }
                                                         },
                                                         child: Text(
                                                           'تأكيد',

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
+import 'package:brsel_application/models/orderModel.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/models/registerModel.dart';
 import 'package:brsel_application/service/apiSettings.dart';
@@ -548,6 +549,47 @@ class RemoteServices {
 
       var mapOutput = await json.decode(jsonString)["message"];
       print(mapOutput);
+      return mapOutput;
+    } else {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString)["message"];
+      print(mapOutput);
+
+      return mapOutput;
+    }
+  }
+
+  static Future order(
+      {required OrderModel orderModel, String? access_token}) async {
+    print('$orderModel+ $access_token');
+    var body = jsonEncode(orderModel.toJson());
+    print('body $body');
+    Map<String, String> headers = {
+      // "Content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      "Authorization": "Bearer $access_token",
+      "Content-Type": "application/json",
+    };
+
+    var response = await client.post(
+      Uri.parse(ApiSettings.Order),
+      headers: headers,
+      body: body,
+    );
+    print('order');
+    print(response);
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print(jsonString);
+
+      var mapOutput = await json.decode(jsonString)["message"];
+      print(mapOutput);
+
       return mapOutput;
     } else {
       var jsonString = response.body;

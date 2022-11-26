@@ -28,7 +28,7 @@ class _CartState extends State<Cart> {
 
   late Box orderBox;
 
-  void getdata() async {
+  void getCartdata() async {
     await cartController.getCartOrders();
     await cartController.getCartOrdersPrice();
   }
@@ -39,7 +39,7 @@ class _CartState extends State<Cart> {
     // TODO: implement initState
 
     // print('Get.currentRoute${ModalRoute.of(context)?.settings.name}');
-    getdata();
+    getCartdata();
     cartController.totalprice;
     cartController.cartListLength;
     if (cartController.totalprice > 0) {
@@ -567,11 +567,12 @@ class _CartState extends State<Cart> {
                                       await orderBox.putAt(
                                           index, mealWithCounter);
                                       setState(() {
-                                        getdata();
+                                        getCartdata();
                                         // mealWithCounter;
                                         // mealDetailsData.count;
                                         // mealDetailsData;
-                                        print(mealWithCounter);
+                                        print(
+                                            'mealWithCounter $mealWithCounter');
                                       });
                                     },
                                   ),
@@ -612,11 +613,12 @@ class _CartState extends State<Cart> {
                                       await orderBox.putAt(
                                           index, mealWithCounter);
                                       setState(() {
-                                        getdata();
+                                        getCartdata();
                                         // mealWithCounter;
                                         // mealDetailsData.count;
                                         // mealDetailsData;
-                                        print(mealWithCounter);
+                                        print(
+                                            'mealWithCounter $mealWithCounter');
                                       });
                                     },
                                   ),
