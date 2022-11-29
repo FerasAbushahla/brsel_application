@@ -13,4 +13,5 @@ class ApiSettings {
   static const mealDetails = _apiUrl + 'meals';
   static const contactUs = _apiUrl + 'contact_us';
   static const Order = _apiUrl + 'order';
+  static const Orders = _apiUrl + 'orders';
 }

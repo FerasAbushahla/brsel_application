@@ -6,6 +6,7 @@ import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/models/orderModel.dart';
 import 'package:brsel_application/screens/orderSuccess.dart';
+import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
@@ -750,6 +751,10 @@ class _PaymentState extends State<Payment> {
                                                           if (response
                                                                   .toString() ==
                                                               "تم تنفيذ طلبك بنجاح") {
+                                                            await LocaleDBHelper
+                                                                .dbHelper
+                                                                .deleteOrdersLocal();
+                                                            getCartdata();
                                                             Navigator.pushReplacement(
                                                                 Get.context!,
                                                                 MaterialPageRoute(

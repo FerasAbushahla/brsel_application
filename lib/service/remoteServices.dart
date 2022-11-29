@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:brsel_application/models/SearchModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
+import 'package:brsel_application/models/orderHistory.dart';
 import 'package:brsel_application/models/orderModel.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/models/registerModel.dart';
@@ -600,5 +601,25 @@ class RemoteServices {
 
       return mapOutput;
     }
+  }
+
+  static Future<OrderHistory?> getOrdersHistory({String? access_token}) async {
+    print('${ApiSettings.Orders}');
+    var response = await client.get(Uri.parse('${ApiSettings.Orders}'),
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $access_token"
+        });
+    // print(response.statusCode);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print('$jsonString');
+
+      var mapOutput = json.decode(jsonString);
+      print('jsonString');
+
+      return OrderHistory.fromJson(mapOutput);
+    }
+    return null;
   }
 }
