@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CartController extends GetxController {
   static var isLoading = true.obs;
+
   var cartList = <MealDetailsData>[].obs;
   var totalprice = 0.0.obs;
   var cartListLength = 0.obs;
@@ -12,13 +13,16 @@ class CartController extends GetxController {
   String? token;
 
   @override
-  void onInit() {
+  void onInit() async {
+    // isLoading(true);
     // getSharedPrefs().then((value) => getOrders());
-    getCartOrders().then((value) {
-      getCartOrdersPrice();
-      getcartListLength();
+    await getCartOrders().then((value) async {
+      await getCartOrdersPrice();
+      await getcartListLength();
+
       super.onInit();
     });
+    // isLoading(false);
     // getOrdersPrice();
   }
 
@@ -46,11 +50,12 @@ class CartController extends GetxController {
   }
 
   Future getCartOrders() async {
+    // isLoading.value = true;
     try {
-      isLoading(true);
       int length = await LocaleDBHelper.dbHelper.getLocalOrdersListLength();
       print('length ${length}');
       var order = await LocaleDBHelper.dbHelper.getAllOrders();
+      print('order ${order}');
       // RemoteServices.getSearchMeals(
       //     access_token: token, searchWord: word == null ? "" : word);
       // var homeMeals = await RemoteServices.getHomeMeals(
@@ -59,7 +64,7 @@ class CartController extends GetxController {
       cartList.value = order;
       await getcartListLength();
     } finally {
-      isLoading(false);
+      // isLoading.value = false;
     }
   }
   // Future getCartOrders() async {

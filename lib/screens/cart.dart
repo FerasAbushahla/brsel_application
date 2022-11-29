@@ -39,6 +39,7 @@ class _CartState extends State<Cart> {
     // TODO: implement initState
 
     // print('Get.currentRoute${ModalRoute.of(context)?.settings.name}');
+    cartController.onInit();
     getCartdata();
     cartController.totalprice;
     cartController.cartListLength;
@@ -205,184 +206,69 @@ class _CartState extends State<Cart> {
               })),
               // Spacer(),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: SizeConfig.screenWidth,
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 0),
-                  )
-                ]),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 18, 0, 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'ملخص الطلبية',
-                        style: MyCustomTextStyle.myCardTitletextStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'الإجمالي',
-                              style: MyCustomTextStyle.mySearchHintTextStyle,
-                            ),
-                            Row(
-                              children: [
-                                Obx(() {
-                                  if (CartController.isLoading.value) {
-                                    return Container(
-                                      height: getProportionalScreenHeight(5),
-                                      // child: Center(
-                                      //   child: SizedBox(
-                                      //       // height: 30,
-                                      //       // width: 30,
-                                      //       child: CircularProgressIndicator()),
-                                      // ),
-                                    );
-                                  } else {
-                                    return Text(
-                                      cartController.totalprice.value
-                                          .toString(),
-                                      // '210.80',
-                                      style: MyCustomTextStyle
-                                          .mySearchHintTextStyle,
-                                    );
-                                  }
-                                }),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  'ر.ع',
-                                  style:
-                                      MyCustomTextStyle.mySearchHintTextStyle,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'رسوم التوصيل',
-                              style: MyCustomTextStyle.mySearchHintTextStyle,
-                            ),
-                            Text(
-                              '20 ر.ع',
-                              style: MyCustomTextStyle.mySearchHintTextStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      // SizedBox(
-                      //   height: 6,
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 25),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         'كوبون خصم',
-                      //         style: MyCustomTextStyle.mySearchHintTextStyle,
-                      //       ),
-                      //       Text(
-                      //         '15 ر.ع',
-                      //         style: MyCustomTextStyle.mySearchHintTextStyle,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      // Container(
-                      //   width: SizeConfig.screenWidth,
-                      //   color: myPrimaryColor.withOpacity(0.4),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
-                      //     child: Row(
-                      //       children: [
-                      //         RawMaterialButton(
-                      //           constraints: BoxConstraints(),
-                      //           materialTapTargetSize:
-                      //               MaterialTapTargetSize.shrinkWrap,
-                      //           onPressed: () {},
-                      //           fillColor: myPrimaryColor,
-                      //           child: Icon(
-                      //             Icons.edit,
-                      //             color: Colors.white,
-                      //             size: 14.0,
-                      //           ),
-                      //           padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
-                      //           shape: CircleBorder(),
-                      //         ),
-                      //         SizedBox(
-                      //           width: 5,
-                      //         ),
-                      //         Text(
-                      //           'تعديل الكوبون',
-                      //           style: MyCustomTextStyle.myTextButtonTextStyle,
-                      //         ),
-                      //         Spacer(),
-                      //         Text(
-                      //           'تم توفير مبلع 15 ريال عماني',
-                      //           style: MyCustomTextStyle
-                      //               .myTextButtonLightTextStyle,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            Obx((() {
+              if (cartController.cartList.isEmpty) {
+                return Container();
+              } else {
+                return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: SizeConfig.screenWidth,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(0, 0),
+                      )
+                    ]),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 18, 0, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'ملخص الطلبية',
+                            style: MyCustomTextStyle.myCardTitletextStyle,
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'إجمالي',
+                                  'الإجمالي',
                                   style:
                                       MyCustomTextStyle.mySearchHintTextStyle,
-                                ),
-                                SizedBox(
-                                  height: 2,
                                 ),
                                 Row(
                                   children: [
-                                    Obx(
-                                      () => Text(
-                                        '${cartController.totalprice.value + totalWhithFees}',
-                                        // '210.80',
-                                        style: MyCustomTextStyle
-                                            .mySearchHintTextStyle,
-                                      ),
-                                    ),
+                                    Obx(() {
+                                      if (CartController.isLoading.value) {
+                                        return Container(
+                                          height:
+                                              getProportionalScreenHeight(5),
+                                          // child: Center(
+                                          //   child: SizedBox(
+                                          //       // height: 30,
+                                          //       // width: 30,
+                                          //       child: CircularProgressIndicator()),
+                                          // ),
+                                        );
+                                      } else {
+                                        return Text(
+                                          cartController.totalprice.value
+                                              .toString(),
+                                          // '210.80',
+                                          style: MyCustomTextStyle
+                                              .mySearchHintTextStyle,
+                                        );
+                                      }
+                                    }),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -395,69 +281,196 @@ class _CartState extends State<Cart> {
                                 ),
                               ],
                             ),
-                            Obx(
-                              () => ElevatedButton(
-                                onPressed: cartController.isButtonDisabled.value
-                                    ? null
-                                    : () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Payment()));
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  // padding: EdgeInsets.symmetric(vertical: 8),
-                                  padding: EdgeInsets.zero,
-                                  elevation: 0,
-                                  backgroundColor: myPrimaryColor,
-                                  // primary: mySecondaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'رسوم التوصيل',
+                                  style:
+                                      MyCustomTextStyle.mySearchHintTextStyle,
                                 ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(6, 0, 16, 0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'استمرار',
-                                        style:
-                                            MyCustomTextStyle.myButtonTextStyle,
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 2, 3, 2),
-                                          child: Icon(
-                                            textDirection: TextDirection.ltr,
-                                            Icons.arrow_back_ios,
-                                            color: myPrimaryColor,
-                                            size: 20.0,
+                                Text(
+                                  '20 ر.ع',
+                                  style:
+                                      MyCustomTextStyle.mySearchHintTextStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          // SizedBox(
+                          //   height: 6,
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 25),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Text(
+                          //         'كوبون خصم',
+                          //         style: MyCustomTextStyle.mySearchHintTextStyle,
+                          //       ),
+                          //       Text(
+                          //         '15 ر.ع',
+                          //         style: MyCustomTextStyle.mySearchHintTextStyle,
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          // Container(
+                          //   width: SizeConfig.screenWidth,
+                          //   color: myPrimaryColor.withOpacity(0.4),
+                          //   child: Padding(
+                          //     padding: EdgeInsets.fromLTRB(20, 8, 20, 8),
+                          //     child: Row(
+                          //       children: [
+                          //         RawMaterialButton(
+                          //           constraints: BoxConstraints(),
+                          //           materialTapTargetSize:
+                          //               MaterialTapTargetSize.shrinkWrap,
+                          //           onPressed: () {},
+                          //           fillColor: myPrimaryColor,
+                          //           child: Icon(
+                          //             Icons.edit,
+                          //             color: Colors.white,
+                          //             size: 14.0,
+                          //           ),
+                          //           padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                          //           shape: CircleBorder(),
+                          //         ),
+                          //         SizedBox(
+                          //           width: 5,
+                          //         ),
+                          //         Text(
+                          //           'تعديل الكوبون',
+                          //           style: MyCustomTextStyle.myTextButtonTextStyle,
+                          //         ),
+                          //         Spacer(),
+                          //         Text(
+                          //           'تم توفير مبلع 15 ريال عماني',
+                          //           style: MyCustomTextStyle
+                          //               .myTextButtonLightTextStyle,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'إجمالي',
+                                      style: MyCustomTextStyle
+                                          .mySearchHintTextStyle,
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Obx(
+                                          () => Text(
+                                            '${cartController.totalprice.value + totalWhithFees}',
+                                            // '210.80',
+                                            style: MyCustomTextStyle
+                                                .mySearchHintTextStyle,
                                           ),
                                         ),
-                                      )
-                                    ],
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'ر.ع',
+                                          style: MyCustomTextStyle
+                                              .mySearchHintTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Obx(
+                                  () => ElevatedButton(
+                                    onPressed:
+                                        cartController.isButtonDisabled.value
+                                            ? null
+                                            : () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Payment()));
+                                              },
+                                    style: ElevatedButton.styleFrom(
+                                      // padding: EdgeInsets.symmetric(vertical: 8),
+                                      padding: EdgeInsets.zero,
+                                      elevation: 0,
+                                      backgroundColor: myPrimaryColor,
+                                      // primary: mySecondaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          6, 0, 16, 0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'استمرار',
+                                            style: MyCustomTextStyle
+                                                .myButtonTextStyle,
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white,
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  10, 2, 3, 2),
+                                              child: Icon(
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                Icons.arrow_back_ios,
+                                                color: myPrimaryColor,
+                                                size: 20.0,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
-                    ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            )
+                );
+              }
+            })),
           ],
         ),
       ),

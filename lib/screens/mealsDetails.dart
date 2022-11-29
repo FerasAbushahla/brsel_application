@@ -103,7 +103,7 @@ class _MealDetailsState extends State<MealDetails> {
                       print('mealWithCounter$mealWithCounter');
                       await orderBox
                           .add(mealWithCounter)
-                          .then((value) => Get.to(Cart()));
+                          .then((value) => Get.to(() => Cart()));
                     } else {
                       int count = await mealDetailsController.getMealCount(
                           mealDetailsController.mealDetailsData.value.id);
@@ -113,7 +113,7 @@ class _MealDetailsState extends State<MealDetails> {
                       mealWithCounter['count'] = count += 1;
                       await orderBox
                           .putAt(index, mealWithCounter)
-                          .then((value) => Get.to(Cart()));
+                          .then((value) => Get.to(() => Cart()));
                     }
 
                     // Navigator.push(context,

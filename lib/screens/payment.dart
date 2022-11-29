@@ -23,7 +23,7 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  CartController cartController = Get.put(CartController());
+  CartController cartController = Get.put(CartController(), permanent: true);
   bool switchValue = false;
   bool loading = false;
   bool isButtonDisabled = true;

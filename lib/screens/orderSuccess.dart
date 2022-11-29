@@ -1,17 +1,12 @@
-import 'package:brsel_application/componantes/myButton.dart';
-import 'package:brsel_application/componantes/myCustomAppBar.dart';
-import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/mySuccessPageButton.dart';
 import 'package:brsel_application/constants.dart';
-import 'package:brsel_application/screens/register.dart';
+import 'package:brsel_application/controllers/cartController.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class OrderSuccess extends StatefulWidget {
   const OrderSuccess({super.key});
@@ -21,12 +16,34 @@ class OrderSuccess extends StatefulWidget {
 }
 
 class _OrderSuccessState extends State<OrderSuccess> {
+  CartController cartController = Get.put(CartController());
   bool loading = false;
 
-  Future<T?> pushPage<T>(BuildContext context, Widget page) {
-    return Navigator.of(context)
-        .push<T>(MaterialPageRoute(builder: (context) => page));
+  Future? pushPage(BuildContext context, Widget page) {
+    // return Navigator.of(context)
+    //     .push<T>(MaterialPageRoute(builder: (context) => page));
+    return Get.to(() => Wraper());
   }
+
+  void getCartdata() async {
+    await cartController.getCartOrders();
+    await cartController.getCartOrdersPrice();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // getCartdata;
+    cartController.onInit();
+    super.initState();
+  }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   cartController.dispose();
+  //   super.dispose();
+  // }
 
   void _moveToHome(BuildContext context) => Get.replace(Wraper());
   @override
@@ -38,30 +55,6 @@ class _OrderSuccessState extends State<OrderSuccess> {
         return false;
       },
       child: Scaffold(
-        // appBar: MyCustomAppBar(
-        //   leading: Column(
-        //     children: [
-        //       SizedBox(
-        //         height: 11,
-        //       ),
-        //       MyIconButton(
-        //         onPress: () {
-        //           Get.back();
-
-        //           // Navigator.pop(context);
-        //         },
-        //         borderRadius: 12,
-        //         BackgroundColor: Colors.white,
-        //         iconWidget: Padding(
-        //           padding: EdgeInsets.all(5),
-        //           child: SvgPicture.asset(
-        //             'assets/images/ArrowBack Icon.svg',
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -115,7 +108,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 loading: false,
                 title: 'الرجوع للرئيسية',
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () async {
+                  await pushPage(context, Wraper());
+                },
               ),
             ),
           ],

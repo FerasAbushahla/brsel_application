@@ -182,7 +182,7 @@ class _TermsAndPoliciesState extends State<TermsAndPolicies> {
                               title: 'حفظ ومتابعة',
                               color: mySecondaryColor,
                               onPressed: () {
-                                saveSwitchState(value);
+                                saveSwitchState(switchSelect);
                               },
                             ),
                           ],

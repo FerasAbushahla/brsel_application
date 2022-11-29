@@ -40,7 +40,7 @@ class _MyCartBadgedButtonState extends State<MyCartBadgedButton> {
                   borderRadius: 6,
                   iconWidget: SvgPicture.asset('assets/images/CartIcon.svg'),
                   onPress: () {
-                    Get.to(Cart());
+                    Get.to(() => Cart());
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
@@ -54,7 +54,7 @@ class _MyCartBadgedButtonState extends State<MyCartBadgedButton> {
                 borderRadius: 6,
                 iconWidget: SvgPicture.asset('assets/images/CartIcon.svg'),
                 onPress: () {
-                  Get.to(Cart());
+                  Get.to(() => Cart());
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(
