@@ -1,8 +1,5 @@
-import 'package:brsel_application/componantes/myHomeSecCustomAppBar.dart';
-import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/myRestaurantesCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
-import 'package:brsel_application/controllers/SearchController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/screens/meals.dart';
@@ -10,7 +7,6 @@ import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Restaurants extends StatefulWidget {
@@ -202,7 +198,6 @@ class _RestaurantsState extends State<Restaurants> {
                     children: [
                       Text(
                         homeResturante.name!,
-                        // homeMeals.name!,
                         style: MyCustomTextStyle.myAppBarTitleTextStyle,
                       ),
                       IntrinsicHeight(
@@ -210,17 +205,17 @@ class _RestaurantsState extends State<Restaurants> {
                           children: [
                             Icon(
                               BrselApp.locationsecicon,
-                              size: 10,
+                              color: myThirdGreyColor,
+                              size: 12,
                             ),
                             Text(
                               '2.6',
                               // homeResturante.address!,
-                              // homeMeals.price!,
-                              style: MyCustomTextStyle.myDetailsSecTextStyle,
+                              style: MyCustomTextStyle.myDetailsThirdTextStyle,
                             ),
                             Text(
                               'كم',
-                              style: MyCustomTextStyle.myDetailsSecTextStyle,
+                              style: MyCustomTextStyle.myDetailsThirdTextStyle,
                             ),
                             VerticalDivider(
                               width: 6,
@@ -228,12 +223,12 @@ class _RestaurantsState extends State<Restaurants> {
                             ),
                             Icon(
                               BrselApp.deliveryicon,
-                              size: 10,
+                              size: 12,
                             ),
                             Text(
                               // '20د',
                               '${homeResturante.deliveryTime}د',
-                              style: MyCustomTextStyle.myDetailsSecTextStyle,
+                              style: MyCustomTextStyle.myDetailsThirdTextStyle,
                             ),
                             Container(
                               width: 6,
@@ -247,7 +242,7 @@ class _RestaurantsState extends State<Restaurants> {
                             ),
                             Icon(
                               BrselApp.staricon,
-                              size: 10,
+                              size: 12,
                               color: myYellowColor,
                             ),
                             SizedBox(
@@ -256,11 +251,11 @@ class _RestaurantsState extends State<Restaurants> {
                             Text(
                               // '3',
                               homeResturante.review!,
-                              style: MyCustomTextStyle.myP1,
+                              style: MyCustomTextStyle.myDetailsThirdTextStyle,
                             ),
                             Text(
                               '(100)',
-                              style: MyCustomTextStyle.myP1,
+                              style: MyCustomTextStyle.myDetailsThirdTextStyle,
                             ),
                           ],
                         ),
@@ -271,7 +266,8 @@ class _RestaurantsState extends State<Restaurants> {
                     height: 5,
                   ),
                   Text(
-                    'hjhj',
+                    // 'hjhj',
+                    homeResturante.description!,
                     // homeMeals.description!,
                     style: MyCustomTextStyle.myDetailsTextStyle,
                   ),

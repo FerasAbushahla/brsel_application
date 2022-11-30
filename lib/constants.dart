@@ -26,6 +26,7 @@ const myDarkGreyColor = Color(0xFF595959);
 const myBorderGreyColor = Color(0xFFE8E8E8);
 const myGreyColor = Color(0xFFA1A1A1);
 const mySecGreyColor = Color(0xFF8F92A1);
+const myThirdGreyColor = Color(0xFF707070);
 const myYellowColor = Color(0xFFFFDE0A);
 const mySecondaryColor = Color(0xFF275D89);
 const myDarkBlueColor = Color(0xFF3E4958);
@@ -220,6 +221,11 @@ class MyCustomTextStyle {
   static TextStyle myDetailsSecTextStyle = TextStyle(
     fontSize: 8,
     color: myBlackColor.withOpacity(0.5),
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle myDetailsThirdTextStyle = TextStyle(
+    fontSize: 10,
+    color: myBlackColor,
     fontWeight: FontWeight.w500,
   );
   static const TextStyle myCardTitleBlackSecondTextStyle = TextStyle(
