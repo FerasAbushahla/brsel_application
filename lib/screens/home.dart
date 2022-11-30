@@ -365,7 +365,7 @@ class _HomeState extends State<Home> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    childAspectRatio: (1 / 1.18),
+                                    childAspectRatio: (1 / 1.1),
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10),
                             itemBuilder: (context, index) => homeMeals(
@@ -440,13 +440,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            // Image.asset(
-            //   'assets/images/Burger.jpg',
-            //   fit: BoxFit.fill,
-            // ),
-
             Padding(
-              padding: EdgeInsets.fromLTRB(10, 6, 10, 10),
+              padding: EdgeInsets.fromLTRB(10, 6, 10, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -484,6 +479,7 @@ class _HomeState extends State<Home> {
                   ),
                   Text(
                     homeMeals.description!,
+                    overflow: TextOverflow.ellipsis,
                     style: MyCustomTextStyle.myDetailsTextStyle,
                   ),
                   SizedBox(

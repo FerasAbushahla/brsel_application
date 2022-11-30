@@ -220,7 +220,7 @@ class MyCustomTextStyle {
   static TextStyle myDetailsSecTextStyle = TextStyle(
     fontSize: 8,
     color: myBlackColor.withOpacity(0.5),
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w500,
   );
   static const TextStyle myCardTitleBlackSecondTextStyle = TextStyle(
     fontSize: 12,
