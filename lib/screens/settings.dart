@@ -257,7 +257,7 @@ class _SettingsState extends State<Settings> {
                                       ],
                                     ),
                                     VerticalDivider(
-                                      width: 0,
+                                      width: 12,
                                       thickness: 1,
                                     ),
                                     Column(
@@ -281,7 +281,7 @@ class _SettingsState extends State<Settings> {
                                       ],
                                     ),
                                     VerticalDivider(
-                                      width: 0,
+                                      width: 12,
                                       thickness: 1,
                                     ),
                                     Column(
