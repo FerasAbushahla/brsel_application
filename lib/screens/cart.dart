@@ -58,17 +58,6 @@ class _CartState extends State<Cart> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   cartController.dispose();
-  //   super.dispose();
-  // }
-
-  // void deleteOrder(int index) async {
-  //   await LocaleDBHelper.dbHelper.deleteOrder(index);
-  // }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

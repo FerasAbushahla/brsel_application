@@ -166,6 +166,11 @@ class MyCustomTextStyle {
     color: myTextGreyColor,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle myOrderDetailsH1 = TextStyle(
+    fontSize: 12,
+    color: Colors.white,
+    fontWeight: FontWeight.w400,
+  );
   static const TextStyle myTextFieldTitletextStyle = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
