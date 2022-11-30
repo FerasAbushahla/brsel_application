@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/myOrderDetailsCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -48,17 +49,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                       zoomControlsEnabled: false,
                     ),
                   ),
-                  // Positioned(
-                  //   top: 0,
-                  //   bottom: 0,
-                  //   // height: 500,
-                  //   child: Container(
-                  //     height: 200,
-                  //     width: SizeConfig.screenWidth,
-                  //     color: myPrimaryColor,
-                  //   ),
-                  // )
-
                   Padding(
                     padding: const EdgeInsets.only(top: 14),
                     child: Align(
@@ -77,7 +67,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     topLeft: Radius.circular(34),
                                     topRight: Radius.circular(34),
                                   ),
-                                  color: myPrimaryColor,
+                                  color: Colors.white,
                                 ),
                                 height: 420,
                                 width: SizeConfig.screenWidth,
@@ -88,6 +78,78 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     SizedBox(
                                       height: 40,
                                     ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/images/CircleChecked.svg',
+                                        ),
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/images/dashedLineHorizontal.svg',
+                                        ),
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/images/CircleChecked.svg',
+                                        ),
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/images/dashedLineHorizontal.svg',
+                                        ),
+                                        SizedBox(
+                                          width: 11,
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/images/CircleChecked.svg',
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 17,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 55,
+                                          child: Text(
+                                            'تم استلام طلبكم',
+                                            style: MyCustomTextStyle
+                                                .myTextButtonLightTextStyle,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 50,
+                                        ),
+                                        Container(
+                                          width: 80,
+                                          child: Text(
+                                            'الطلب بالطريق',
+                                            style: MyCustomTextStyle
+                                                .myTextButtonLightTextStyle,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 50,
+                                        ),
+                                        Container(
+                                          width: 55,
+                                          child: Text(
+                                            'تم استلام طلبكم',
+                                            style: MyCustomTextStyle
+                                                .myTextButtonLightTextStyle,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
