@@ -22,6 +22,12 @@ class MealDetailsController extends GetxController {
 
     super.onInit();
   }
+  // @override
+  // void onReady() {
+  //   // TODO: implement onReady
+  //   super.onReady();
+  //   ever(mealDetailsData, callback)
+  // }
 
   Future getSharedPrefs() async {
     try {

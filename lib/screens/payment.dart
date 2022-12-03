@@ -59,23 +59,18 @@ class _PaymentState extends State<Payment> {
   }
 
   getListOfMeals({required List<MealDetailsData> listOfMeals}) {
-    OrderModel orderModel = OrderModel();
+    // OrderModel orderModel = OrderModel();
     List<Meal>? meals = [];
     meals = listOfMeals.map((meal) {
       return Meal(
         numberOfMeals: meal.count,
-        mealExtras: meal.extraIngredients!
-            .map(
-              (e) => Extra(name: e),
-            )
-            .toList(),
+        meal_extras: meal.extraIngredients,
         extras: meal.extras!
             .map(
-              (e) => Extra(id: e.id, name: e.name),
+              (e) => Extra(id: e.id, name: e.name, count: 0),
             )
             .toList(),
         mealId: meal.id,
-        totalPrice: double.parse(meal.price!),
       );
     }).toList();
     return meals;
@@ -663,130 +658,161 @@ class _PaymentState extends State<Payment> {
                                   : () {
                                       showDialog(
                                         context: context,
-                                        builder: (context) => AlertDialog(
-                                          contentPadding:
-                                              EdgeInsets.only(top: 15),
-                                          title: Icon(
-                                            BrselApp.paymenticon,
-                                            color: myPrimaryColor,
-                                          ),
-                                          content: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'تأكيد الطلب ؟',
-                                                  style: TextStyle(
-                                                      color: mySecGreyColor,
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Divider(
-                                                height: 0,
-                                              ),
-                                              IntrinsicHeight(
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: TextButton(
-                                                        onPressed: () {
-                                                          Get.back();
-                                                        },
+                                        builder: (context) => StatefulBuilder(
+                                            builder: (context, setState) {
+                                          return AlertDialog(
+                                            contentPadding:
+                                                EdgeInsets.only(top: 15),
+                                            title: Icon(
+                                              BrselApp.paymenticon,
+                                              color: myPrimaryColor,
+                                            ),
+                                            content: loading
+                                                ? SizedBox(
+                                                    height: 90,
+                                                    child: Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
+                                                  )
+                                                : Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .stretch,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.center,
                                                         child: Text(
-                                                          'الغاء',
+                                                          'تأكيد الطلب ؟',
                                                           style: TextStyle(
                                                               color:
-                                                                  myGreyColor,
+                                                                  mySecGreyColor,
                                                               fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
                                                         ),
                                                       ),
-                                                    ),
-                                                    VerticalDivider(
-                                                      width: 0,
-                                                      // thickness: 1,
-                                                    ),
-                                                    Expanded(
-                                                      child: TextButton(
-                                                        onPressed: () async {
-                                                          await getSharedPrefs();
-                                                          await getCartdata();
-
-                                                          List<Meal> meals =
-                                                              getListOfMeals(
-                                                                  listOfMeals:
-                                                                      cartController
-                                                                          .cartList);
-
-                                                          OrderModel orderModel = OrderModel(
-                                                              meals: meals,
-                                                              paymentWay:
-                                                                  "BY_HAND",
-                                                              status:
-                                                                  "NOT_GET_YET",
-                                                              totalPrice:
-                                                                  cartController
-                                                                      .totalprice
-                                                                      .value
-                                                                      .toInt(),
-                                                              userId: userId!);
-
-                                                          var response =
-                                                              await RemoteServices.order(
-                                                                  access_token:
-                                                                      token,
-                                                                  orderModel:
-                                                                      orderModel);
-
-                                                          if (response
-                                                                  .toString() ==
-                                                              "تم تنفيذ طلبك بنجاح") {
-                                                            await LocaleDBHelper
-                                                                .dbHelper
-                                                                .deleteOrdersLocal();
-                                                            getCartdata();
-                                                            Navigator.pushReplacement(
-                                                                Get.context!,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            OrderSuccess()));
-                                                          } else {
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                    "يوجد مشكلة, أعد المحاولة لاحقاً",
-                                                                backgroundColor:
-                                                                    myDarkGreyColor);
-                                                          }
-                                                        },
-                                                        child: Text(
-                                                          'تأكيد',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  myPrimaryColor,
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
+                                                      SizedBox(
+                                                        height: 20,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                                      Divider(
+                                                        height: 0,
+                                                      ),
+                                                      IntrinsicHeight(
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: TextButton(
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                                child: Text(
+                                                                  'الغاء',
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          myGreyColor,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            VerticalDivider(
+                                                              width: 0,
+                                                              // thickness: 1,
+                                                            ),
+                                                            Expanded(
+                                                              child: TextButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  setState(() {
+                                                                    loading =
+                                                                        true;
+                                                                  });
+                                                                  await getSharedPrefs();
+                                                                  await getCartdata();
+
+                                                                  List<Meal>
+                                                                      meals =
+                                                                      getListOfMeals(
+                                                                          listOfMeals:
+                                                                              cartController.cartList);
+
+                                                                  OrderModel orderModel = OrderModel(
+                                                                      meals:
+                                                                          meals,
+                                                                      paymentWay:
+                                                                          "BY_HAND",
+                                                                      status:
+                                                                          "NOT_GET_YET",
+                                                                      notes:
+                                                                          "-");
+
+                                                                  var response = await RemoteServices.order(
+                                                                      access_token:
+                                                                          token,
+                                                                      orderModel:
+                                                                          orderModel);
+
+                                                                  if (response
+                                                                          .toString() ==
+                                                                      "تم تنفيذ طلبك بنجاح") {
+                                                                    await LocaleDBHelper
+                                                                        .dbHelper
+                                                                        .deleteOrdersLocal();
+                                                                    getCartdata();
+                                                                    Navigator.pushReplacement(
+                                                                        Get
+                                                                            .context!,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                OrderSuccess()));
+                                                                  } else if (response
+                                                                          .toString() !=
+                                                                      "تم تنفيذ طلبك بنجاح") {
+                                                                    Fluttertoast.showToast(
+                                                                        msg:
+                                                                            "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                                                        backgroundColor:
+                                                                            myDarkGreyColor);
+                                                                  }
+                                                                  // else {
+                                                                  //   Fluttertoast.showToast(
+                                                                  //       msg:
+                                                                  //           "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                                                  //       backgroundColor:
+                                                                  //           myDarkGreyColor);
+                                                                  // }
+                                                                  setState(() {
+                                                                    loading =
+                                                                        false;
+                                                                  });
+                                                                },
+                                                                child: Text(
+                                                                  'تأكيد',
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          myPrimaryColor,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                          );
+                                        }),
                                       );
                                     },
                               style: ElevatedButton.styleFrom(

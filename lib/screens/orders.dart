@@ -126,7 +126,7 @@ class _OrdersState extends State<Orders> {
   InkWell orderCard(Datum datum) {
     return InkWell(
       onTap: () {
-        Get.to(() => OrderDetails());
+        // Get.to(() => OrderDetails());
       },
       child: Container(
         color: Colors.white,

@@ -111,14 +111,18 @@ class Attachment {
 
 class MealsDetailsExtra {
   int? id;
+  int? count;
   String? name;
   String? price;
   String? type;
+  String? image;
   MealsDetailsExtra({
     this.id,
+    this.count,
     this.name,
     this.price,
     this.type,
+    this.image,
   });
 
   factory MealsDetailsExtra.fromJson(Map<dynamic, dynamic> json) =>
@@ -127,6 +131,8 @@ class MealsDetailsExtra {
         name: json["name"],
         price: json["price"],
         type: json["type"],
+        image: json["image"],
+        count: json["count"] == null ? 0 : json["count"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -134,6 +140,8 @@ class MealsDetailsExtra {
         "name": name,
         "price": price,
         "type": type,
+        "image": image,
+        "count": count,
       };
 }
 

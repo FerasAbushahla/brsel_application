@@ -438,7 +438,12 @@ class _MealDetailsState extends State<MealDetails> {
                                         height: 20,
                                       ),
                                       MyMultipleExtrasChips(
-                                          extrasList: extrasList),
+                                        extrasList: mealDetailsController
+                                            .mealDetailsData
+                                            .value
+                                            .extraIngredients,
+                                        // extrasList: extrasList,
+                                      ),
                                     ],
                                   ),
                                 );
@@ -478,10 +483,12 @@ class _MealDetailsState extends State<MealDetails> {
                                   padding: index == 0
                                       ? EdgeInsets.only(right: 35)
                                       : EdgeInsets.only(right: 10),
-                                  child: recommendedExtrasCard(
+                                  child: RecommendedExtrasCard(
                                     mealsDetailsExtra: mealDetailsController
                                         .mealDetailsData.value.extras![index],
-                                    // widget.homeMeals!.extras![index],
+                                    mealDetailsData: mealDetailsController
+                                        .mealDetailsData.value,
+                                    index: index,
                                   ),
                                 ),
                               ),
@@ -502,8 +509,29 @@ class _MealDetailsState extends State<MealDetails> {
       )),
     );
   }
+}
 
-  Stack recommendedExtrasCard({MealsDetailsExtra? mealsDetailsExtra}) {
+class RecommendedExtrasCard extends StatefulWidget {
+  final MealsDetailsExtra? mealsDetailsExtra;
+  final MealDetailsData? mealDetailsData;
+  final int? index;
+
+  const RecommendedExtrasCard({
+    this.mealsDetailsExtra,
+    this.mealDetailsData,
+    this.index,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<RecommendedExtrasCard> createState() => _RecommendedExtrasCardState();
+}
+
+class _RecommendedExtrasCardState extends State<RecommendedExtrasCard> {
+  int count = 0;
+  @override
+  Widget build(BuildContext context) {
+    // String mealExtrasCount = mealDetailsData.extras;
     return Stack(
       children: [
         Column(
@@ -512,8 +540,9 @@ class _MealDetailsState extends State<MealDetails> {
               width: 80,
               height: 80,
               child: CachedNetworkImage(
-                // imageUrl: homeMealsExtra. ?? "",
-                imageUrl:
+                // imageUrl:
+                // 'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
+                imageUrl: widget.mealsDetailsExtra!.image ??
                     'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png',
                 imageBuilder: (context, imageProvider) => Container(
                   width: SizeConfig.screenWidth,
@@ -562,17 +591,63 @@ class _MealDetailsState extends State<MealDetails> {
                       size: 11.7,
                       color: myPrimaryColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      count += 1;
+                      print('count $count');
+                      widget.mealDetailsData!.extras![widget.index!].count =
+                          count;
+                      print('index ${widget.index}');
+                      setState(() {
+                        // mealDetailsData;
+                      });
+                      print(
+                          '1111111 ${widget.mealDetailsData!.extras![widget.index!].count}');
+                      print('count $count');
+                      // Map<String, dynamic> mealWithExtrasCounter =
+                      //     mealDetailsData.toJson();
+
+                      // int index =
+                      //     await cartController.getIndex(mealDetailsData.id!);
+
+                      // mealWithExtrasCounter['extras'][index]['count'] =
+                      //     count.toString();
+                      // print(
+                      //     '9999999 ${mealWithExtrasCounter['extras'][index]['count'].toString()}');
+
+                      // await orderBox.putAt(index, mealWithCounter);
+                      // setState(() {
+                      //   mealDetailsController.onInit();
+                      //   // mealWithCounter;
+                      //   // mealDetailsData.count;
+                      //   // mealDetailsData;
+                      //   print('mealWithCounter $mealWithExtrasCounter');
+                      // });
+                    },
                   ),
                 ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(color: myPrimaryColor),
-                    child: Center(
-                        child: Text(
-                      '1',
-                      style: MyCustomTextStyle.myCounter,
-                    )),
+                    child: Center(child: Obx(((() {
+                      if (MealDetailsController.isLoading.value) {
+                        return Text(
+                          '0',
+                          // mealDetailsData!.extras![index!].count.toString(),
+                          // mealWithExtrasCounter['extras'][index]['count'] =
+                          // count.toString(),
+                          style: MyCustomTextStyle.myCounter,
+                        );
+                      } else {
+                        return Text(
+                          // '0',
+                          widget.mealDetailsData!.extras![widget.index!].count
+                              .toString(),
+                          // mealWithExtrasCounter['extras'][index]['count'] =
+                          // count.toString(),
+                          style: MyCustomTextStyle.myCounter,
+                        );
+                      }
+                    })))),
                   ),
                 ),
                 Expanded(
@@ -583,7 +658,18 @@ class _MealDetailsState extends State<MealDetails> {
                       size: 11.7,
                       color: myPrimaryColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      count > 0 ? count -= 1 : count = 0;
+                      print('count $count');
+
+                      widget.mealDetailsData!.extras![widget.index!].count =
+                          count;
+                      print('index ${widget.index}');
+                      setState(() {});
+                      print(
+                          '1111111 ${widget.mealDetailsData!.extras![widget.index!].count}');
+                      print('count $count');
+                    },
                   ),
                 ),
               ],
