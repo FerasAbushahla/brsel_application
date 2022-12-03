@@ -126,7 +126,7 @@ class _OrdersState extends State<Orders> {
   InkWell orderCard(Datum datum) {
     return InkWell(
       onTap: () {
-        // Get.to(() => OrderDetails());
+        Get.to(() => OrderDetails());
       },
       child: Container(
         color: Colors.white,
@@ -255,6 +255,7 @@ class _OrdersState extends State<Orders> {
                     Text(
                       // mealDetailsData.description!,
                       datum.meals!.first.meal!.description!,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: MyCustomTextStyle.myH1withOpacityTextStyle,
                     ),

@@ -152,6 +152,11 @@ class MyCustomTextStyle {
     color: myBlackColor,
     fontWeight: FontWeight.w300,
   );
+  static TextStyle myP1WithOpacity = TextStyle(
+    fontSize: 10,
+    color: myBlackColor.withOpacity(0.5),
+    fontWeight: FontWeight.w300,
+  );
   static TextStyle myCounter = TextStyle(
     fontSize: 10,
     color: Colors.white,
@@ -257,6 +262,11 @@ class MyCustomTextStyle {
   static const TextStyle myTextButtonTextStyle = TextStyle(
     fontSize: 13,
     color: myBlackColor,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle myTextButtonTextStyleWithOpacity = TextStyle(
+    fontSize: 13,
+    color: myBlackColor.withOpacity(0.7),
     fontWeight: FontWeight.w500,
   );
   static const TextStyle myTextButtonLightTextStyle = TextStyle(

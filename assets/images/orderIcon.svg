@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="33" viewBox="0 0 30 33">
+  <!-- <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_14192" data-name="Rectangle 14192" width="30" height="33" transform="translate(300 632.5)" fill="#fff" stroke="#707070" stroke-width="0.5"/>
+    </clipPath>
+  </defs> -->
+  <g id="Mask_Group_1264" data-name="Mask Group 1264" transform="translate(-300 -632.5)" opacity="0.4" clip-path="url(#clip-path)">
+    <g id="fi-rr-receipt" transform="translate(302.625 632)">
+      <path id="Path_73858" data-name="Path 73858" d="M23.375,0h-11A6.883,6.883,0,0,0,5.5,6.875v24.75a1.375,1.375,0,0,0,2.15,1.134l2.9-1.979,2.9,1.979a1.375,1.375,0,0,0,1.554,0l2.887-1.979,2.887,1.979a1.375,1.375,0,0,0,1.555,0l2.887-1.977L28.1,32.758a1.375,1.375,0,0,0,2.149-1.133V6.875A6.883,6.883,0,0,0,23.375,0ZM27.5,29.012l-1.512-1.034a1.375,1.375,0,0,0-1.556,0l-2.887,1.979-2.887-1.979a1.375,1.375,0,0,0-1.555,0l-2.887,1.979-2.887-1.979a1.375,1.375,0,0,0-1.552,0L8.25,29.012V6.875A4.125,4.125,0,0,1,12.375,2.75h11A4.125,4.125,0,0,1,27.5,6.875Z" transform="translate(-5.5)" fill="#212121"/>
+      <rect id="Rectangle_14193" data-name="Rectangle 14193" width="13.75" height="2.75" rx="1.375" transform="translate(5.5 11)" fill="#212121"/>
+      <rect id="Rectangle_14194" data-name="Rectangle 14194" width="11" height="2.75" rx="1.375" transform="translate(5.5 16.5)" fill="#212121"/>
+    </g>
+  </g>
+</svg>

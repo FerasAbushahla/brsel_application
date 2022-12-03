@@ -1,4 +1,5 @@
 import 'package:brsel_application/screens/location.dart';
+import 'package:brsel_application/screens/orderDetails.dart';
 import 'package:brsel_application/screens/orderSuccess.dart';
 import 'package:brsel_application/screens/payment.dart';
 import 'package:brsel_application/screens/splash.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: myBackgroundColor,
         primarySwatch: myMaterialPrimaryColor,
       ),
-      home: Splash(),
+      home: OrderDetails(),
     );
   }
 }
