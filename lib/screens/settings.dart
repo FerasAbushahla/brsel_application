@@ -4,6 +4,7 @@ import 'package:brsel_application/componantes/MySettingsCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/homeADsSliderController.dart';
+import 'package:brsel_application/controllers/orderHistoryController.dart';
 import 'package:brsel_application/screens/contactUs.dart';
 import 'package:brsel_application/screens/location.dart';
 import 'package:brsel_application/screens/login.dart';
@@ -39,6 +40,8 @@ class _SettingsState extends State<Settings> {
 
   HomeADsSliderController homeADsSliderController =
       Get.put(HomeADsSliderController());
+  OrderHistoryController orderHistoryController =
+      Get.put(OrderHistoryController());
 
   Future getSharedPrefs() async {
     setState(() {
@@ -106,11 +109,18 @@ class _SettingsState extends State<Settings> {
     print('userPersonalInfoDone ${preferences.get('userPersonalInfoDone')}');
   }
 
+  void getOrdersdata() async {
+    await orderHistoryController.getAmountSpent();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     getSharedPrefs();
     super.initState();
+    orderHistoryController.spentAmount;
+    getOrdersdata();
+    // orderHistoryController.onInit();
   }
 
   @override
@@ -247,13 +257,23 @@ class _SettingsState extends State<Settings> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text(
-                                          '5',
-                                          style: TextStyle(
-                                              color: myPrimaryColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        Obx((() {
+                                          if (OrderHistoryController
+                                              .isLoading.value) {
+                                            return SizedBox();
+                                          } else {
+                                            return Text(
+                                              orderHistoryController
+                                                  .orderList.length
+                                                  .toString(),
+                                              // '5',
+                                              style: TextStyle(
+                                                  color: myPrimaryColor,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500),
+                                            );
+                                          }
+                                        })),
                                       ],
                                     ),
                                     VerticalDivider(
@@ -271,13 +291,23 @@ class _SettingsState extends State<Settings> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text(
-                                          '125',
-                                          style: TextStyle(
-                                              color: myPrimaryColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        Obx((() {
+                                          if (OrderHistoryController
+                                              .isLoading.value) {
+                                            return SizedBox();
+                                          } else {
+                                            return Text(
+                                              orderHistoryController
+                                                  .spentAmount!.value
+                                                  .toString(),
+                                              // '125',
+                                              style: TextStyle(
+                                                  color: myPrimaryColor,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500),
+                                            );
+                                          }
+                                        })),
                                       ],
                                     ),
                                     VerticalDivider(

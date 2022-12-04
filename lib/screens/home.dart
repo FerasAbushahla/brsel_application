@@ -10,7 +10,9 @@ import 'package:brsel_application/controllers/homeMealsController.dart';
 import 'package:brsel_application/controllers/homeRestaurantsController.dart';
 import 'package:brsel_application/controllers/mealDetailsController.dart';
 import 'package:brsel_application/controllers/cartController.dart';
+import 'package:brsel_application/controllers/orderHistoryController.dart';
 import 'package:brsel_application/models/homeModel.dart';
+import 'package:brsel_application/screens/ads.dart';
 import 'package:brsel_application/screens/meals.dart';
 import 'package:brsel_application/screens/mealsDetails.dart';
 import 'package:brsel_application/screens/restaurants.dart';
@@ -82,6 +84,8 @@ class _HomeState extends State<Home> {
   MealDetailsController mealDetailsController =
       Get.put(MealDetailsController());
   SearchController searchController = Get.put(SearchController());
+  OrderHistoryController orderHistoryController =
+      Get.put(OrderHistoryController());
 
   // final drawerController = ZoomDrawerController();
   int curruntCategory = 1;
@@ -133,12 +137,21 @@ class _HomeState extends State<Home> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'العروض(130)',
-                                    style: MyCustomTextStyle.myH2,
-                                  ),
+                                  Obx((() {
+                                    if (HomeADsSliderController
+                                        .isLoading.value) {
+                                      return SizedBox();
+                                    } else {
+                                      return Text(
+                                        'العروض(${homeADsSliderController.homeSliderList.length})',
+                                        style: MyCustomTextStyle.myH2,
+                                      );
+                                    }
+                                  })),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.to(() => Ads());
+                                    },
                                     child: Text(
                                       'تصفح الكل',
                                       style: MyCustomTextStyle.myGreenTextStyle,
@@ -199,10 +212,16 @@ class _HomeState extends State<Home> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'المطاعم المتوفرة(120)',
-                            style: MyCustomTextStyle.myH2,
-                          ),
+                          Obx((() {
+                            if (HomeRestaurantsController.isLoading.value) {
+                              return SizedBox();
+                            } else {
+                              return Text(
+                                'المطاعم المتوفرة(${homeRestaurantsController.homeResraurantsList.length})',
+                                style: MyCustomTextStyle.myH2,
+                              );
+                            }
+                          })),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -261,10 +280,16 @@ class _HomeState extends State<Home> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'الأصناف',
-                            style: MyCustomTextStyle.myH2,
-                          ),
+                          Obx((() {
+                            if (HomeCategoriesController.isLoading.value) {
+                              return SizedBox();
+                            } else {
+                              return Text(
+                                'الأصناف(${homeCategoriesController.homeCategoriesList.length})',
+                                style: MyCustomTextStyle.myH2,
+                              );
+                            }
+                          })),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -324,10 +349,16 @@ class _HomeState extends State<Home> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'الوجبات الرائجة',
-                            style: MyCustomTextStyle.myH2,
-                          ),
+                          Obx((() {
+                            if (HomeMealsController.isLoading.value) {
+                              return SizedBox();
+                            } else {
+                              return Text(
+                                'الوجبات الرائجة(${homeMealsController.homeMealsList.length})',
+                                style: MyCustomTextStyle.myH2,
+                              );
+                            }
+                          })),
                           TextButton(
                             onPressed: () {
                               Navigator.push(

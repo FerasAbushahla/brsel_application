@@ -7,6 +7,7 @@ class OrderHistoryController extends GetxController {
   static var isLoading = true.obs;
   var orderList = <Datum>[].obs;
   String? token;
+  RxDouble? spentAmount = 0.0.obs;
 
   @override
   void onInit() async {
@@ -24,6 +25,7 @@ class OrderHistoryController extends GetxController {
   Future getOrderHistory() async {
     try {
       isLoading(true);
+      await getAmountSpent();
 
       OrderHistoryModel? orderHistory = await RemoteServices.getOrdersHistory(
         access_token: token,
@@ -33,5 +35,27 @@ class OrderHistoryController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  // Future getSpentAmount() async {
+  //   double total = 0;
+  //   orderList.forEach((element) {
+  //     total += double.parse(element.totalPrice!);
+  //     print('total ${total}');
+  //   });
+  //   print('total 2 ${total}');
+  //   spentAmount!.value = total;
+  //   print('spentAmount ${spentAmount}');
+  // }
+  Future getAmountSpent() async {
+    double total = 0;
+    for (var i = 0; i < orderList.length; i++) {
+      total += double.parse(orderList[i].totalPrice!);
+      print('total ${total}');
+    }
+
+    print('total 2 ${total}');
+    spentAmount!.value = total;
+    print('spentAmount ${spentAmount}');
   }
 }
