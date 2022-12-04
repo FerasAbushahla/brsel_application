@@ -10,6 +10,7 @@ import 'package:brsel_application/service/hiveDB.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,8 @@ class _PaymentState extends State<Payment> {
   final cardNum = TextEditingController();
   final cardExpDate = TextEditingController();
   final cardSecNum = TextEditingController();
+
+  final noteController = TextEditingController();
 
   Future getCartdata() async {
     await cartController.getCartOrders();
@@ -183,23 +186,23 @@ class _PaymentState extends State<Payment> {
                                     ],
                                   ),
                                   Spacer(),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: RawMaterialButton(
-                                      constraints: BoxConstraints(),
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      onPressed: () {},
-                                      fillColor: myPrimaryColor,
-                                      child: Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                        size: 14.0,
-                                      ),
-                                      padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
-                                      shape: CircleBorder(),
-                                    ),
-                                  ),
+                                  // Align(
+                                  //   alignment: Alignment.center,
+                                  //   child: RawMaterialButton(
+                                  //     constraints: BoxConstraints(),
+                                  //     materialTapTargetSize:
+                                  //         MaterialTapTargetSize.shrinkWrap,
+                                  //     onPressed: () {},
+                                  //     fillColor: myPrimaryColor,
+                                  //     child: Icon(
+                                  //       Icons.edit,
+                                  //       color: Colors.white,
+                                  //       size: 14.0,
+                                  //     ),
+                                  //     padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                                  //     shape: CircleBorder(),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -293,240 +296,240 @@ class _PaymentState extends State<Payment> {
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(15, 20, 15, 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'إضافة وسيلة دفع',
-                                style: MyCustomTextStyle
-                                    .myTextButtonLightTextStyle,
-                              ),
-                              RawMaterialButton(
-                                elevation: 0,
-                                constraints: BoxConstraints(),
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                      backgroundColor: Colors.white,
-                                      isScrollControlled: true,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(6),
-                                            topRight: Radius.circular(6)),
-                                      ),
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              35, 15, 35, 10),
-                                          child: Form(
-                                              child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                'اسم صاحب  البطاقة',
-                                                style: MyCustomTextStyle
-                                                    .myTextFieldTitletextStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              TextFormField(
-                                                // maxLength: 40,
-                                                textDirection:
-                                                    TextDirection.ltr,
-                                                // validator: (val) =>
-                                                //     validateEmail(val),
-                                                controller: cardOwnerName,
-                                                style: MyCustomTextStyle
-                                                    .myH1TextStyle,
-                                                decoration: myInputDecoration(
-                                                    // hint:
-                                                    //     'أدخل البريد الإلكتروني',
-                                                    // suffix: Icon(
-                                                    //   BrselApp.checkicon,
-                                                    //   color: myPrimaryColor,
-                                                    //   size: 13,
-                                                    // ),
-                                                    ),
-                                              ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                              Text(
-                                                'رقم البطاقة',
-                                                style: MyCustomTextStyle
-                                                    .myTextFieldTitletextStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              TextFormField(
-                                                // maxLength: 15,
-                                                // obscureText: true,
-                                                // validator: (val) => val!.isEmpty
-                                                //     ? 'أدخل كلمة المرور'
-                                                //     : null,
-                                                controller: cardNum,
-                                                style: MyCustomTextStyle
-                                                    .myH1TextStyle,
-                                                decoration: myInputDecoration(
-                                                    // hint: 'أدخل كلمة المرور',
-                                                    // suffix: Icon(
-                                                    //   BrselApp.checkicon,
-                                                    //   color: myPrimaryColor,
-                                                    //   size: 13,
-                                                    // ),
-                                                    ),
-                                              ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          'تاريخ الانتهاء',
-                                                          style: MyCustomTextStyle
-                                                              .myTextFieldTitletextStyle,
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        // Expanded(
-                                                        // child:
-                                                        TextFormField(
-                                                          // maxLength: 15,
-                                                          // obscureText: true,
-                                                          // validator: (val) => val!.isEmpty
-                                                          //     ? 'أدخل كلمة المرور'
-                                                          //     : null,
-                                                          controller:
-                                                              cardExpDate,
-                                                          style:
-                                                              MyCustomTextStyle
-                                                                  .myH1TextStyle,
-                                                          decoration: myInputDecoration(
-                                                              // hint: 'أدخل كلمة المرور',
-                                                              // suffix: Icon(
-                                                              //   BrselApp.checkicon,
-                                                              //   color: myPrimaryColor,
-                                                              //   size: 13,
-                                                              // ),
-                                                              ),
-                                                        ),
-                                                        // ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 30,
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          'الرقم السري',
-                                                          style: MyCustomTextStyle
-                                                              .myTextFieldTitletextStyle,
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        // Expanded(
-                                                        // child:
-                                                        TextFormField(
-                                                          // maxLength: 15,
-                                                          // obscureText: true,
-                                                          // validator: (val) => val!.isEmpty
-                                                          //     ? 'أدخل كلمة المرور'
-                                                          //     : null,
-                                                          controller:
-                                                              cardSecNum,
-                                                          style:
-                                                              MyCustomTextStyle
-                                                                  .myH1TextStyle,
-                                                          decoration: myInputDecoration(
-                                                              // hint: 'أدخل كلمة المرور',
-                                                              // suffix: Icon(
-                                                              //   BrselApp.checkicon,
-                                                              //   color: myPrimaryColor,
-                                                              //   size: 13,
-                                                              // ),
-                                                              ),
-                                                        ),
-                                                        // ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 15,
-                                              ),
-                                              MyButton(
-                                                title: 'حفظ ومتابعة',
-                                                color: myPrimaryColor,
-                                                loading: loading,
-                                                onPressed: () {},
-                                              )
-                                            ],
-                                          )),
-                                        );
-                                      });
-                                },
-                                fillColor: Colors.white,
-                                child: Icon(
-                                  Icons.edit,
-                                  size: 20,
-                                  color: myGreyColor,
-                                ),
-                                padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
-                                shape: CircleBorder(),
-                              ),
-                              // Material(
-                              //   child: Container(
-                              //     decoration:
-                              //         BoxDecoration(shape: BoxShape.circle),
-                              //     child: IconButton(
-                              //       // splashRadius: 60,
-                              //       // splashColor: myPrimaryColor,
-                              //       constraints: BoxConstraints(),
-                              //       padding: EdgeInsets.zero,
-                              //       onPressed: () {},
-                              //       icon: Icon(
-                              //         Icons.edit,
-                              //         size: 20,
-                              //         color: myGreyColor,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.circular(6),
+                      //   ),
+                      //   child: Padding(
+                      //     padding: EdgeInsets.fromLTRB(15, 20, 15, 20),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         Text(
+                      //           'إضافة وسيلة دفع',
+                      //           style: MyCustomTextStyle
+                      //               .myTextButtonLightTextStyle,
+                      //         ),
+                      //         RawMaterialButton(
+                      //           elevation: 0,
+                      //           constraints: BoxConstraints(),
+                      //           materialTapTargetSize:
+                      //               MaterialTapTargetSize.shrinkWrap,
+                      //           onPressed: () {
+                      //             showModalBottomSheet(
+                      //                 backgroundColor: Colors.white,
+                      //                 isScrollControlled: true,
+                      //                 shape: RoundedRectangleBorder(
+                      //                   borderRadius: BorderRadius.only(
+                      //                       topLeft: Radius.circular(6),
+                      //                       topRight: Radius.circular(6)),
+                      //                 ),
+                      //                 context: context,
+                      //                 builder: (BuildContext context) {
+                      //                   return Padding(
+                      //                     padding: EdgeInsets.fromLTRB(
+                      //                         35, 15, 35, 10),
+                      //                     child: Form(
+                      //                         child: Column(
+                      //                       crossAxisAlignment:
+                      //                           CrossAxisAlignment.stretch,
+                      //                       mainAxisSize: MainAxisSize.min,
+                      //                       children: [
+                      //                         Text(
+                      //                           'اسم صاحب  البطاقة',
+                      //                           style: MyCustomTextStyle
+                      //                               .myTextFieldTitletextStyle,
+                      //                         ),
+                      //                         SizedBox(
+                      //                           height: 5,
+                      //                         ),
+                      //                         TextFormField(
+                      //                           // maxLength: 40,
+                      //                           textDirection:
+                      //                               TextDirection.ltr,
+                      //                           // validator: (val) =>
+                      //                           //     validateEmail(val),
+                      //                           controller: cardOwnerName,
+                      //                           style: MyCustomTextStyle
+                      //                               .myH1TextStyle,
+                      //                           decoration: myInputDecoration(
+                      //                               // hint:
+                      //                               //     'أدخل البريد الإلكتروني',
+                      //                               // suffix: Icon(
+                      //                               //   BrselApp.checkicon,
+                      //                               //   color: myPrimaryColor,
+                      //                               //   size: 13,
+                      //                               // ),
+                      //                               ),
+                      //                         ),
+                      //                         SizedBox(
+                      //                           height: 15,
+                      //                         ),
+                      //                         Text(
+                      //                           'رقم البطاقة',
+                      //                           style: MyCustomTextStyle
+                      //                               .myTextFieldTitletextStyle,
+                      //                         ),
+                      //                         SizedBox(
+                      //                           height: 5,
+                      //                         ),
+                      //                         TextFormField(
+                      //                           // maxLength: 15,
+                      //                           // obscureText: true,
+                      //                           // validator: (val) => val!.isEmpty
+                      //                           //     ? 'أدخل كلمة المرور'
+                      //                           //     : null,
+                      //                           controller: cardNum,
+                      //                           style: MyCustomTextStyle
+                      //                               .myH1TextStyle,
+                      //                           decoration: myInputDecoration(
+                      //                               // hint: 'أدخل كلمة المرور',
+                      //                               // suffix: Icon(
+                      //                               //   BrselApp.checkicon,
+                      //                               //   color: myPrimaryColor,
+                      //                               //   size: 13,
+                      //                               // ),
+                      //                               ),
+                      //                         ),
+                      //                         SizedBox(
+                      //                           height: 15,
+                      //                         ),
+                      //                         Row(
+                      //                           children: [
+                      //                             Expanded(
+                      //                               child: Column(
+                      //                                 crossAxisAlignment:
+                      //                                     CrossAxisAlignment
+                      //                                         .start,
+                      //                                 children: [
+                      //                                   Text(
+                      //                                     'تاريخ الانتهاء',
+                      //                                     style: MyCustomTextStyle
+                      //                                         .myTextFieldTitletextStyle,
+                      //                                   ),
+                      //                                   SizedBox(
+                      //                                     height: 5,
+                      //                                   ),
+                      //                                   // Expanded(
+                      //                                   // child:
+                      //                                   TextFormField(
+                      //                                     // maxLength: 15,
+                      //                                     // obscureText: true,
+                      //                                     // validator: (val) => val!.isEmpty
+                      //                                     //     ? 'أدخل كلمة المرور'
+                      //                                     //     : null,
+                      //                                     controller:
+                      //                                         cardExpDate,
+                      //                                     style:
+                      //                                         MyCustomTextStyle
+                      //                                             .myH1TextStyle,
+                      //                                     decoration: myInputDecoration(
+                      //                                         // hint: 'أدخل كلمة المرور',
+                      //                                         // suffix: Icon(
+                      //                                         //   BrselApp.checkicon,
+                      //                                         //   color: myPrimaryColor,
+                      //                                         //   size: 13,
+                      //                                         // ),
+                      //                                         ),
+                      //                                   ),
+                      //                                   // ),
+                      //                                 ],
+                      //                               ),
+                      //                             ),
+                      //                             SizedBox(
+                      //                               width: 30,
+                      //                             ),
+                      //                             Expanded(
+                      //                               child: Column(
+                      //                                 crossAxisAlignment:
+                      //                                     CrossAxisAlignment
+                      //                                         .start,
+                      //                                 children: [
+                      //                                   Text(
+                      //                                     'الرقم السري',
+                      //                                     style: MyCustomTextStyle
+                      //                                         .myTextFieldTitletextStyle,
+                      //                                   ),
+                      //                                   SizedBox(
+                      //                                     height: 5,
+                      //                                   ),
+                      //                                   // Expanded(
+                      //                                   // child:
+                      //                                   TextFormField(
+                      //                                     // maxLength: 15,
+                      //                                     // obscureText: true,
+                      //                                     // validator: (val) => val!.isEmpty
+                      //                                     //     ? 'أدخل كلمة المرور'
+                      //                                     //     : null,
+                      //                                     controller:
+                      //                                         cardSecNum,
+                      //                                     style:
+                      //                                         MyCustomTextStyle
+                      //                                             .myH1TextStyle,
+                      //                                     decoration: myInputDecoration(
+                      //                                         // hint: 'أدخل كلمة المرور',
+                      //                                         // suffix: Icon(
+                      //                                         //   BrselApp.checkicon,
+                      //                                         //   color: myPrimaryColor,
+                      //                                         //   size: 13,
+                      //                                         // ),
+                      //                                         ),
+                      //                                   ),
+                      //                                   // ),
+                      //                                 ],
+                      //                               ),
+                      //                             ),
+                      //                           ],
+                      //                         ),
+                      //                         SizedBox(
+                      //                           height: 15,
+                      //                         ),
+                      //                         MyButton(
+                      //                           title: 'حفظ ومتابعة',
+                      //                           color: myPrimaryColor,
+                      //                           loading: loading,
+                      //                           onPressed: () {},
+                      //                         )
+                      //                       ],
+                      //                     )),
+                      //                   );
+                      //                 });
+                      //           },
+                      //           fillColor: Colors.white,
+                      //           child: Icon(
+                      //             Icons.edit,
+                      //             size: 20,
+                      //             color: myGreyColor,
+                      //           ),
+                      //           padding: EdgeInsets.fromLTRB(6, 6, 6, 6),
+                      //           shape: CircleBorder(),
+                      //         ),
+                      //         // Material(
+                      //         //   child: Container(
+                      //         //     decoration:
+                      //         //         BoxDecoration(shape: BoxShape.circle),
+                      //         //     child: IconButton(
+                      //         //       // splashRadius: 60,
+                      //         //       // splashColor: myPrimaryColor,
+                      //         //       constraints: BoxConstraints(),
+                      //         //       padding: EdgeInsets.zero,
+                      //         //       onPressed: () {},
+                      //         //       icon: Icon(
+                      //         //         Icons.edit,
+                      //         //         size: 20,
+                      //         //         color: myGreyColor,
+                      //         //       ),
+                      //         //     ),
+                      //         //   ),
+                      //         // )
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -577,7 +580,10 @@ class _PaymentState extends State<Payment> {
                         height: 100,
                       ),
                       TextField(
+                        controller: noteController,
                         maxLines: 8,
+                        maxLength: 300,
+                        // maxLengthEnforcement: MaxLengthEnforcement.none,
                         style: MyCustomTextStyle.myH1TextStyle,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -636,7 +642,8 @@ class _PaymentState extends State<Payment> {
                                 Row(
                                   children: [
                                     Text(
-                                      '210.80',
+                                      cartController.totalprice.toString(),
+                                      // '210.80',
                                       style: MyCustomTextStyle
                                           .mySearchHintTextStyle,
                                     ),
@@ -750,8 +757,8 @@ class _PaymentState extends State<Payment> {
                                                                           "BY_HAND",
                                                                       status:
                                                                           "NOT_GET_YET",
-                                                                      notes:
-                                                                          "-");
+                                                                      notes: noteController
+                                                                          .text);
 
                                                                   var response = await RemoteServices.order(
                                                                       access_token:

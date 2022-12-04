@@ -123,7 +123,12 @@ class _OrderDetailsState extends State<OrderDetails> {
     SizeConfig().init(context);
     return WillPopScope(
       onWillPop: () async {
-        await pushPage(context, Wraper());
+        if (widget.fromPaymentPage) {
+          await pushPage(context, Wraper());
+        } else {
+          Get.back();
+        }
+
         return false;
       },
       child: Scaffold(
@@ -159,7 +164,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   onMapCreated:
                                       (GoogleMapController controller) {
                                     _controller.complete(controller);
-                                    googleMapController = controller;
+                                    // googleMapController = controller;
                                   },
                                   markers: markers,
                                   zoomControlsEnabled: false,
