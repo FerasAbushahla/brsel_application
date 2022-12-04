@@ -228,7 +228,7 @@ class _OrdersState extends State<Orders> {
                                           BoxDecoration(color: myPrimaryColor),
                                       child: Center(
                                           child: Text(
-                                        datum.meals!.first.numberOfMeals!,
+                                        datum.meals!.length.toString(),
                                         // mealDetailsData.count.toString(),
                                         style: MyCustomTextStyle.myCounter,
                                       )),
