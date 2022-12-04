@@ -1,12 +1,13 @@
-class OrderHistory {
+class OrderHistoryModel {
   Status? status;
   List<Datum>? data;
-  OrderHistory({
+  OrderHistoryModel({
     this.status,
     this.data,
   });
 
-  factory OrderHistory.fromJson(Map<String, dynamic> json) => OrderHistory(
+  factory OrderHistoryModel.fromJson(Map<String, dynamic> json) =>
+      OrderHistoryModel(
         status: Status.fromJson(json["status"]),
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );

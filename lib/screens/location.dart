@@ -605,16 +605,6 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
             ),
           ),
         ]
-
-        // TextButton(
-        //     onPressed: () async {
-        //       displaySavedLocation();
-        //     },
-        //     child: Container(
-        //       height: 30,
-        //       width: 80,
-        //       color: myPrimaryColor,
-        //     ))
       ],
     );
   }

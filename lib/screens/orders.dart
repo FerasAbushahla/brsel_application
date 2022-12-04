@@ -3,7 +3,7 @@ import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/componantes/myOrdersCustomAppBar.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/orderHistoryController.dart';
-import 'package:brsel_application/models/orderHistory.dart';
+import 'package:brsel_application/models/orderHistoryModel.dart';
 import 'package:brsel_application/screens/cart.dart';
 import 'package:brsel_application/screens/orderDetails.dart';
 import 'package:brsel_application/size_config.dart';
@@ -126,7 +126,10 @@ class _OrdersState extends State<Orders> {
   InkWell orderCard(Datum datum) {
     return InkWell(
       onTap: () {
-        Get.to(() => OrderDetails());
+        Get.to(() => OrderDetails(
+              fromPaymentPage: false,
+              orderID: datum.id!,
+            ));
       },
       child: Container(
         color: Colors.white,
@@ -183,7 +186,7 @@ class _OrdersState extends State<Orders> {
                         Row(
                           children: [
                             Text(
-                              datum.meals!.first.meal!.price!,
+                              datum.totalPrice!,
                               // '15 ر.ع',
                               style: MyCustomTextStyle.myTextButtonTextStyle,
                             ),

@@ -1,6 +1,8 @@
 import 'package:brsel_application/componantes/mySuccessPageButton.dart';
 import 'package:brsel_application/constants.dart';
 import 'package:brsel_application/controllers/cartController.dart';
+import 'package:brsel_application/controllers/orderHistoryController.dart';
+import 'package:brsel_application/screens/orderDetails.dart';
 import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,8 @@ class OrderSuccess extends StatefulWidget {
 
 class _OrderSuccessState extends State<OrderSuccess> {
   CartController cartController = Get.put(CartController());
+  OrderHistoryController orderHistoryController =
+      Get.put(OrderHistoryController());
   bool loading = false;
 
   Future? pushPage(BuildContext context, Widget page) {
@@ -35,6 +39,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
     // TODO: implement initState
     // getCartdata;
     cartController.onInit();
+    orderHistoryController.onInit();
     super.initState();
   }
 
@@ -95,7 +100,17 @@ class _OrderSuccessState extends State<OrderSuccess> {
                 loading: loading,
                 title: 'تتبع الطلب',
                 color: myPrimaryColor,
-                onPressed: () {},
+                onPressed: () async {
+                  // Get.to(() => OrderDetails(
+                  //     orderID: orderHistoryController.orderList.last.id!));
+                  Navigator.pushReplacement(
+                      Get.context!,
+                      MaterialPageRoute(
+                          builder: (context) => OrderDetails(
+                              fromPaymentPage: true,
+                              orderID:
+                                  orderHistoryController.orderList.last.id!)));
+                },
               ),
             ),
             SizedBox(

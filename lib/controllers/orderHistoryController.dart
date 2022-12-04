@@ -1,4 +1,4 @@
-import 'package:brsel_application/models/orderHistory.dart';
+import 'package:brsel_application/models/orderHistoryModel.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +25,7 @@ class OrderHistoryController extends GetxController {
     try {
       isLoading(true);
 
-      OrderHistory? orderHistory = await RemoteServices.getOrdersHistory(
+      OrderHistoryModel? orderHistory = await RemoteServices.getOrdersHistory(
         access_token: token,
       );
 
