@@ -415,6 +415,9 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                           position.latitude.toString());
                       sharedPreferences.setString('currentPositionLongitude',
                           position.longitude.toString());
+                      sharedPreferences.setString('currentStreetPosition',
+                          '${userCurrentPlace![0].street}');
+                      userStreet = userCurrentPlace![0].street;
 
                       userLat = sharedPreferences
                           .getString('currentPositionLatitude');

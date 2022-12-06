@@ -1,3 +1,4 @@
+import 'package:brsel_application/screens/Driver/driverPersonalInfo.dart';
 import 'package:brsel_application/screens/location.dart';
 import 'package:brsel_application/screens/orderDetails.dart';
 import 'package:brsel_application/screens/orderSuccess.dart';

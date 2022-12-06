@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/constants.dart';
+import 'package:brsel_application/screens/personalInfo.dart';
 import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
@@ -158,6 +159,7 @@ class _LoginState extends State<Login> {
                                 height: 5,
                               ),
                               TextFormField(
+                                textDirection: TextDirection.ltr,
                                 maxLength: 15,
                                 obscureText: true,
                                 validator: (val) =>
@@ -235,67 +237,102 @@ class _LoginState extends State<Login> {
                                         'view Response>>>${response.message}');
                                     if (response.message ==
                                         "User Logged In Successfully") {
-                                      // image = response.user!.avatar;
-                                      // final imageTemporary = File(image!.path);
-                                      // print('image.path ${image!.path}');
-                                      // setState(() {
-                                      //   this.image = imageTemporary;
-                                      // });
-                                      http.Response imagResponse =
-                                          await http.get(
-                                        Uri.parse(response.user!.avatar),
-                                      );
-                                      final bytes = imagResponse.bodyBytes;
-                                      print(bytes);
-                                      String base64Image = base64Encode(
-                                          bytes.buffer.asUint8List());
-                                      print(base64Image);
+                                      if (response.user!.address == null ||
+                                          response.user!.avatar == null ||
+                                          response.user!.email == null ||
+                                          response.user!.firstName == null ||
+                                          response.user!.lastName == null ||
+                                          response.user!.phone == null) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                " تم تسجيل الدخول, أدخل بياناتك الشخصية.",
+                                            backgroundColor: myDarkGreyColor);
 
-                                      Directory documentDirectory =
-                                          await getApplicationDocumentsDirectory();
-                                      File file = new File(join(
-                                          documentDirectory.path,
-                                          'imagetest.png'));
-                                      file.writeAsBytesSync(
-                                          imagResponse.bodyBytes);
-                                      setState(() {
-                                        image = file;
-                                        print('image $image');
-                                      });
+                                        SharedPreferences sharedPreferences =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        sharedPreferences.setString(
+                                            'token', response.token!);
+                                        print('token');
+                                        sharedPreferences.setString(
+                                            'email', response.user!.email!);
+                                        print('email');
+                                        sharedPreferences.setInt(
+                                            'ID', response.user!.id!);
+                                        print('ID');
 
-                                      await setPreferences(
-                                        personalImageePath: image!.path,
-                                        personalImage: base64Image,
-                                        ID: response.user!.id!,
-                                        currentPosition:
-                                            response.user!.address!,
-                                        currentPositionLatitude:
-                                            response.user!.latitude!,
-                                        currentPositionLongitude:
-                                            response.user!.longitude!,
-                                        firstName: response.user!.firstName!,
-                                        lastName: response.user!.lastName!,
-                                        // personalImage: response.user!.avatar,
-                                        phoneNumber: response.user!.phone!,
-                                        sex: response.user!.gender!,
-                                        token: response.token!,
-                                      ).then((value) => Fluttertoast.showToast(
-                                              msg: "تم تسجيل الدخول بنجاح",
-                                              backgroundColor: myDarkGreyColor)
-                                          // ScaffoldMessenger.of(context)
-                                          //     .showSnackBar(
-                                          //   SnackBar(
-                                          //     content:
-                                          //         Text("تم تسجيل الدخول بنجاح"),
-                                          //   ),
-                                          // ),
-                                          );
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    PersonalInfo(
+                                                      fromSettings: false,
+                                                    ))));
+                                      } else {
+                                        // image = response.user!.avatar;
+                                        // final imageTemporary = File(image!.path);
+                                        // print('image.path ${image!.path}');
+                                        // setState(() {
+                                        //   this.image = imageTemporary;
+                                        // });
+                                        http.Response imagResponse =
+                                            await http.get(
+                                          Uri.parse(response.user!.avatar),
+                                        );
+                                        final bytes = imagResponse.bodyBytes;
+                                        print(bytes);
+                                        String base64Image = base64Encode(
+                                            bytes.buffer.asUint8List());
+                                        print(base64Image);
 
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: ((context) =>
-                                                  Wraper())));
+                                        Directory documentDirectory =
+                                            await getApplicationDocumentsDirectory();
+                                        File file = new File(join(
+                                            documentDirectory.path,
+                                            'imagetest.png'));
+                                        file.writeAsBytesSync(
+                                            imagResponse.bodyBytes);
+                                        setState(() {
+                                          image = file;
+                                          print('image $image');
+                                        });
+
+                                        await setPreferences(
+                                          personalImageePath: image!.path,
+                                          personalImage: base64Image,
+                                          ID: response.user!.id!,
+                                          currentPosition:
+                                              response.user!.address!,
+                                          currentPositionLatitude:
+                                              response.user!.latitude!,
+                                          currentPositionLongitude:
+                                              response.user!.longitude!,
+                                          firstName: response.user!.firstName!,
+                                          lastName: response.user!.lastName!,
+                                          // personalImage: response.user!.avatar,
+                                          phoneNumber: response.user!.phone!,
+                                          sex: response.user!.gender!,
+                                          token: response.token!,
+                                        ).then(
+                                            (value) => Fluttertoast.showToast(
+                                                msg: "تم تسجيل الدخول بنجاح",
+                                                backgroundColor:
+                                                    myDarkGreyColor)
+                                            // ScaffoldMessenger.of(context)
+                                            //     .showSnackBar(
+                                            //   SnackBar(
+                                            //     content:
+                                            //         Text("تم تسجيل الدخول بنجاح"),
+                                            //   ),
+                                            // ),
+                                            );
+
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    Wraper())));
+                                      }
                                     } else if (response.message ==
                                         "Email or Password does not match with our record.") {
                                       Fluttertoast.showToast(

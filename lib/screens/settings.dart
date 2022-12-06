@@ -237,108 +237,103 @@ class _SettingsState extends State<Settings> {
                               ),
                               // ),
                             ],
-                            Expanded(
-                              child: IntrinsicHeight(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "عدد الطلبات",
-                                          // '${widget.homeMeals!.deliveryTime!}د',
-                                          style:
-                                              MyCustomTextStyle.myH2TextStyle,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Obx((() {
-                                          if (OrderHistoryController
-                                              .isLoading.value) {
-                                            return SizedBox();
-                                          } else {
-                                            return Text(
-                                              orderHistoryController
-                                                  .orderList.length
-                                                  .toString(),
-                                              // '5',
-                                              style: TextStyle(
-                                                  color: myPrimaryColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500),
-                                            );
-                                          }
-                                        })),
-                                      ],
-                                    ),
-                                    VerticalDivider(
-                                      width: 12,
-                                      thickness: 1,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "المبلغ المصروف",
-                                          // '${widget.homeMeals!.deliveryTime!}د',
-                                          style:
-                                              MyCustomTextStyle.myH2TextStyle,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Obx((() {
-                                          if (OrderHistoryController
-                                              .isLoading.value) {
-                                            return SizedBox();
-                                          } else {
-                                            return Text(
-                                              orderHistoryController
-                                                  .spentAmount!.value
-                                                  .toString(),
-                                              // '125',
-                                              style: TextStyle(
-                                                  color: myPrimaryColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500),
-                                            );
-                                          }
-                                        })),
-                                      ],
-                                    ),
-                                    VerticalDivider(
-                                      width: 12,
-                                      thickness: 1,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "عضو منذ",
-                                          // '${widget.homeMeals!.deliveryTime!}د',
-                                          style:
-                                              MyCustomTextStyle.myH2TextStyle,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          '2022',
-                                          style: TextStyle(
-                                              color: myPrimaryColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 0,
-                                    ),
-                                  ],
-                                ),
+                            IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "عدد الطلبات",
+                                        // '${widget.homeMeals!.deliveryTime!}د',
+                                        style: MyCustomTextStyle.myH2TextStyle,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx((() {
+                                        if (OrderHistoryController
+                                            .isLoading.value) {
+                                          return SizedBox();
+                                        } else {
+                                          return Text(
+                                            orderHistoryController
+                                                .orderList.length
+                                                .toString(),
+                                            // '5',
+                                            style: TextStyle(
+                                                color: myPrimaryColor,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500),
+                                          );
+                                        }
+                                      })),
+                                    ],
+                                  ),
+                                  VerticalDivider(
+                                    width: 12,
+                                    thickness: 1,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "المبلغ المصروف",
+                                        // '${widget.homeMeals!.deliveryTime!}د',
+                                        style: MyCustomTextStyle.myH2TextStyle,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Obx((() {
+                                        if (OrderHistoryController
+                                            .isLoading.value) {
+                                          return SizedBox();
+                                        } else {
+                                          return Text(
+                                            orderHistoryController
+                                                .spentAmount!.value
+                                                .toString(),
+                                            // '125',
+                                            style: TextStyle(
+                                                color: myPrimaryColor,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500),
+                                          );
+                                        }
+                                      })),
+                                    ],
+                                  ),
+                                  VerticalDivider(
+                                    width: 12,
+                                    thickness: 1,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "عضو منذ",
+                                        // '${widget.homeMeals!.deliveryTime!}د',
+                                        style: MyCustomTextStyle.myH2TextStyle,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '2022',
+                                        style: TextStyle(
+                                            color: myPrimaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 0,
+                                  ),
+                                ],
                               ),
                             ),
                           ],

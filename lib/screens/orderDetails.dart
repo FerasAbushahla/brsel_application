@@ -338,12 +338,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width: 50,
+                                                      width: 40,
                                                     ),
                                                     Container(
-                                                      width: 55,
+                                                      width: 60,
                                                       child: Text(
-                                                        'تم استلام طلبكم',
+                                                        'الطلب عند العنوان',
                                                         style: MyCustomTextStyle
                                                             .myTextButtonLightTextStyle,
                                                       ),

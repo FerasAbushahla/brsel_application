@@ -129,6 +129,7 @@ class _RegisterState extends State<Register> {
                                 validator: (val) =>
                                     val!.isEmpty ? 'أدخل كلمة المرور' : null,
                                 controller: passwordController,
+                                textDirection: TextDirection.ltr,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
                                   hint: 'أدخل كلمة المرور',
@@ -163,6 +164,7 @@ class _RegisterState extends State<Register> {
                                     return null;
                                   }
                                 },
+                                textDirection: TextDirection.ltr,
                                 controller: passwordRetypeController,
                                 style: MyCustomTextStyle.myH1TextStyle,
                                 decoration: myInputDecoration(
