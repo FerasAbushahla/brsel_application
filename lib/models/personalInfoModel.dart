@@ -41,6 +41,7 @@ class User {
   dynamic emailVerifiedAt;
   DateTime? createdAt;
   dynamic deletedAt;
+  int? place_id;
   User({
     this.id,
     this.firstName,
@@ -55,6 +56,7 @@ class User {
     this.emailVerifiedAt,
     this.createdAt,
     this.deletedAt,
+    this.place_id,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -71,6 +73,7 @@ class User {
         emailVerifiedAt: json["email_verified_at"],
         createdAt: DateTime.parse(json["created_at"]),
         deletedAt: json["deleted_at"],
+        place_id: int.parse(json["place_id"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,5 +90,6 @@ class User {
         "email_verified_at": emailVerifiedAt,
         "created_at": createdAt!.toIso8601String(),
         "deleted_at": deletedAt,
+        "place_id": place_id,
       };
 }

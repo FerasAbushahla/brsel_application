@@ -162,17 +162,19 @@ class RemoteServices {
     }
   }
 
-  static Future<PersonalInfoModel> userInfoRegister(
-      {String? userID,
-      String? firstName,
-      String? lastName,
-      String? phoneNumber,
-      String? gender,
-      File? image,
-      String? address,
-      String? lat,
-      String? long,
-      String? access_token}) async {
+  static Future<PersonalInfoModel> userInfoRegister({
+    String? userID,
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    String? gender,
+    File? image,
+    String? address,
+    String? lat,
+    String? long,
+    String? access_token,
+    String? place_id,
+  }) async {
     print(
         '$firstName + $lastName + $phoneNumber + $gender+ $image + $lat+ $long');
     var request =
@@ -187,6 +189,7 @@ class RemoteServices {
       "address": address!,
       "latitude": lat!,
       "longitude": long!,
+      "place_id": place_id!,
     };
     Map<String, String> headers = {
       "Content-Type": "multipart/form-data",
