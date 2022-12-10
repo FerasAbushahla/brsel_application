@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
@@ -10,8 +12,10 @@ import 'package:brsel_application/screens/register.dart';
 import 'package:brsel_application/screens/settings.dart';
 import 'package:brsel_application/service/remoteServices.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,6 +49,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   String? lat;
   String? long;
   String? area;
+  File? image;
+  String? sharedPreferenceImagePath;
 
   @override
   void initState() {
@@ -102,6 +108,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
       ID = preferences.getInt('ID');
       token = preferences.getString('token');
       area = preferences.getString('areaID');
+      sharedPreferenceImagePath =
+          preferences.getString('personalImageFileLocation');
+
+      if (sharedPreferenceImagePath != null) {
+        setState(() {
+          image = File(sharedPreferenceImagePath!);
+        });
+      } else {
+        setState(() {
+          image = null;
+        });
+      }
 
       // firstName = preferences.getString("firstName");
       // lastName = preferences.getString("lastName");
@@ -125,6 +143,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     print(preferences.get('currentPositionLatitude'));
     print(preferences.get('currentPositionLongitude'));
     print(preferences.get('areaID'));
+    print(preferences.get('personalImageFileLocation'));
   }
 
   String? validatePhoneNum(String? value) {
@@ -489,6 +508,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                           setState(() {
                                             loading = true;
                                           });
+                                          print('loading $loading');
                                           SharedPreferences sharedPreferences =
                                               await SharedPreferences
                                                   .getInstance();
@@ -526,25 +546,41 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                 firstName: firstName,
                                                 lastName: lastName,
                                                 // gender: sex,
-                                                // image: widget.image,
+                                                image: image,
                                                 lat: lat,
                                                 long: long,
                                                 phoneNumber: phoneNumber,
                                                 userID: ID.toString(),
                                                 place_id: area,
                                               );
+                                              if (personalInfoResponse
+                                                      .message ==
+                                                  "User updated Successfully") {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "تم تعديل بياناتك الشخصية",
+                                                    backgroundColor:
+                                                        myDarkGreyColor);
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: ((context) =>
+                                                        Wraper()),
+                                                  ),
+                                                );
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "يوجد مشكلة, أعد المحاولة لاحقاً",
+                                                    backgroundColor:
+                                                        myDarkGreyColor);
+                                              }
                                             },
                                           );
                                           setState(() {
                                             loading = false;
                                           });
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: ((context) =>
-                                                  Settings()),
-                                            ),
-                                          );
+                                          print('loading $loading');
                                         }
                                       } else {
                                         if (_formKey.currentState!.validate()) {
