@@ -138,6 +138,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             mainAxisSize: MainAxisSize.max,
             children: [
               MyOrderDetailsCustomAppBar(
+                fromPayment: widget.fromPaymentPage,
                 title: 'تتبع الطلب',
               ),
               Obx(((() {

@@ -1,6 +1,6 @@
-import 'package:brsel_application/componantes/myCartBadgedButton.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
 import 'package:brsel_application/size_config.dart';
+import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,11 +9,13 @@ import '../constants.dart';
 
 class MyOrderDetailsCustomAppBar extends StatefulWidget {
   final String? title;
+  final bool fromPayment;
 
   @override
   const MyOrderDetailsCustomAppBar({
     Key? key,
     this.title,
+    required this.fromPayment,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,12 @@ class _MyOrderDetailsCustomAppBarState
                 children: [
                   MyIconButton(
                     onPress: () {
-                      Get.back();
+                      if (widget.fromPayment) {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => Wraper()));
+                      } else {
+                        Get.back();
+                      }
                     },
                     borderRadius: 12,
                     BackgroundColor: Colors.white,
