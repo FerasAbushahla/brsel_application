@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:brsel_application/models/SearchModel.dart';
+import 'package:brsel_application/models/areasModel.dart';
 import 'package:brsel_application/models/homeModel.dart';
 import 'package:brsel_application/models/mealDetailsModel.dart';
 import 'package:brsel_application/models/orderHistoryModel.dart';
@@ -167,7 +168,7 @@ class RemoteServices {
     String? firstName,
     String? lastName,
     String? phoneNumber,
-    String? gender,
+    // String? gender,
     File? image,
     String? address,
     String? lat,
@@ -175,8 +176,7 @@ class RemoteServices {
     String? access_token,
     String? place_id,
   }) async {
-    print(
-        '$firstName + $lastName + $phoneNumber + $gender+ $image + $lat+ $long');
+    print('$firstName + $lastName + $phoneNumber + $image + $lat+ $long');
     var request =
         http.MultipartRequest("POST", Uri.parse(ApiSettings.infoRegister));
 
@@ -185,7 +185,7 @@ class RemoteServices {
       "first_name": firstName!,
       "last_name": lastName!,
       "phone": phoneNumber!,
-      "gender": gender!,
+      // "gender": gender!,
       "address": address!,
       "latitude": lat!,
       "longitude": long!,
@@ -644,6 +644,26 @@ class RemoteServices {
       print('jsonString');
 
       return Datum.fromJson(mapOutput['data']);
+    }
+    return null;
+  }
+
+  static Future<AreasModel?> getAreas({String? access_token}) async {
+    print('${ApiSettings.areas}');
+    var response = await client.get(Uri.parse('${ApiSettings.areas}'),
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $access_token"
+        });
+    // print(response.statusCode);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      print('$jsonString');
+
+      var mapOutput = json.decode(jsonString);
+      print('jsonString');
+
+      return AreasModel.fromJson(mapOutput);
     }
     return null;
   }

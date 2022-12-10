@@ -14,4 +14,5 @@ class ApiSettings {
   static const contactUs = _apiUrl + 'contact_us';
   static const Order = _apiUrl + 'order';
   static const Orders = _apiUrl + 'orders';
+  static const areas = _apiUrl + 'constants/AREAS';
 }

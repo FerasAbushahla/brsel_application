@@ -1,7 +1,9 @@
 import 'package:brsel_application/componantes/myButton.dart';
 import 'package:brsel_application/componantes/myCustomAppBar.dart';
 import 'package:brsel_application/componantes/myIconButton.dart';
+import 'package:brsel_application/controllers/areasController.dart';
 import 'package:brsel_application/controllers/userController.dart';
+import 'package:brsel_application/models/areasModel.dart';
 import 'package:brsel_application/models/personalInfoModel.dart';
 import 'package:brsel_application/screens/personalImage.dart';
 import 'package:brsel_application/screens/register.dart';
@@ -29,6 +31,8 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {
+  AreasController areasController = Get.put(AreasController());
+
   bool sharedPreferencesLoading = false;
   String? firstName;
   String? lastName;
@@ -40,9 +44,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
   String? personalImage;
   String? lat;
   String? long;
+  String? area;
 
   @override
   void initState() {
+    areasController.onInit();
     // Future.delayed(const Duration(milliseconds: 5), () async {
     //   SharedPreferences preferences = await SharedPreferences.getInstance();
     //   print(preferences.get('firstName'));
@@ -67,8 +73,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
       if (phoneNumber != null) {
         phoneController.text = phoneNumber!;
       }
-      if (sex != null) {
-        mySexValue = sex!;
+      // if (sex != null) {
+      //   mySexValue = sex!;
+      // }
+      if (area != null) {
+        myAreaValue = area!;
       }
     });
 
@@ -92,6 +101,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       phoneNumber = preferences.getString('phoneNumber');
       ID = preferences.getInt('ID');
       token = preferences.getString('token');
+      area = preferences.getString('areaID');
 
       // firstName = preferences.getString("firstName");
       // lastName = preferences.getString("lastName");
@@ -114,6 +124,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     print(preferences.get('currentPosition'));
     print(preferences.get('currentPositionLatitude'));
     print(preferences.get('currentPositionLongitude'));
+    print(preferences.get('areaID'));
   }
 
   String? validatePhoneNum(String? value) {
@@ -139,6 +150,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final sexController = TextEditingController();
   bool loading = false;
   String? mySexValue;
+  String? myAreaValue;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -205,308 +217,417 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     padding: EdgeInsets.fromLTRB(16, 42, 16, 42),
                     child: Column(
                       children: [
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                'الاسم',
-                                style:
-                                    MyCustomTextStyle.myTextFieldTitletextStyle,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              TextFormField(
-                                validator: (val) =>
-                                    val!.isEmpty ? 'أدخل الاسم' : null,
-                                controller: firstNameController,
-                                style: MyCustomTextStyle.myH1TextStyle,
-                                decoration: myInputDecoration(
-                                  hint: 'أدخل الاسم',
-                                  // suffix: Icon(
-                                  //   BrselApp.checkicon,
-                                  //   color: myPrimaryColor,
-                                  //   size: 13,
-                                  // ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'اسم العائلة',
-                                style:
-                                    MyCustomTextStyle.myTextFieldTitletextStyle,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              TextFormField(
-                                validator: (val) =>
-                                    val!.isEmpty ? 'أدخل اسم العائلة' : null,
-                                controller: lastNameController,
-                                style: MyCustomTextStyle.myH1TextStyle,
-                                decoration: myInputDecoration(
-                                  hint: 'أدخل اسم العائلة',
-                                  // suffix: Icon(
-                                  //   BrselApp.checkicon,
-                                  //   color: myPrimaryColor,
-                                  //   size: 13,
-                                  // ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'رقم الهاتف',
-                                style:
-                                    MyCustomTextStyle.myTextFieldTitletextStyle,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              TextFormField(
-                                maxLength: 8,
-                                validator: (val) => validatePhoneNum(val),
-                                // validator: (val) =>
-                                //     val!.isEmpty ? 'أدخل رقم الهاتف' : null,
-                                controller: phoneController,
-                                style: MyCustomTextStyle.myH1TextStyle,
-                                keyboardType: TextInputType.phone,
-                                decoration: myInputDecoration(
-                                  hint: 'أدخل رقم الهاتف',
-                                  prefix: SizedBox(
-                                    height: 30,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          '+968',
-                                          style: MyCustomTextStyle
-                                              .myTextFieldTitletextStyle,
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        VerticalDivider(
-                                          width: 0,
-                                          thickness: 1,
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                      ],
+                        Obx((() {
+                          if (AreasController.isLoading.value) {
+                            return SizedBox(
+                                // width: 25,
+                                height: 150,
+                                child:
+                                    Center(child: CircularProgressIndicator()));
+                          } else if (areasController.areasList.isNotEmpty) {
+                            return Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'الاسم',
+                                    style: MyCustomTextStyle
+                                        .myTextFieldTitletextStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    validator: (val) =>
+                                        val!.isEmpty ? 'أدخل الاسم' : null,
+                                    controller: firstNameController,
+                                    style: MyCustomTextStyle.myH1TextStyle,
+                                    decoration: myInputDecoration(
+                                      hint: 'أدخل الاسم',
+                                      // suffix: Icon(
+                                      //   BrselApp.checkicon,
+                                      //   color: myPrimaryColor,
+                                      //   size: 13,
+                                      // ),
                                     ),
                                   ),
-                                  // suffix: Icon(
-                                  //   BrselApp.checkicon,
-                                  //   color: myPrimaryColor,
-                                  //   size: 13,
-                                  // ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'الجنس',
-                                style:
-                                    MyCustomTextStyle.myTextFieldTitletextStyle,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              DropdownButtonFormField(
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'أدخل الجنس';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                decoration: const InputDecoration(
-                                  fillColor: myBackgroundFillingColor,
-                                  filled: true,
-                                  hintText: '',
-                                  border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(8.0),
-                                    ),
-                                    borderSide: BorderSide(
-                                      width: 1.0,
-                                      color: myBackgroundFillingColor,
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'اسم العائلة',
+                                    style: MyCustomTextStyle
+                                        .myTextFieldTitletextStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    validator: (val) => val!.isEmpty
+                                        ? 'أدخل اسم العائلة'
+                                        : null,
+                                    controller: lastNameController,
+                                    style: MyCustomTextStyle.myH1TextStyle,
+                                    decoration: myInputDecoration(
+                                      hint: 'أدخل اسم العائلة',
+                                      // suffix: Icon(
+                                      //   BrselApp.checkicon,
+                                      //   color: myPrimaryColor,
+                                      //   size: 13,
+                                      // ),
                                     ),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(8.0),
-                                    ),
-                                    borderSide: BorderSide(
-                                      width: 1.0,
-                                      color: myBackgroundFillingColor,
-                                    ),
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 11, vertical: 0),
-                                ),
-                                isExpanded: true,
-                                value: mySexValue,
-                                hint: Text(
-                                  'اختر الجنس',
-                                  style: MyCustomTextStyle.myHintTextStyle,
-                                ),
-                                onChanged: (value) => setState(
-                                    () => mySexValue = value.toString()),
-                                items: [
-                                  DropdownMenuItem(
-                                      child: Container(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 11),
-                                          child: Container(
-                                            alignment: Alignment.centerRight,
-                                            child: Text('ذكر',
-                                                style: MyCustomTextStyle
-                                                    .myH1TextStyle),
-                                          ),
+                                  Text(
+                                    'رقم الهاتف',
+                                    style: MyCustomTextStyle
+                                        .myTextFieldTitletextStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    maxLength: 8,
+                                    validator: (val) => validatePhoneNum(val),
+                                    // validator: (val) =>
+                                    //     val!.isEmpty ? 'أدخل رقم الهاتف' : null,
+                                    controller: phoneController,
+                                    style: MyCustomTextStyle.myH1TextStyle,
+                                    keyboardType: TextInputType.phone,
+                                    decoration: myInputDecoration(
+                                      hint: 'أدخل رقم الهاتف',
+                                      prefix: SizedBox(
+                                        height: 30,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(
+                                              '+968',
+                                              style: MyCustomTextStyle
+                                                  .myTextFieldTitletextStyle,
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            VerticalDivider(
+                                              width: 0,
+                                              thickness: 1,
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      value: 'ذكر'),
-                                  DropdownMenuItem(
-                                      child: Container(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 11),
-                                          child: Container(
-                                            alignment: Alignment.centerRight,
-                                            child: Text('أنثى',
-                                                style: MyCustomTextStyle
-                                                    .myH1TextStyle),
+                                      // suffix: Icon(
+                                      //   BrselApp.checkicon,
+                                      //   color: myPrimaryColor,
+                                      //   size: 13,
+                                      // ),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   height: 10,
+                                  // ),
+                                  // Text(
+                                  //   'الجنس',
+                                  //   style: MyCustomTextStyle
+                                  //       .myTextFieldTitletextStyle,
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 5,
+                                  // ),
+                                  // DropdownButtonFormField(
+                                  //   validator: (value) {
+                                  //     if (value == null) {
+                                  //       return 'أدخل الجنس';
+                                  //     } else {
+                                  //       return null;
+                                  //     }
+                                  //   },
+                                  //   decoration: const InputDecoration(
+                                  //     fillColor: myBackgroundFillingColor,
+                                  //     filled: true,
+                                  //     hintText: '',
+                                  //     border: OutlineInputBorder(
+                                  //       borderRadius: const BorderRadius.all(
+                                  //         const Radius.circular(8.0),
+                                  //       ),
+                                  //       borderSide: BorderSide(
+                                  //         width: 1.0,
+                                  //         color: myBackgroundFillingColor,
+                                  //       ),
+                                  //     ),
+                                  //     enabledBorder: OutlineInputBorder(
+                                  //       borderRadius: const BorderRadius.all(
+                                  //         const Radius.circular(8.0),
+                                  //       ),
+                                  //       borderSide: BorderSide(
+                                  //         width: 1.0,
+                                  //         color: myBackgroundFillingColor,
+                                  //       ),
+                                  //     ),
+                                  //     contentPadding: EdgeInsets.symmetric(
+                                  //         horizontal: 11, vertical: 0),
+                                  //   ),
+                                  //   isExpanded: true,
+                                  //   value: mySexValue,
+                                  //   hint: Text(
+                                  //     'اختر الجنس',
+                                  //     style: MyCustomTextStyle.myHintTextStyle,
+                                  //   ),
+                                  //   onChanged: (value) => setState(
+                                  //       () => mySexValue = value.toString()),
+                                  //   items: [
+                                  //     DropdownMenuItem(
+                                  //         child: Container(
+                                  //           child: Padding(
+                                  //             padding: const EdgeInsets.only(
+                                  //                 right: 11),
+                                  //             child: Container(
+                                  //               alignment:
+                                  //                   Alignment.centerRight,
+                                  //               child: Text('ذكر',
+                                  //                   style: MyCustomTextStyle
+                                  //                       .myH1TextStyle),
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //         value: 'ذكر'),
+                                  //     DropdownMenuItem(
+                                  //         child: Container(
+                                  //           child: Padding(
+                                  //             padding: const EdgeInsets.only(
+                                  //                 right: 11),
+                                  //             child: Container(
+                                  //               alignment:
+                                  //                   Alignment.centerRight,
+                                  //               child: Text('أنثى',
+                                  //                   style: MyCustomTextStyle
+                                  //                       .myH1TextStyle),
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //         value: 'أنثى'),
+                                  //   ],
+                                  // ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'المنطقة',
+                                    style: MyCustomTextStyle
+                                        .myTextFieldTitletextStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  DropdownButtonFormField(
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return 'اختر المنطقة';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      decoration: const InputDecoration(
+                                        fillColor: myBackgroundFillingColor,
+                                        filled: true,
+                                        hintText: '',
+                                        border: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                          borderSide: BorderSide(
+                                            width: 1.0,
+                                            color: myBackgroundFillingColor,
                                           ),
                                         ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                          borderSide: BorderSide(
+                                            width: 1.0,
+                                            color: myBackgroundFillingColor,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 11, vertical: 0),
                                       ),
-                                      value: 'أنثى'),
+                                      isExpanded: true,
+                                      value: myAreaValue,
+                                      hint: Text(
+                                        'اختر المنطقة',
+                                        style:
+                                            MyCustomTextStyle.myHintTextStyle,
+                                      ),
+                                      onChanged: (value) => setState(
+                                          () => myAreaValue = value.toString()),
+                                      items: List.generate(
+                                        areasController.areasList.length,
+                                        (index) => myDropDownMenuItem(
+                                            areasDatum: areasController
+                                                .areasList[index]),
+                                      )),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  MyButton(
+                                    loading: loading,
+                                    color: mySecondaryColor,
+                                    title: 'حفظ ومتابعة',
+                                    onPressed: () async {
+                                      if (widget.fromSettings == true) {
+                                        if (_formKey.currentState!.validate()) {
+                                          setState(() {
+                                            loading = true;
+                                          });
+                                          SharedPreferences sharedPreferences =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          sharedPreferences.setString(
+                                              'firstName',
+                                              firstNameController.text);
+                                          print('firstName');
+                                          print(firstNameController.text);
+                                          sharedPreferences.setString(
+                                              'lastName',
+                                              lastNameController.text);
+                                          print('lastName');
+                                          print(lastNameController.text);
+                                          sharedPreferences.setString(
+                                              'phoneNumber',
+                                              phoneController.text);
+                                          print('phoneNumber');
+                                          print(phoneController.text);
+                                          // sharedPreferences.setString(
+                                          //     'sex', mySexValue.toString());
+                                          // print('sex');
+                                          // print(mySexValue);
+                                          sharedPreferences.setString(
+                                              'areaID', myAreaValue!);
+                                          print('areaID');
+                                          print(myAreaValue);
+                                          getSharedPrefs().then(
+                                            (value) async {
+                                              PersonalInfoModel
+                                                  personalInfoResponse =
+                                                  await RemoteServices
+                                                      .userInfoRegister(
+                                                access_token: token,
+                                                address: currentPosition,
+                                                firstName: firstName,
+                                                lastName: lastName,
+                                                // gender: sex,
+                                                // image: widget.image,
+                                                lat: lat,
+                                                long: long,
+                                                phoneNumber: phoneNumber,
+                                                userID: ID.toString(),
+                                                place_id: area,
+                                              );
+                                            },
+                                          );
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  Settings()),
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        if (_formKey.currentState!.validate()) {
+                                          setState(() {
+                                            loading = true;
+                                          });
+                                          SharedPreferences sharedPreferences =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          sharedPreferences.setString(
+                                              'firstName',
+                                              firstNameController.text);
+                                          print('firstName');
+                                          print(firstNameController.text);
+                                          sharedPreferences.setString(
+                                              'lastName',
+                                              lastNameController.text);
+                                          print('lastName');
+                                          print(lastNameController.text);
+                                          sharedPreferences.setString(
+                                              'phoneNumber',
+                                              phoneController.text);
+                                          print('phoneNumber');
+                                          print(phoneController.text);
+                                          sharedPreferences.setString(
+                                              'sex', mySexValue.toString());
+                                          print('sex');
+                                          sharedPreferences.setString(
+                                              'areaID', myAreaValue!);
+                                          print('areaID');
+                                          print(myAreaValue);
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  PersonalImage(
+                                                    fromSettings: false,
+                                                  )),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    },
+                                  ),
                                 ],
                               ),
-                              // TextFormField(
-                              //   controller: sexController,
-                              //   style: MyCustomTextStyle.myH1TextStyle,
-                              //   decoration: myInputDecoration(
-                              //     hint: 'أدخل الجنس',
-                              //     suffix: Icon(
-                              //       BrselApp.checkicon,
-                              //       color: myPrimaryColor,
-                              //       size: 13,
-                              //     ),
-                              //   ),
-                              // ),
-                              SizedBox(
-                                height: 25,
+                            );
+                          }
+                          // else if (areasController.areasList.isEmpty) {
+                          //   return Container(
+                          //     height: 100,
+                          //     child: Center(
+                          //       child: Column(
+                          //         mainAxisAlignment: MainAxisAlignment.center,
+                          //         children: [
+                          //           Icon(
+                          //             Icons.error_outline,
+                          //             size: 40,
+                          //             color: myGreyColor,
+                          //           ),
+                          //           SizedBox(
+                          //             height: 5,
+                          //           ),
+                          //           Text(
+                          //             'لا يوجد طلبات في سابقة',
+                          //             style: MyCustomTextStyle.myHintTextStyle,
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   );
+                          // }
+                          else {
+                            return Center(
+                              child: Icon(
+                                Icons.error_outline,
                               ),
-                              MyButton(
-                                loading: loading,
-                                color: mySecondaryColor,
-                                title: 'حفظ ومتابعة',
-                                onPressed: () async {
-                                  // if (widget.fromSettings == true) {
-                                  //   if (_formKey.currentState!.validate()) {
-                                  //     setState(() {
-                                  //       loading = true;
-                                  //     });
-                                  //     SharedPreferences sharedPreferences =
-                                  //         await SharedPreferences.getInstance();
-                                  //     sharedPreferences.setString('firstName',
-                                  //         firstNameController.text);
-                                  //     print('firstName');
-                                  //     print(firstNameController.text);
-                                  //     sharedPreferences.setString(
-                                  //         'lastName', lastNameController.text);
-                                  //     print('lastName');
-                                  //     print(lastNameController.text);
-                                  //     sharedPreferences.setString(
-                                  //         'phoneNumber', phoneController.text);
-                                  //     print('phoneNumber');
-                                  //     print(phoneController.text);
-                                  //     sharedPreferences.setString(
-                                  //         'sex', mySexValue.toString());
-                                  //     print('sex');
-                                  //     print(mySexValue);
-                                  //     getSharedPrefs().then(
-                                  //       (value) async {
-                                  //         PersonalInfoModel
-                                  //             personalInfoResponse =
-                                  //             await RemoteServices
-                                  //                 .userInfoRegister(
-                                  //           access_token: token,
-                                  //           address: currentPosition,
-                                  //           firstName: firstName,
-                                  //           lastName: lastName,
-                                  //           gender: sex,
-                                  //           // image: widget.image,
-                                  //           lat: lat,
-                                  //           long: long,
-                                  //           phoneNumber: phoneNumber,
-                                  //           userID: ID.toString(),
-                                  //         );
-                                  //       },
-                                  //     );
-                                  //     setState(() {
-                                  //       loading = false;
-                                  //     });
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: ((context) => Settings()),
-                                  //       ),
-                                  //     );
-                                  //   }
-                                  // } else {
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      loading = true;
-                                    });
-                                    SharedPreferences sharedPreferences =
-                                        await SharedPreferences.getInstance();
-                                    sharedPreferences.setString(
-                                        'firstName', firstNameController.text);
-                                    print('firstName');
-                                    print(firstNameController.text);
-                                    sharedPreferences.setString(
-                                        'lastName', lastNameController.text);
-                                    print('lastName');
-                                    print(lastNameController.text);
-                                    sharedPreferences.setString(
-                                        'phoneNumber', phoneController.text);
-                                    print('phoneNumber');
-                                    print(phoneController.text);
-                                    sharedPreferences.setString(
-                                        'sex', mySexValue.toString());
-                                    print('sex');
-                                    print(mySexValue);
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: ((context) => PersonalImage(
-                                              fromSettings: false,
-                                            )),
-                                      ),
-                                    );
-                                    // }
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
+                            );
+                          }
+                        })),
                       ],
                     ),
                   ),
@@ -517,5 +638,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
         ),
       ),
     );
+  }
+
+  DropdownMenuItem<String> myDropDownMenuItem({AreasDatum? areasDatum}) {
+    return DropdownMenuItem(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 11),
+            child: Container(
+              alignment: Alignment.centerRight,
+              child: Text(
+                areasDatum!.value!,
+                style: MyCustomTextStyle.myH1TextStyle,
+              ),
+            ),
+          ),
+        ),
+        value: areasDatum.id.toString());
   }
 }

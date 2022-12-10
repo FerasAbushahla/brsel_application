@@ -10,6 +10,7 @@ import 'package:brsel_application/size_config.dart';
 import 'package:brsel_application/wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -223,6 +224,7 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
   String? userStreet;
   String? userLocality;
   String? userCountry;
+  String? userArea;
 
   late GoogleMapController googleMapController;
   Completer<GoogleMapController> _controller = Completer();
@@ -253,6 +255,7 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
       userStreet = sharedPreferences.getString('currentStreetPosition');
       userLocality = sharedPreferences.getString('currentLocalityPosition');
       userCountry = sharedPreferences.getString('currentCountryPosition');
+      userArea = sharedPreferences.getString('areaID');
     });
     print('userStreet $userStreet');
     print('userLocality $userLocality');
@@ -581,29 +584,28 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                     address: userAddress,
                     firstName: userFirstName,
                     lastName: userLastName,
-                    gender: userGender,
+                    // gender: userGender,
                     image: widget.image,
                     lat: userLat,
                     long: userLong,
                     phoneNumber: userPhoneNumber,
                     userID: userID.toString(),
-                    place_id: "1",
+                    place_id: userArea,
                   );
-                  // if(personalInfoResponse.)
-                  // PersonalInfoModel personalInfoResponse =
-                  //     await RemoteServices.userInfoRegister(
-                  //   address: userAddress,
-                  //   firstName: userFirstName,
-                  //   lastName: userLastName,
-                  //   gender: userGender,
-                  //   // image: userImage,
-                  //   lat: userLat,
-                  //   long: userLong,
-                  //   phoneNumber: userPhoneNumber,
-                  //   userID: userID.toString(),
-                  // );
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Wraper()));
+                  if (personalInfoResponse.message !=
+                      "User updated Successfully") {
+                    Fluttertoast.showToast(
+                        msg: "يوجد مشكلة, أعد المحاولة لاحقاً",
+                        backgroundColor: myDarkGreyColor);
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "تم إدخال بياناتك الشخصية, أهلا بك",
+                        backgroundColor: myDarkGreyColor);
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Wraper()));
+                  }
+
                   setState(() {
                     loading = false;
                   });

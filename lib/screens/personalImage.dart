@@ -414,7 +414,7 @@ class _PersonalImageState extends State<PersonalImage> {
                               address: userAddress,
                               firstName: userFirstName,
                               lastName: userLastName,
-                              gender: userGender,
+                              // gender: userGender,
                               image: image,
                               lat: userLat,
                               long: userLong,
