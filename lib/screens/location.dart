@@ -484,22 +484,21 @@ class _CurrentLocationMapState extends State<CurrentLocationMap> {
                                 ),
                                 Column(
                                   children: [
-                                    if (userLocality == null) ...[
-                                      Text(
-                                        overflow: TextOverflow.ellipsis,
-                                        userStreet!,
-                                        style:
-                                            MyCustomTextStyle.myCardtextStyle,
-                                      ),
-                                    ] else ...[
-                                      Text(
-                                        overflow: TextOverflow.ellipsis,
-                                        '$userCountry, $userLocality, $userStreet',
-                                        // 'مسقط ,عمان,1988',
-                                        style:
-                                            MyCustomTextStyle.myCardtextStyle,
-                                      ),
-                                    ]
+                                    // if (userLocality == null) ...[
+                                    Text(
+                                      overflow: TextOverflow.ellipsis,
+                                      "$userAddress",
+                                      style: MyCustomTextStyle.myCardtextStyle,
+                                    ),
+                                    // ] else ...[
+                                    //   Text(
+                                    //     overflow: TextOverflow.ellipsis,
+                                    //     '$userCountry, $userLocality, $userStreet',
+                                    //     // 'مسقط ,عمان,1988',
+                                    //     style:
+                                    //         MyCustomTextStyle.myCardtextStyle,
+                                    //   ),
+                                    // ]
                                   ],
                                 ),
                               ],
