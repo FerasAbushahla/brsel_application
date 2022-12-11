@@ -167,6 +167,11 @@ class MyCustomTextStyle {
     color: myTextGreyColor,
     fontWeight: FontWeight.w400,
   );
+  static const TextStyle myDriverAppBarSecTextStyle = TextStyle(
+    fontSize: 14,
+    color: myGreyColor,
+    fontWeight: FontWeight.w500,
+  );
   static TextStyle myHintTextStyle = TextStyle(
     fontSize: 12,
     color: myTextGreyColor,
@@ -187,6 +192,11 @@ class MyCustomTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w700,
     color: myDarkBlueColor,
+  );
+  static const TextStyle myDriverTitletextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
   );
   static const TextStyle myTitleSecTextStyle = TextStyle(
     fontSize: 14,
@@ -299,6 +309,11 @@ class MyCustomTextStyle {
     color: myDarkBlueColor,
     fontWeight: FontWeight.w700,
   );
+  static const TextStyle myDriverAppBarTitleTextStyle = TextStyle(
+    fontSize: 16,
+    color: mylighterDarkBlueColor,
+    fontWeight: FontWeight.w300,
+  );
   static const TextStyle mySuccessPageTitleTextStyle = TextStyle(
     fontSize: 18,
     color: myDarkBlue,
@@ -313,6 +328,11 @@ class MyCustomTextStyle {
     height: 1.7,
     fontSize: 14,
     color: mylighterDarkBlueColor.withOpacity(0.5),
+    fontWeight: FontWeight.w300,
+  );
+  static TextStyle myDriverStatTextStyle = TextStyle(
+    fontSize: 14,
+    color: myBlackColor.withOpacity(0.5),
     fontWeight: FontWeight.w300,
   );
 }

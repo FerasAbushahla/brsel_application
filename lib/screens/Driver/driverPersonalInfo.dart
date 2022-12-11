@@ -124,17 +124,6 @@ class _DiriverPersonalInfoState extends State<DiriverPersonalInfo> {
                                     height: 55,
                                     child: CircularProgressIndicator()))
                           ] else if (!sharedPreferencesLoading) ...[
-                            // InkWell(
-                            //   onTap: () {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => PersonalImage(
-                            //                   fromSettings: true,
-                            //                 )));
-                            //   },
-                            //   child:
-
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Container(
@@ -146,14 +135,8 @@ class _DiriverPersonalInfoState extends State<DiriverPersonalInfo> {
                                   base64Decode(personalImage),
                                   fit: BoxFit.cover,
                                 ),
-                                // child: Image.asset(
-                                //   'assets/images/Profile.jpg',
-                                //   fit: BoxFit.cover,
-                                // ),
                               ),
                             ),
-
-                            // ),
                           ],
                           IntrinsicHeight(
                             child: Row(
@@ -288,12 +271,7 @@ class _DiriverPersonalInfoState extends State<DiriverPersonalInfo> {
                             controller: firstNameController,
                             style: MyCustomTextStyle.myH1TextStyle,
                             decoration: myInputDecoration(
-                              hint: 'أدخل الاسم',
-                              // suffix: Icon(
-                              //   BrselApp.checkicon,
-                              //   color: myPrimaryColor,
-                              //   size: 13,
-                              // ),
+                              hint: 'الاسم',
                             ),
                           ),
                           SizedBox(
@@ -312,18 +290,12 @@ class _DiriverPersonalInfoState extends State<DiriverPersonalInfo> {
                             controller: lastNameController,
                             style: MyCustomTextStyle.myH1TextStyle,
                             decoration: myInputDecoration(
-                              hint: 'أدخل اسم العائلة',
-                              // suffix: Icon(
-                              //   BrselApp.checkicon,
-                              //   color: myPrimaryColor,
-                              //   size: 13,
-                              // ),
+                              hint: 'اسم العائلة',
                             ),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-
                           SizedBox(
                             height: 10,
                           ),
@@ -334,186 +306,15 @@ class _DiriverPersonalInfoState extends State<DiriverPersonalInfo> {
                           SizedBox(
                             height: 5,
                           ),
-                          DropdownButtonFormField(
-                            validator: (value) {
-                              if (value == null) {
-                                return 'أدخل الجنس';
-                              } else {
-                                return null;
-                              }
-                            },
-                            decoration: const InputDecoration(
-                              fillColor: myBackgroundFillingColor,
-                              filled: true,
-                              hintText: '',
-                              border: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(8.0),
-                                ),
-                                borderSide: BorderSide(
-                                  width: 1.0,
-                                  color: myBackgroundFillingColor,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(8.0),
-                                ),
-                                borderSide: BorderSide(
-                                  width: 1.0,
-                                  color: myBackgroundFillingColor,
-                                ),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 11, vertical: 0),
+                          TextFormField(
+                            validator: (val) =>
+                                val!.isEmpty ? 'أدخل الجنس' : null,
+                            controller: sexController,
+                            style: MyCustomTextStyle.myH1TextStyle,
+                            decoration: myInputDecoration(
+                              hint: 'الجنس',
                             ),
-                            isExpanded: true,
-                            value: mySexValue,
-                            hint: Text(
-                              'اختر الجنس',
-                              style: MyCustomTextStyle.myHintTextStyle,
-                            ),
-                            onChanged: (value) =>
-                                setState(() => mySexValue = value.toString()),
-                            items: [
-                              DropdownMenuItem(
-                                  child: Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 11),
-                                      child: Container(
-                                        alignment: Alignment.centerRight,
-                                        child: Text('ذكر',
-                                            style: MyCustomTextStyle
-                                                .myH1TextStyle),
-                                      ),
-                                    ),
-                                  ),
-                                  value: 'ذكر'),
-                              DropdownMenuItem(
-                                  child: Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 11),
-                                      child: Container(
-                                        alignment: Alignment.centerRight,
-                                        child: Text('أنثى',
-                                            style: MyCustomTextStyle
-                                                .myH1TextStyle),
-                                      ),
-                                    ),
-                                  ),
-                                  value: 'أنثى'),
-                            ],
                           ),
-                          // TextFormField(
-                          //   controller: sexController,
-                          //   style: MyCustomTextStyle.myH1TextStyle,
-                          //   decoration: myInputDecoration(
-                          //     hint: 'أدخل الجنس',
-                          //     suffix: Icon(
-                          //       BrselApp.checkicon,
-                          //       color: myPrimaryColor,
-                          //       size: 13,
-                          //     ),
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          // MyButton(
-                          //   loading: loading,
-                          //   color: mySecondaryColor,
-                          //   title: 'حفظ ومتابعة',
-                          //   onPressed: () async {
-                          //     // if (widget.fromSettings == true) {
-                          //     //   if (_formKey.currentState!.validate()) {
-                          //     //     setState(() {
-                          //     //       loading = true;
-                          //     //     });
-                          //     //     SharedPreferences sharedPreferences =
-                          //     //         await SharedPreferences.getInstance();
-                          //     //     sharedPreferences.setString('firstName',
-                          //     //         firstNameController.text);
-                          //     //     print('firstName');
-                          //     //     print(firstNameController.text);
-                          //     //     sharedPreferences.setString(
-                          //     //         'lastName', lastNameController.text);
-                          //     //     print('lastName');
-                          //     //     print(lastNameController.text);
-                          //     //     sharedPreferences.setString(
-                          //     //         'phoneNumber', phoneController.text);
-                          //     //     print('phoneNumber');
-                          //     //     print(phoneController.text);
-                          //     //     sharedPreferences.setString(
-                          //     //         'sex', mySexValue.toString());
-                          //     //     print('sex');
-                          //     //     print(mySexValue);
-                          //     //     getSharedPrefs().then(
-                          //     //       (value) async {
-                          //     //         PersonalInfoModel
-                          //     //             personalInfoResponse =
-                          //     //             await RemoteServices
-                          //     //                 .userInfoRegister(
-                          //     //           access_token: token,
-                          //     //           address: currentPosition,
-                          //     //           firstName: firstName,
-                          //     //           lastName: lastName,
-                          //     //           gender: sex,
-                          //     //           // image: widget.image,
-                          //     //           lat: lat,
-                          //     //           long: long,
-                          //     //           phoneNumber: phoneNumber,
-                          //     //           userID: ID.toString(),
-                          //     //         );
-                          //     //       },
-                          //     //     );
-                          //     //     setState(() {
-                          //     //       loading = false;
-                          //     //     });
-                          //     //     Navigator.push(
-                          //     //       context,
-                          //     //       MaterialPageRoute(
-                          //     //         builder: ((context) => Settings()),
-                          //     //       ),
-                          //     //     );
-                          //     //   }
-                          //     // } else {
-                          //     if (_formKey.currentState!.validate()) {
-                          //       setState(() {
-                          //         loading = true;
-                          //       });
-                          //       SharedPreferences sharedPreferences =
-                          //           await SharedPreferences.getInstance();
-                          //       sharedPreferences.setString(
-                          //           'firstName', firstNameController.text);
-                          //       print('firstName');
-                          //       print(firstNameController.text);
-                          //       sharedPreferences.setString(
-                          //           'lastName', lastNameController.text);
-                          //       print('lastName');
-                          //       print(lastNameController.text);
-                          //       sharedPreferences.setString(
-                          //           'phoneNumber', phoneController.text);
-                          //       print('phoneNumber');
-                          //       print(phoneController.text);
-                          //       sharedPreferences.setString(
-                          //           'sex', mySexValue.toString());
-                          //       print('sex');
-                          //       print(mySexValue);
-                          //       setState(() {
-                          //         loading = false;
-                          //       });
-                          //       // Navigator.push(
-                          //       //   context,
-                          //       //   MaterialPageRoute(
-                          //       //     builder: ((context) => PersonalImage(
-                          //       //           fromSettings: false,
-                          //       //         )),
-                          //       //   ),
-                          //       // );
-                          //       // }
-                          //     }
-                          //   },
-                          // ),
                         ],
                       ),
                     ),
