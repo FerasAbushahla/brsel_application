@@ -137,6 +137,11 @@ class MyCustomTextStyle {
     color: myDarkGreyColor,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle myDriverDteTextStyle = TextStyle(
+    fontSize: 12,
+    color: myBlackColor.withOpacity(0.4),
+    fontWeight: FontWeight.w500,
+  );
   static TextStyle myH22 = TextStyle(
     fontSize: 12,
     color: myGreyColor,
@@ -282,6 +287,18 @@ class MyCustomTextStyle {
   static const TextStyle myTextButtonLightTextStyle = TextStyle(
     fontSize: 13,
     color: myBlackColor,
+    fontWeight: FontWeight.w300,
+  );
+  static const TextStyle myTabBarSelectedLabelTextStyle = TextStyle(
+    fontFamily: "ArbFONTS-Montserrat-Arabic",
+    fontSize: 13,
+    color: myBlackColor,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle myTabBarUnSelectedLabelTextStyle = TextStyle(
+    fontFamily: "ArbFONTS-Montserrat-Arabic",
+    fontSize: 13,
+    color: myGreyColor,
     fontWeight: FontWeight.w300,
   );
   static const TextStyle myAppBarTitleTextStyle = TextStyle(
